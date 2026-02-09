@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@layer components {
+
+  .outer-card{
+    @apply 
+      w-[90%] h-auto bg-[#A8DADC] px-[15px] pb-[15px] pt-[30px] rounded-[20px];
+  
+  }
+
+  .inner-card {
+    @apply bg-[linear-gradient(0deg,#45E7EE_0%,#FFFFFF_67%)] flex justify-evenly rounded-[20px] p-2
+  }
+}
+
+@layer utilities {
+  .text-outline-black {
+    text-shadow: 
+      1px 1px 0 #000,
+      -1px 1px 0 #000,
+      1px -1px 0 #000,
+      -1px -1px 0 #000;
+  }
+  .text-outline-black-38 {
+    text-shadow:
+      1px 1px 0 rgba(0,0,0,0.30),
+      -1px 1px 0 rgba(0,0,0,0.30),
+      1px -1px 0 rgba(0,0,0,0.30),
+      -1px -1px 0 rgba(0,0,0,0.30);
+  }
+}
+
+@layer base {
+  html {
+     overflow-y: auto;
+     overflow-x: hidden;
+     touch-action: manipulation;
+  }
+}
