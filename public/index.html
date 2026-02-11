@@ -8,15 +8,21 @@
   <link href="../src/output.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Lacquer&family=Lilita+One&display=swap"
     rel="stylesheet">
 </head>
 
-<body class="bg-[#1D3557] flex flex-col items-center justify-center relative">
-  <div class = "add-withdraw-option-container inset-0 h-screen w-full bg-black opacity-[0.3] fixed z-10 hidden">
-
+<body class="bg-[#1D3557] flex flex-col items-center justify-center ">
+  <div
+    class="add-withdraw-option-container h-screen w-full fixed inset-0 bg-black/30 z-10 hidden flex items-center justify-center">
+    
   </div>
+
+
   <div class="w-[380px] flex flex-row  px-3 py-10 items-center justify-center">
     <img class="w-[114px] h-[72px] translate-x-3" src="../images/eye-gasto-logo.png" alt="Eye Gasto logo">
 
@@ -27,17 +33,7 @@
   </div>
 
   <div class="outer-card">
-    <div class="inner-card">
-
-      <div class = "flex flex-col items-start justify-center p-2">
-        <h1 class = "font-['DM_Sans'] font-bold w-full text-xs">Current Saved Money</h1>
-        <p class = "savings-balance text-[#079F9F] font-['DM_Sans'] font-bold text-3xl">P0.00</p>
-        <button class = " add-withdraw-money bg-[#07D5C4] text-white flex items-center p-2 gap-1 text-xs rounded-2xl w-full text-outline-black-38 drop-shadow-[0_4px_2px_rgba(0,0,0,0.56)] cursor-pointer"><img src="../images/mini-coin.png" alt="Mini coin logo" class="w-[24px] filter drop-shadow-[0_0_2px_rgba(0,0,0,0.38)]">Add / Withdraw Money</button>
-      </div>
-
-      <div>
-        <img class="w-[150px] -translate-y-4" src="../images/moneybag-big.png" alt="Money bag big logo">
-      </div>
+    <div class="inner-card js-savings-container">
 
     </div>
   </div>
