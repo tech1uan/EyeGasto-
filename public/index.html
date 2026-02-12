@@ -14,12 +14,40 @@
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Lacquer&family=Lilita+One&display=swap"
     rel="stylesheet">
+
 </head>
 
 <body class="bg-[#1D3557] flex flex-col items-center justify-center ">
-  <div
-    class="add-withdraw-option-container h-screen w-full fixed inset-0 bg-black/30 z-10 hidden flex items-center justify-center">
-    
+
+  <div class="add-withdraw-option-container w-full fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+
+    <div class="outer-card">
+      <div class="inner-card rounded-lg p-6 flex flex-row items-center gap-4 w-full">
+
+        <div class="flex flex-col justify-between gap-4">
+
+          <div class="relative">
+            <input type="text" id="description" class="js-description peer input-cozy" placeholder="Description">
+
+            <label for="description" class="label-cozy">Description</label>
+          </div>
+
+        <div class="relative">
+          <input type="text" id="amount" class="js-amountInput peer input-cozy" placeholder="Amount">
+
+          <label for="amount" class="label-cozy">Amount</label>
+        </div>
+        </div>
+
+        <div class="flex flex-col justify-between gap-8">
+          <button class="bg-green-500 text-white p-2 text-sm rounded hover:bg-green-600 cursor-pointer js-add-button">Add
+            Money</button>
+          <button class="js-withdraw-button bg-red-500 text-sm text-white p-2 rounded hover:bg-red-600 cursor-pointer">Withdraw Money</button>
+        </div>
+
+      </div>
+
+    </div>
   </div>
 
 

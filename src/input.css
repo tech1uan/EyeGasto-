@@ -9,8 +9,18 @@
   }
 
   .inner-card {
-    @apply bg-[linear-gradient(0deg,#45E7EE_0%,#FFFFFF_67%)] flex justify-evenly rounded-[20px] p-2
+    @apply bg-[linear-gradient(0deg,#45E7EE_0%,#FFFFFF_50%)] flex justify-evenly rounded-[20px] p-2;
   }
+
+
+ .input-cozy {
+  @apply w-full p-2 border-2 rounded-xl bg-white text-black placeholder-transparent transition-all focus:outline-none focus:border-blue-500;
+ }
+
+ .label-cozy {
+  @apply absolute left-1.5 -top-3 text-sm text-gray-500 bg-white px-1 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-focus:-top-3 peer-focus:text-sm peer-focus:text-blue-600;
+ }
+
 }
 
 @layer utilities {

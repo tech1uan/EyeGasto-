@@ -1,6 +1,5 @@
 import '../scripts/savings.js'
-import { renderAddWithdrawHTML } from './renderAddWithdraw.js';
-import { addMoneyInSavingsHTML } from '../scripts/savings.js';
+import { addMoneyInSavingsHTML, withdrawMoneyInSavingsHTML } from '../scripts/savings.js';
 import { renderSavingsHTML } from './renderSavings.js';
 
 
@@ -11,6 +10,7 @@ function showAddWithdrawOption () {
 
   addWithdrawBtn.addEventListener('click', () => {
    addWithdrawContainer.classList.remove("hidden");
+   addWithdrawContainer.classList.add("flex");
   })
   
 }
@@ -19,17 +19,19 @@ export function hideAddWithdrawOption () {
   const addWithdrawContainer = document.querySelector('.add-withdraw-option-container');
 
  addWithdrawContainer.classList.add("hidden");
+ addWithdrawContainer.classList.remove("flex");
 
  addWithdrawContainer.addEventListener('click', (e) => {
   if(e.target === addWithdrawContainer) {
     addWithdrawContainer.classList.add("hidden");
+    addWithdrawContainer.classList.remove("flex");
   }
  })
 }
 
 renderSavingsHTML();
-renderAddWithdrawHTML();
 addMoneyInSavingsHTML();
+withdrawMoneyInSavingsHTML();
 showAddWithdrawOption();
 hideAddWithdrawOption();
 
