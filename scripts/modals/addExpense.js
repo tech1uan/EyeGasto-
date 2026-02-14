@@ -1,5 +1,6 @@
 import { expenses, addExpense } from "../expenses.js";
 import { renderExpensesHTML } from "../renderExpenses.js";
+import { removeJustifyCenter } from "../utils.js";
 
 
 
@@ -33,6 +34,7 @@ export function handleAddExpense () {
   const descriptionInput = document.getElementById('expense-description');
   const amountInput = document.getElementById('expense-amount');
   const categorySelect = document.getElementById('category');
+  const container = document.querySelector('.expenses-container');
 
  const description = descriptionInput.value.trim();
  const amount =  Number(amountInput.value);
@@ -51,7 +53,6 @@ export function handleAddExpense () {
 
   renderExpensesHTML();
   hideAddExpense();
- 
   console.log(expenses);
 
 }

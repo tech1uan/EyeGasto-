@@ -7,11 +7,12 @@ import {initAddWithdrawOption, hideAddWithdrawOption} from './modals/addWithdraw
 import { initAddExpense } from './modals/addExpense.js';
 import { renderDateTodayHTML } from './renderdateToday.js';
 import { renderExpensesHTML } from './renderExpenses.js';
+import { renderDefaultExpensesHTML } from './renderDefault.js';
 
 
 
 renderSavingsHTML();
-renderExpensesHTML();
+renderDefaultExpensesHTML();
 addMoneyInSavings();
 withdrawMoneyInSavings();
 initAddWithdrawOption();

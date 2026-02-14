@@ -19,7 +19,7 @@
 
 <body class="bg-[#1D3557] overflow-x-hidden">
 
-  <div class="grid grid-cols-1 gap-5 border-black place-items-center">
+  <div class="grid grid-cols-1 gap-5 border-black place-items-center pb-20">
 
     <div class="fixed bottom-5 right-5 z-11 rounded-[100%] bg-[#14D7C6] js-show-add-expense p-4">
       <img src="../images/coin-button.png" alt="Coin button logo " class="w-[35px] h-[30px]">
@@ -88,7 +88,7 @@
     </div>
 
 
-    <div class="w-[380px] flex flex-row  px-3 py-10 items-center justify-center">
+    <div class="w-[380px] flex flex-row  px-3 pt-10 pb-3 items-center justify-center">
       <img class="w-[114px] h-[72px] translate-x-3" src="../images/eye-gasto-logo.png" alt="Eye Gasto logo">
 
       <div class="flex flex-col w-full items-center justify-center">
@@ -131,11 +131,11 @@
               class="w-full p-2 text-sm border-2 rounded-xl bg-white text-black sm:text-base ">
               <option value="" selected disabled hidden>Category</option>
 
-              <option value="Foods & Drinks">Foods & Drinks</option>
+              <option value="Foods">Foods</option>
               <option value="Transport">Transport</option>
               <option value="Shoppings">Shopping</option>
-              <option value="Bills & Utilities">Bills & Utilities</option>
-              <option value="Health & Fitness">Health & Fitness</option>
+              <option value="Bills">Bills</option>
+              <option value="Health">Health</option>
               <option value="Entertainment">Entertainment</option>
               <option value="Education">Education</option>
               <option value="Savings">Savings</option>
@@ -156,17 +156,18 @@
     </div>
 
     <div class="bg-[#4FECF3] rounded-2xl 
-    w-[90%] pt-4 max-w-[550px] ">
+    w-[90%] pt-4 max-w-[550px] h-[300px] ">
         <h1 class="font-['Lilita_One'] text-white text-2xl text-outline-black pl-3">Your Expenses</h1>
 
-        <div class = "inner-card rounded-r-none rounded-l-none flex flex-col">
+        <div class = "inner-card rounded-r-none rounded-l-none flex flex-col h-full rounded-b-xl">
           
-          <div class = "date-container">
+          <div class = "date-container h-[30px] font-['DM_Sans'] pb-3">
             
           </div>
 
-          <div class = "expenses-container flex flex-col gap-3 overflow-y-scroll w-full">
-        
+          <div class = "expenses-container flex flex-col gap-3 overflow-y-scroll w-full h-full items-center justify-center p-3">
+    
+            <h1 class = "font-['DM_Sans'] text-center">No expenses today yet. Start tracking now 💸.</h1>
           </div>
         </div>
 

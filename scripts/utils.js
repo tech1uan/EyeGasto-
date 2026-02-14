@@ -16,3 +16,7 @@ export function formatDate(date) {
   return today;
  
 }
+
+export function removeJustifyCenter (container) {
+   container.classList.remove("justify-center");
+}
