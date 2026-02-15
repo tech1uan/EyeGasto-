@@ -5,7 +5,7 @@ import { showReceipts } from './renderReceipts.js';
 import {initAddExpenseOption} from './modals/addExpense.js';
 import {initAddWithdrawOption} from './modals/addWithdraw.js';
 import { initAddExpense } from './modals/addExpense.js';
-import { renderDateTodayHTML } from '.renderDateToday.js';
+import { renderDateTodayHTML } from './renderDateToday.js';
 import { initDeleteExpense } from './renderExpenses.js';
 import { renderDefaultExpensesHTML } from './renderDefault.js';
 import { updateTotalExpenses } from './totalExpenses.js';
