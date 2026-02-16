@@ -40,7 +40,7 @@ container.innerHTML = expenses.map(expense => `
     </div>
 
     <span class = "absolute left-1/2 -translate-x-1/2  top-full mt-2 w-40 p-2 bg-black text-white text-sm rounded shadow-lg z-50 
-    group-hover:block transition-all duration-300 opacity-0 group-hover:opacity-100 pointer-events-none">
+    group-hover:block transition-all duration-300 opacity-0 group-hover:opacity-100 pointer-events-none sm:pointer-events-auto">
      Description: ${expense.description}
      Date: ${expense.date}
      Category: ${expense.category}
