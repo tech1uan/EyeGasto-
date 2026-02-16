@@ -1,4 +1,4 @@
-import { expenses } from "./expenses.js";
+import { expenses } from "../../data/expenses.js";
 import { loadSavingsFromStorage, saveToLocalStorage } from "./storage.js";
 import { formatToPeso } from "./utils.js";
 

@@ -1,4 +1,4 @@
-import { deleteExpense, expenses } from "./expenses.js";
+import { deleteExpense, expenses } from "../data/expenses.js";
 import { addJustifyCenter, formatToPeso, removeJustifyCenter } from "./utils.js";
 
 export function initDeleteExpense() {

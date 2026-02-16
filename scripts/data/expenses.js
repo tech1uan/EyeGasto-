@@ -1,9 +1,9 @@
-import { updateBiggestExpense } from "./biggestExpense.js";
-import { updateRecentExpenses } from "./recentExpenses.js";
-import { renderExpensesHTML } from "./renderExpenses.js";
+import { updateBiggestExpense } from "../features/expenses/biggestExpense.js";
+import { updateRecentExpenses } from "../features/expenses/recentExpenses.js";
+import { renderExpensesHTML } from "../ui/renderExpenses.js";
 import { loadSavingsFromStorage, saveToLocalStorage } from "./storage.js";
-import {updateTotalExpenses} from "./totalExpenses.js";
-import { updateExpensesChart } from "./charts/expensesChart.js";
+import {updateTotalExpenses} from "../features/expenses/totalExpenses.js";
+import { updateExpensesChart } from "../charts/expensesChart.js";
 
 const savedData = loadSavingsFromStorage("expenses");
 

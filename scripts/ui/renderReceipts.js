@@ -1,5 +1,5 @@
-import "../scripts/savings.js"
-import { savingsMoney } from "../scripts/savings.js";
+import "../data/savings.js"
+import { savingsMoney } from "../data/savings.js";
 import { formatToPeso } from "./utils.js";
 
 

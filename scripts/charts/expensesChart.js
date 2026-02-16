@@ -1,4 +1,4 @@
-import { groupExpensesByCategory } from "../groupExpenses.js";
+import { groupExpensesByCategory } from "../features/expenses/groupExpenses.js";
 
 export function updateExpensesChart(expenses) {
   

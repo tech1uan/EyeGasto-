@@ -1,5 +1,5 @@
 
-import { savingsMoney } from "./savings.js";
+import { savingsMoney } from "../data/savings.js";
 
 
 export function renderSavingsHTML () {

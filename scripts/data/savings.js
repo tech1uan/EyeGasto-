@@ -1,7 +1,7 @@
-import { hideAddWithdrawOption } from "../scripts/modals/addWithdraw.js";
+import { hideAddWithdrawOption } from "../withdrawals/addWithdraw.js";
 import { formatToPeso } from "./utils.js";
-import "./storage.js";
-import { loadSavingsFromStorage, saveToLocalStorage } from "./storage.js";
+import "../core/storage.js";
+import { loadSavingsFromStorage, saveToLocalStorage } from "../core/storage.js";
 
 
 const savedData = loadSavingsFromStorage("savings");
