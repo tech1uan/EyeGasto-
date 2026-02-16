@@ -13,6 +13,7 @@ export let expenses = savedData || [];
 export function addExpense(description, amount, category) {
   const expense = {
     id: Date.now(),
+    date: dayjs().format('YYYY-MM-DD'),
     description,
     category,
     amount: Number(amount),
@@ -40,6 +41,20 @@ export function deleteExpense(id) {
  updateBiggestExpense();
  updateExpensesChart(expenses);
  }
+
+export function getExpensesForToday() {
+  const today = dayjs().format('YYYY-MM-DD');
+  return expenses.filter(e => e.date === today);
+}
+
+export function getExpensesForWeek() {
+  const weekAgo = dayjs().subtract(7, 'day').format('YYYY-MM-DD');
+  return expenses.filter(e => e.date >= weekAgo);
+}
+
+export function getAllExpenses () {
+  return expenses;
+}
 
 
 

@@ -1,6 +1,7 @@
-import { expenses } from "../../data/expenses.js";
+
 import { loadSavingsFromStorage, saveToLocalStorage } from "../../core/storage.js";
 import { formatToPeso } from "../../core/utils.js";
+import { getCurrentExpenses } from "./expenseVIew.js";
 
 
 const savedData = loadSavingsFromStorage("recentExpenses");
@@ -8,7 +9,7 @@ const savedData = loadSavingsFromStorage("recentExpenses");
 let recentExpenses = savedData || [];
 
 export function updateRecentExpenses () {
-    
+    const expenses = getCurrentExpenses();
     recentExpenses = expenses.slice(-2);
 
     saveToLocalStorage("recentExpenses", recentExpenses);
@@ -32,7 +33,6 @@ if(recentExpenses.length === 0) {
    `
    return;
   }
-
    container.innerHTML = recentExpenses.map(expense =>
     `<div class="flex bg-white w-[80%] rounded-xl mb-2 shadow-[0_4px_4px_rgba(0,0,0,0.25)]">
 
@@ -43,6 +43,8 @@ if(recentExpenses.length === 0) {
     <h1 class="text-white text-sm font-bold font-[DM_Sans] truncate">
       ${expense.description}
     </h1>
+  
+    
   </div>
 
   <!-- RIGHT: amount, fixed -->

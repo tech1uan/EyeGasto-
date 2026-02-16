@@ -1,6 +1,10 @@
+import { getCurrentExpenses } from "../features/expenses/expenseVIew.js";
 import { groupExpensesByCategory } from "../features/expenses/groupExpenses.js";
 
-export function updateExpensesChart(expenses) {
+
+export function updateExpensesChart() {
+
+  const expenses = getCurrentExpenses();
   
   const canvasParent = document.querySelector('.chart-card-container .inner-card'); 
   const legendDiv = document.getElementById('expensesLegend');
@@ -46,7 +50,7 @@ function showNoDataMessage(canvasParent, legendDiv) {
 
 
 function showChart(expenses, canvasParent, legendDiv) {
-
+  
   const grouped = groupExpensesByCategory(expenses);
 
   const categoryNames = Object.keys(grouped);

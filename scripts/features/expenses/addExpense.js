@@ -42,7 +42,6 @@ export function handleAddExpense () {
 
   renderExpensesHTML();
   hideAddExpense();
-  console.log(expenses);
 
 }
 

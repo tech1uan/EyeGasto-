@@ -12,10 +12,13 @@ import { updateRecentExpenses } from './features/expenses/recentExpenses.js';
 import { updateBiggestExpense } from './features/expenses/biggestExpense.js';
 import { updateExpensesChart } from './charts/expensesChart.js';
 import { expenses } from './data/expenses.js';
+import { initDateFilter } from './features/expenses/expenseVIew.js';
+
 
 
 function initApp() {
 renderSavingsHTML();
+renderDateTodayHTML();
 renderDefaultExpensesHTML();
 addMoneyInSavings();
 withdrawMoneyInSavings();
@@ -24,11 +27,10 @@ initAddExpenseOption();
 showReceipts();
 initAddExpense();
 initDeleteExpense();
-renderDateTodayHTML();
 updateTotalExpenses();
 updateRecentExpenses();
 updateBiggestExpense();
- 
+initDateFilter();
 
 if (expenses.length > 0) {
   setTimeout(() => {

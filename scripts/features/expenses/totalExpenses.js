@@ -1,6 +1,7 @@
-import { expenses } from "../../data/expenses.js";
+
 import { loadSavingsFromStorage } from "../../core/storage.js";
 import { formatToPeso } from "../../core/utils.js";
+import { getCurrentExpenses } from "./expenseVIew.js";
 
 
 const savedData = loadSavingsFromStorage("totalExpenses");
@@ -18,6 +19,8 @@ export function setTotalExpenses(value) {
 
 
 export function updateTotalExpenses() {
+
+  const expenses = getCurrentExpenses();
   
   totalExpenses = expenses.reduce((sum,exp) => sum + exp.amount, 0);
 
