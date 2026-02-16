@@ -23,9 +23,11 @@ export function addExpense(description, amount, category) {
   expenses.push(expense);
   saveToLocalStorage("expenses", expenses);
   updateTotalExpenses();
-  setTimeout(updateRecentExpenses, 3000);
-  setTimeout(updateBiggestExpense,5000);
-  updateExpensesChart(expenses);
+  setTimeout(updateRecentExpenses, 2000);
+  setTimeout(updateBiggestExpense,3000);
+  setTimeout(() => {
+    updateExpensesChart(expenses);
+  }, 4000 );
 }
 
 export function deleteExpense(id) {

@@ -9,8 +9,10 @@ export function updateExpensesChart(expenses) {
 
   if (noExpenses) {
     showNoDataMessage(canvasParent, legendDiv);
+    document.getElementById('expensesLegend').classList.add("hidden");
   } else {
     showChart(expenses, canvasParent, legendDiv);
+    document.getElementById('expensesLegend').classList.remove("hidden");
   }
 }
 
@@ -61,11 +63,13 @@ function showChart(expenses, canvasParent, legendDiv) {
   if (!canvas) {
     canvasParent.innerHTML = `
       <div class="title-container">
-        <h3 class="text-xl font-bold text-gray-800 text-center w-full">
+        <h3 class="text-xl font-[DM_Sans] font-bold text-gray-800 text-center w-full">
           Expenses by Category
         </h3>
       </div>
-      <canvas id="expensesChart" class="max-w-full"></canvas>
+      <div class="w-full flex items-center justify-center">
+        <canvas id="expensesChart"></canvas>
+      </div>
     `;
     canvas = document.getElementById('expensesChart');
   }
@@ -93,8 +97,8 @@ function showChart(expenses, canvasParent, legendDiv) {
     options: {
       responsive: true,
       maintainAspectRatio: true,
+      aspectRatio: 1.5,
       cutout: '60%',
-      
       plugins: {
         legend: {
           display: false  // Hide default legend - we make our own!
@@ -118,7 +122,8 @@ function showChart(expenses, canvasParent, legendDiv) {
           color: '#fff',
           font: {
             weight: 'bold',
-            size: 16
+            size: 16,
+            family: "'DM Sans', sans-serif",
           },
           formatter: function(value) {
             const percent = ((value / total) * 100).toFixed(1);
@@ -160,7 +165,7 @@ function createLegend(grouped, total, legendDiv) {
 
     // Build HTML for each category row
     html += `
-      <div class="flex items-center justify-between py-3 px-4 hover:bg-white/30 rounded-xl transition-all duration-200 cursor-pointer">
+      <div class="flex items-center justify-between py-3 px-4 hover:bg-white/30 rounded-xl transition-all duration-200 cursor-pointer font-['DM_Sans']">
         <div class="flex items-center gap-3 flex-1">
             <div style="width: 16px; height: 16px; border-radius: 50%; background-color: ${color}; box-shadow: 0 1px 2px rgba(0,0,0,0.1);"></div>
           <span class="text-gray-800 font-semibold text-sm">${categoryName}</span>

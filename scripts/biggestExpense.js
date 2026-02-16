@@ -37,18 +37,16 @@ function renderBiggestExpense (biggestExpense) {
   }
 
  container.innerHTML = 
- `<!-- Title -->
+ `
 <h1 class="font-semibold font-[DM_Sans] w-full">
   Biggest Expense Today: 
-  <span class="biggestExpenseName text-[20px] font-['Lilita_One'] text-white text-5xl text-outline-black tracking-wide truncate inline-block max-w-[200px] align-middle">
+  <span class="biggestExpenseName text-[20px] font-['Lilita_One'] text-white text-5xl text-outline-black inline-block max-w-[200px] align-middle">
     ${biggestExpense.description}
   </span>
 </h1>
 
-<!-- Card -->
 <div class="flex bg-white w-[80%] rounded-xl shadow-[0_4px_4px_rgba(0,0,0,0.25)]">
 
-  <!-- LEFT: Colored section, shrinkable -->
   <div class="flex items-center gap-2 p-3 rounded-l-xl min-w-0 flex-shrink flex-1"
        style="background-color: ${biggestExpense.color}">
     <img class="w-5 h-5 flex-shrink-0" src="${biggestExpense.logo}" alt="${biggestExpense.category}"/>
@@ -57,7 +55,6 @@ function renderBiggestExpense (biggestExpense) {
     </h1>
   </div>
 
-  <!-- RIGHT: Amount, fixed -->
   <div class="flex items-center px-3 flex-shrink-0">
     <h1 class="text-[#079F9F] font-['DM_Sans'] font-bold text-l whitespace-nowrap">
       ${formatToPeso(biggestExpense.amount)}

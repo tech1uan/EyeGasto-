@@ -16,12 +16,144 @@
     rel="stylesheet">
 </head>
 
-<body class="bg-[#1D3557] overflow-x-hidden">
+<body class="bg-[#1D3557] overflow-x-hidden p-3 flex items-center justify-center min-h-screen">
 
-  <div class="grid grid-cols-1 gap-8 border-black place-items-center pb-20">
+  <div class="grid grid-cols-1 gap-8 border-black place-items-center xl:grid-cols-4 xl:auto-rows-min">
+
+       <!-- Header Section -->
+    <div class="w-full flex flex-row px-3 pt-10 pb-3 items-center justify-center xl:col-span-4 min-w-[330px]">
+      <img class="w-[100px] h-auto " src="../images/eye-gasto-logo.png" alt="Eye Gasto logo">
+      <div class="flex flex-col items-center justify-center">
+        <h1 class="font-['Lilita_One'] text-white text-[clamp(2.5rem,5vw,3.5rem)]  text-outline-black">EyeGasto!</h1>
+        <p class="text-white font-['Lacquer'] text-center text-sm text-outline-black text-[clamp(0.75rem,2vw,1rem)]">
+          Track your expenses and savings.
+        </p>
+      </div>
+    </div>
+
+
+    <div class ="xl:col-span-4 flex justify-center gap-8 flex-wrap">
+
+
+    <!-- Manage Savings Card -->
+    <div class="outer-card max-w-[550px] w-[90%] xl:w-[500px]">
+      <h1 class="font-['Lilita_One'] text-white text-xl text-outline-black">Manage Savings</h1>
+      <div class="inner-card js-savings-container relative"> 
+      </div>
+    </div>
+
+
+    
+ <!-- Add Expense Modal for Desktop -->
+     <div
+      class="add-expense-option-containerDsk flex items-center justify-center hidden sm:flex max-w-[550px] min-h-[200px] xl:w-[500px]">
+
+      <div class="outer-card w-full">
+        <h1 class="font-['Lilita_One'] text-white text-xl text-outline-black">Add Expense</h1>
+        <div class="inner-card flex flex-col gap-3 w-full items-center sm:flex-row">
+
+          <div class="w-full flex flex-row gap-2 flex-wrap max-w-[350px] sm:w-[800px]">
+            <div class="relative w-[50%]">
+              <input type="text" id="expense-description-desktop" placeholder="Description" class="peer input-cozy">
+              <label for="expense-description" class="label-cozy pointer-events-none">Description</label>
+            </div>
+            <div class="relative w-[45%]">
+              <input type="number" id="expense-amount-desktop" placeholder="Amount" class="peer input-cozy" min="0">
+              <label for="expense-amount" class="label-cozy pointer-events-none">Amount</label>
+            </div>
+            <select name="category" id="category-desktop" aria-placeholder="Category"
+              class="w-full p-2 text-sm border-2 rounded-xl bg-white text-black sm:text-base">
+              <option value="" selected disabled hidden>Category</option>
+              <option value="Foods">Foods</option>
+              <option value="Transport">Transport</option>
+              <option value="Shoppings">Shopping</option>
+              <option value="Bills">Bills</option>
+              <option value="Health">Health</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Education">Education</option>
+              <option value="Savings">Savings</option>
+              <option value="Debt">Debt</option>
+              <option value="Others">Others</option>
+            </select>
+          </div>
+
+          <div class="flex items-center justify-center w-full">
+            <button id="js-add-expense-desktop"
+              class="bg-[#07D5C4] text-white flex justify-center items-center px-7 py-3 gap-1 text-xs rounded-2xl text-outline-black-38 drop-shadow-[0_2px_2px_rgba(0,0,0,0.56)] cursor-pointer sm:text-base">
+              Add Expense
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+       </div>
+
+   <div class = "xl:col-span-4 flex items-start justify-center gap-8 flex-wrap">
+    <!-- Your Expenses Card -->
+    <div class="outer-card bg-[#4FECF3] rounded-2xl w-[90%] md:w-[45%] p-0 max-w-[350px] min-h-[350px] flex flex-col xl:w-[350px]">
+      <div class = "flex items-end p-2 px-3 gap-2 ">
+      <img src="images/wallet.png" alt="Wallet logo" class = "w-9">
+      <h1 class="font-['Lilita_One'] text-white text-xl text-outline-black ">Your Expenses</h1>
+      </div>
+      <div class="inner-card rounded-r-none rounded-l-none flex flex-1 flex-col p-0 rounded-b-xl justify-start">
+        <div class="date-container h-[30px] font-['DM_Sans'] pb-3 px-3 pt-1">
+        </div>
+        <div
+          class="expenses-container flex flex-col gap-3 overflow-y-auto w-full h-full items-center justify-center  py-4 px-2 flex-1">
+          <h1 class="font-['DM_Sans'] text-center">
+            No expenses today yet. Start tracking now 💸.
+          </h1>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Expenses Card  -->
+    <div class="outer-card max-w-[350px] min-h-[350px] w-[90%] md:w-[45%] flex flex-col xl:w-[350px]">
+      <div class="inner-card flex flex-col h-full flex-1">
+        <h1 class="font-bold font-[DM_Sans] w-full text-center">Total Expenses</h1>
+
+        <div class="total-expenses-container">
+          <h1 class="total-expenses w-full text-center text-[#079F9F] font-['DM_Sans'] font-bold text-3xl">P0.00</h1>
+        </div>
+
+        <div class="font-semibold font-[DM_Sans] w-full">Recent Expenses:</div>
+        <div class="recent-expenses-container flex flex-col items-center">
+
+        </div>
+
+        <div class="biggest-expense-container flex gap-3 flex-col items-center">
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Expenses Chart Card (Initially Hidden) -->
+    <div class="chart-card-container outer-card max-w-[350px] min-h-[280px] w-[90%] md:w-[45%] flex flex-col gap-2 xl:w-[350px]">
+
+      <div class="inner-card rounded-2xl p-6 shadow-inner flex flex-col gap-10">
+        <div class="title-container">
+          <h3 class="text-xl font-bold text-gray-800 text-center w-full">
+            Expenses by Category
+          </h3>
+        </div>
+        <div class="flex flex-col items-center justify-center">
+          <div class="text-6xl mb-4">📊</div>
+          <p class="text-gray-600 font-semibold">No data yet</p>
+          <p class="text-gray-500 text-sm mt-2">Add expenses to see your chart</p>
+        </div>
+
+      </div>
+      <div id="expensesLegend" class="bg-white backdrop-blur-sm rounded-xl p-2 space-y-2 hidden">
+
+      </div>
+    </div>
+  </div>
+
 
     <!-- Floating Add Expense Button -->
-    <div class="fixed bottom-5 right-5 z-11 rounded-[100%] bg-[#14D7C6] js-show-add-expense p-4">
+    <div class="fixed bottom-5 right-5 z-11 rounded-[100%] bg-[#14D7C6] js-show-add-expense p-4 sm:hidden">
       <img src="../images/coin-button.png" alt="Coin button logo " class="w-[35px] h-[30px]">
     </div>
 
@@ -29,7 +161,7 @@
     <div
       class="add-withdraw-option-container w-full fixed inset-0 bg-black/50 z-50 flex hidden items-center justify-center">
       <div class="js-close-add-withdraw absolute top-5 right-5 text-white text-xl">
-        <i class="fa-solid fa-x"></i>
+        <i class="fa-solid fa-x cursor-pointer"></i>
       </div>
 
       <div class="outer-card max-w-[500px]">
@@ -81,25 +213,7 @@
       </div>
     </div>
 
-    <!-- Header Section -->
-    <div class="w-[380px] flex flex-row px-3 pt-10 pb-3 items-center justify-center">
-      <img class="w-[114px] h-[72px] translate-x-3" src="../images/eye-gasto-logo.png" alt="Eye Gasto logo">
-      <div class="flex flex-col w-full items-center justify-center">
-        <h1 class="font-['Lilita_One'] text-white text-5xl text-outline-black">EyeGasto!</h1>
-        <p class="text-white font-['Lacquer'] text-center text-sm text-outline-black">
-          Track your expenses and savings.
-        </p>
-      </div>
-    </div>
-
-    <!-- Manage Savings Card -->
-    <div class="outer-card max-w-[550px]">
-      <h1 class="font-['Lilita_One'] text-white text-xl text-outline-black">Manage Savings</h1>
-      <div class="inner-card js-savings-container relative">
-      </div>
-    </div>
-
-    <!-- Add Expense Modal -->
+    <!-- Add Expense Modal for Phone -->
     <div
       class="add-expense-option-container w-full fixed inset-0 bg-black/50 z-50 flex hidden items-center justify-center">
       <div class="js-close-add-expense absolute top-5 right-5 text-white text-xl">
@@ -144,80 +258,13 @@
         </div>
       </div>
     </div>
+     
+</div>
 
-    <!-- Your Expenses Card -->
-    <div class="outer-card bg-[#4FECF3] rounded-2xl w-[90%] pt-4 px-0 max-w-[550px] h-[300px]">
-      <h1 class="font-['Lilita_One'] text-white text-2xl text-outline-black pl-3">Your Expenses</h1>
-      <div class="inner-card rounded-r-none rounded-l-none flex flex-1 flex-col h-full p-0 rounded-b-xl">
-        <div class="date-container h-[30px] font-['DM_Sans'] pb-3 px-3 pt-1">
-        </div>
-        <div
-          class="expenses-container flex flex-col gap-3 overflow-y-auto w-full h-full items-center justify-center  py-4 px-2">
-          <h1 class="font-['DM_Sans'] text-center">
-            No expenses today yet. Start tracking now 💸.
-          </h1>
-        </div>
-      </div>
-    </div>
-
-    <!-- Empty Card (Optional) -->
-    <div class="outer-card max-w[550px] h-[350px]">
-      <div class="inner-card flex flex-col h-full">
-        <h1 class="font-bold font-[DM_Sans] w-full text-center">Total Expenses</h1>
-
-        <div class="total-expenses-container">
-          <h1 class="total-expenses w-full text-center text-[#079F9F] font-['DM_Sans'] font-bold text-3xl">P0.00</h1>
-        </div>
-
-        <div class="font-semibold font-[DM_Sans] w-full">Recent Expenses:</div>
-        <div class="recent-expenses-container flex flex-col items-center">
-
-        </div>
-
-        <div class="biggest-expense-container flex gap-3 flex-col items-center">
-
-        </div>
-      </div>
-    </div>
-    <!-- Expenses Chart Card (Initially Hidden) -->
-    <div class="chart-card-container outer-card max-w-sm mx-auto ">
-      <div
-        class="bg-gradient-to-br from-cyan-200 via-teal-100 to-blue-200 rounded-3xl shadow-xl p-8 relative overflow-hidden">
-
-        <div class="absolute top-4 right-4 bg-cyan-400 rounded-full p-3 shadow-lg">
-          <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-            <path
-              d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z">
-            </path>
-            <path fill-rule="evenodd"
-              d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z"
-              clip-rule="evenodd"></path>
-          </svg>
-        </div>
-
-        <div class="inner-card rounded-2xl p-6 mb-6 shadow-inner flex flex-col">
-          <div class="title-container">
-            <h3 class="text-xl font-bold text-gray-800 text-center w-full">
-              Expenses by Category
-            </h3>
-          </div>
-          <div class="flex flex-col items-center justify-center py-12">
-            <div class="text-6xl mb-4">📊</div>
-            <p class="text-gray-600 font-semibold">No data yet</p>
-            <p class="text-gray-500 text-sm mt-2">Add expenses to see your chart</p>
-          </div>
-
-        </div>
-      </div>
-         <div id="expensesLegend" class="bg-white backdrop-blur-sm rounded-xl p-2 space-y-2 mt-10">
-
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
-    <script src="./scripts/main.js" type="module"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+  <script src="./scripts/main.js" type="module"></script>
 </body>
 
-</html> 
+</html>

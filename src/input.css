@@ -4,7 +4,7 @@
 
   .outer-card{
     @apply 
-      w-[90%] max-w-[550px] rounded-2xl p-4 bg-[#A8DADC];
+     rounded-2xl p-4 bg-[#A8DADC];
   }
 
   .inner-card {
