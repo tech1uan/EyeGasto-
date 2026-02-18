@@ -20,7 +20,7 @@ Track your savings, monitor expenses, analyze spending habits, and visualize you
 ## 🚀 Live Demo
 
 🔗 Deployed on Vercel  
-(Add your Vercel link here)
+(https://eye-gasto.vercel.app/)
 
 ---
 
@@ -126,8 +126,8 @@ You can install EyeGasto directly on your phone or tablet from the browser for a
 ![Dashboard Screenshot](./screenshots/main-ui2.png)
 
 ### Phone View UI
-![Phone View UI Screenshot](./screenshots/phone-view1.jpg)
-![Phone View UI Screenshot](./screenshots/phone-view2.jpg)
+![Phone View UI Screenshot](./screenshots/phone-view1.png)
+![Phone View UI Screenshot](./screenshots/phone-view2.png)
 
 
 ### Main Ui Tablets (Without Data & With Data)
