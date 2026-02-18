@@ -5,7 +5,6 @@ import { updateBiggestExpense } from "./biggestExpense.js";
 import { updateRecentExpenses } from "./recentExpenses.js";
 import { updateTotalExpenses } from "./totalExpenses.js";
 import { renderExpensesHTML } from "../../ui/renderExpenses.js";
-import { formatToPeso } from "../../core/utils.js";
 import { confirmMessage } from "../../core/confirmActions.js";
 
 
@@ -27,24 +26,26 @@ function openEditForm(description, id) {
   if (!expense) 
     return;
 
-  document.getElementById('expense-description').value = expense.description;
-  document.getElementById('expense-amount').value = expense.amount;
-  document.getElementById('category').value = expense.category;
+  document.getElementById('edit-expense-description').value = expense.description;
+  document.getElementById('edit-expense-amount').value = expense.amount;
+  document.getElementById('edit-category').value = expense.category;
 
-  const modal = document.querySelector('.add-expense-option-container');
+  const modal = document.querySelector('.edit-expense-option-container');
+  const closeBtn = document.querySelector('.js-close-edit-expense');
+  
+  closeBtn.onclick = () => {
+  modal.classList.add('hidden');
+  }
+ 
   modal.classList.remove("hidden");
    
-  const addButton = document.getElementById('js-add-expense');
   const saveButton = document.getElementById('js-save-edit');
-  addButton.classList.add("hidden");
-  saveButton.classList.remove("hidden");
 
  saveButton.onclick = () => {
   confirmMessage(`Do you wish to save this changes to <strong>${description}</strong>?`, () => {
   saveEditedExpense(id);
   modal.classList.add('hidden');
-  saveButton.classList.add('hidden');
-  addButton.classList.remove('hidden');
+
   renderExpensesHTML();
  
   })
@@ -53,9 +54,9 @@ function openEditForm(description, id) {
 }
 
 function saveEditedExpense(id) {
-  const description = document.getElementById('expense-description').value;
-  const amount = Number(document.getElementById('expense-amount').value);
-  const category = document.getElementById('category').value;
+  const description = document.getElementById('edit-expense-description').value;
+  const amount = Number(document.getElementById('edit-expense-amount').value);
+  const category = document.getElementById('edit-category').value;
 
   const index = expenses.findIndex(e => e.id === id);
   if(index === -1) 

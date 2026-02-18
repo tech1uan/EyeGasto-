@@ -32,7 +32,7 @@ if(recentExpenses.length === 0) {
    return;
   }
    container.innerHTML = recentExpenses.map(expense =>
-    `<div class="flex bg-white w-[80%] rounded-xl mb-2 shadow-[0_4px_4px_rgba(0,0,0,0.25)]">
+    `<div class="flex bg-white w-[80%] rounded-xl mb-2 shadow-[0_4px_4px_rgba(0,0,0,0.25)] ">
 
   <!-- LEFT: colored, shrinkable -->
   <div class="flex items-center gap-3 p-3 rounded-l-xl min-w-0 flex-1 flex-shrink" 

@@ -1,8 +1,7 @@
 import "../data/savings.js"
-import { savingsMoney } from "../data/savings.js";
 import { formatToPeso } from "../core/utils.js";
+import { getCurrentTransactions } from "../features/transactions/viewTransactions.js";
 
-console.log(savingsMoney)
 
 
 
@@ -36,9 +35,10 @@ export function updateReceiptHTML() {
   const receiptsContainer = document.querySelector('.receipts-container');
 
    let html = "";
+  
+   let transactions = getCurrentTransactions();
 
-
-  savingsMoney.transactions.forEach((tx)=> {
+  transactions.forEach((tx)=> {
 
   html+= 
   `

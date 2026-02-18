@@ -8,7 +8,7 @@
   }
 
   .inner-card {
-    @apply bg-[linear-gradient(0deg,#45E7EE_0%,#FFFFFF_50%)] flex justify-evenly rounded-[20px] p-3;
+    @apply bg-[linear-gradient(0deg,#45E7EE_0%,#FFFFFF_50%)] flex justify-evenly rounded-[20px];
   }
 
  

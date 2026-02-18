@@ -70,7 +70,7 @@ export function initAddWithdraw() {
       return alert ('Please enter a valid amount!');
 
 
-    confirmMessage(`Are you sure you want to withdraw ₱${amount}?`, () => {
+    confirmMessage(`Are you sure you want to withdraw <strong>₱${amount}</strong>?`, () => {
       savingsMoney.withdrawMoney(amount, description);
       renderSavingsHTML();
       updateReceiptHTML();

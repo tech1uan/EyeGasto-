@@ -23,7 +23,7 @@ export let savingsMoney = {
         amount: Number(amount),
         description: description,
         type: "deposit",
-        date: new Date().toLocaleDateString()
+        date: dayjs().format('YYYY-MM-DD')
       });
       
       saveToLocalStorage("savings", {
@@ -46,7 +46,7 @@ export let savingsMoney = {
         amount: Number(amount),
         description: description,
         type: "withdraw",
-        date: new Date().toLocaleDateString()
+        date: dayjs().format('YYYY-MM-DD')
       })
 
       saveToLocalStorage("savings", {
@@ -61,6 +61,4 @@ export let savingsMoney = {
 
 
 }
-
-
 
