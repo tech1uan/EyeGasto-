@@ -112,20 +112,49 @@ EyeGasto is fully responsive and works across:
 
 Optimized layout for all screen sizes.
 
+💡 **Mobile Installable Web App**:  
+You can install EyeGasto directly on your phone or tablet from the browser for a more app-like experience. Just tap **“Add to Home Screen”** on your device.  
+
+⚠ Note: EyeGasto does not yet include offline support via a service worker, so full Progressive Web App (PWA) features like offline access are not currently available. These features may be added in a future update.
+
 ---
 
 ## 📷 Screenshots
 
-(Add your UI screenshots here later)
+()
 
-### Dashboard
-![Dashboard Screenshot](./screenshots/dashboard.png)
+### Main Ui Desktop (Without Data & With Data)
+![Dashboard Screenshot](./screenshots/main-ui1.png)
+![Dashboard Screenshot](./screenshots/main-ui2.png)
 
-### Add Expense
-![Add Expense Screenshot](./screenshots/add-expense.png)
+### Phone View UI
+![Phone View UI Screenshot](./screenshots/phone-view1.png)
+![Phone View UI Screenshot](./screenshots/phone-view2.png)
 
-### Analytics Chart
-![Analytics Screenshot](./screenshots/chart.png)
+
+### Main Ui Tablets (Without Data & With Data)
+![Dashboard Screenshot](./screenshots/tablet.png)
+
+### Tooltip Feature 
+![Tooltip Screenshot](./screenshots/tooltip.png)
+
+### Confirmation Message Feature + Delete Expense Feauture (Error Handling)
+![Tooltip Screenshot](./screenshots/confirmation.png)
+
+### Add Expense Feature 
+![Tooltip Screenshot](./screenshots/add-expense.png)
+
+### Transactions View
+![Tooltip Screenshot](./screenshots/transactions.png)
+
+### Date Filters for Expenses and Transactions
+![Tooltip Screenshot](./screenshots/date-filter1.png)
+![Tooltip Screenshot](./screenshots/date-filter2.png)
+
+
+
+
+
 
 ---
 
