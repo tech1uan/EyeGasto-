@@ -106,7 +106,11 @@ function showChart(expenses, canvasParent, legendDiv) {
             font: { weight: 'bold', size: 16, family: "'DM Sans', sans-serif" },
             formatter: function(value) {
               const percent = ((value / safeTotal) * 100).toFixed(1)
+              if(percent > 5) {
               return percent ? percent + '%' : '';
+              } else {
+                return null;
+              }
             },
             anchor: 'center',
             align: 'center',
