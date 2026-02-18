@@ -1,5 +1,16 @@
 # 👁️ EyeGasto – Expense Tracker App
 
+## 🖥️ Tech Stack
+
+<p align="left">
+  <img alt="HTML5" src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" />
+  <img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
+  <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
+  <img alt="Chart.js" src="https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chart.js&logoColor=white" />
+  <img alt="Vercel" src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" />
+</p>
+
+
 EyeGasto is a modern, responsive **expense tracker web application** that helps you manage your money like a digital bank account.
 
 Track your savings, monitor expenses, analyze spending habits, and visualize your financial activity — all in one clean interface.
@@ -90,17 +101,6 @@ This means:
 
 ⚠ Clearing browser data will remove saved information.  
 Future updates may include database integration for permanent storage.
-
----
-
-## 🖥️ Tech Stack
-
-- HTML5  
-- Tailwind CSS  
-- JavaScript (Vanilla JS)  
-- Chart.js  
-- Vercel (Deployment)  
-
 ---
 
 ## 📱 Responsive Design
