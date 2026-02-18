@@ -20,14 +20,13 @@ export function updateExpensesChart() {
   }
 }
 function showNoDataMessage(canvasParent, legendDiv) {
-  // If chart exists, just clear its data
+
   if (window.expensesChartInstance) {
     window.expensesChartInstance.data.labels = [];
     window.expensesChartInstance.data.datasets[0].data = [];
     window.expensesChartInstance.update();
   }
 
-  // Add a "no data" overlay on top of the canvas
   if (canvasParent) {
     let overlay = canvasParent.querySelector('.no-data-overlay');
     if (!overlay) {
@@ -65,13 +64,13 @@ function showChart(expenses, canvasParent, legendDiv) {
   const ctx = canvas.getContext('2d');
 
   if (window.expensesChartInstance) {
-    // Update data for smooth animation
+
     window.expensesChartInstance.data.labels = categoryNames;
     window.expensesChartInstance.data.datasets[0].data = categoryAmounts;
     window.expensesChartInstance.data.datasets[0].backgroundColor = categoryColors;
     window.expensesChartInstance.update({ duration: 1000, easing: 'easeOutCubic' });
   } else {
-    // Create new chart instance
+
     window.expensesChartInstance = new Chart(ctx, {
       type: 'doughnut',
       data: {
@@ -128,21 +127,17 @@ function showChart(expenses, canvasParent, legendDiv) {
 
 
 
-// This creates the custom legend at the bottom of the chart
 function createLegend(grouped, total, legendDiv) {
-  // If no legend container, stop
   if (!legendDiv) return;
 
   let html = '';
 
-  // Loop through each category
   for (let categoryName in grouped) {
     const data = grouped[categoryName];
     const amount = data.total;
     const color = data.color;
     const percent = ((amount / total) * 100).toFixed(1);
 
-    // Build HTML for each category row
     html += `
       <div class="flex items-center justify-between py-3 px-4 hover:bg-white/30 rounded-xl transition-all duration-200 cursor-pointer font-['DM_Sans']">
         <div class="flex items-center gap-3 flex-1">
@@ -159,8 +154,5 @@ function createLegend(grouped, total, legendDiv) {
     
   }
 
-  
-
-  // Put the HTML into the legend div
   legendDiv.innerHTML = html;
 }

@@ -16,8 +16,8 @@ export function confirmMessage(message, onConfirm) {
         
         <h1 id = "confirm-message" class = "font-['DM_Sans'] text-[14px] md:text-base">${message}</h1>
         <div class = "max-w-[150px] w-full flex gap-2">
-        <button class = "text-white bg-green-500 p-2 px-5 rounded-md js-yes-button cursor-pointer font-['DM_Sans'] sm:text-base">Yes</button>
-        <button class="text-white bg-red-600 p-2 px-5 rounded-md js-no-button cursor-pointer font-['DM_Sans']">No</button>
+        <button class = "text-white bg-green-500 p-2 px-5 rounded-md js-yes-button cursor-pointer font-['DM_Sans'] sm:text-base hover:bg-green-700 transition-all">Yes</button>
+        <button class="text-white bg-red-600 p-2 px-5 rounded-md js-no-button cursor-pointer font-['DM_Sans'] hover:bg-red-800 transition-all">No</button>
         </div>
       </div>
   </div>

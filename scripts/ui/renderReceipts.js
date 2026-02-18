@@ -38,6 +38,15 @@ export function updateReceiptHTML() {
   
    let transactions = getCurrentTransactions();
 
+   if(transactions.length === 0) {
+    receiptsContainer.innerHTML =
+    `
+    <p class = "text-center pt-4">No transactions yet.</p>
+    `
+
+    return;
+   }
+
   transactions.forEach((tx)=> {
 
   html+= 
