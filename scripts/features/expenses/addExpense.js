@@ -47,6 +47,7 @@ export function handleAddExpense () {
 })
 }
 
+/*
 export function handleAddExpenseDesktop () {
   const descriptionInput = document.getElementById('expense-description-desktop');
   const amountInput = document.getElementById('expense-amount-desktop');
@@ -74,13 +75,15 @@ export function handleAddExpenseDesktop () {
 
 })
 }
-
+*/
 
 export function initAddExpense() {
   const addExpenseBtn = document.getElementById('js-add-expense');
   addExpenseBtn.addEventListener('click', handleAddExpense);
 
+  /*
   const addExpenseDesktop = document.getElementById('js-add-expense-desktop');
   addExpenseDesktop.addEventListener('click', handleAddExpenseDesktop)
+  */
 }
 

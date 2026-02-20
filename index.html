@@ -19,6 +19,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="./favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./favicon/favicon-16x16.png">
   <link rel="manifest" href="./favicon/site.webmanifest">
+  <link rel="stylesheet" href="./animations/styles.css">
 
 </head>
 
@@ -68,7 +69,7 @@
 
 
 
-      <!-- Add Expense Modal for Desktop -->
+      <!-- 
       <div
         class="add-expense-option-containerDsk flex items-center justify-center hidden sm:flex max-w-[550px] min-h-[200px] xl:w-[500px]">
 
@@ -103,7 +104,7 @@
                 <option value="Others">Others</option>
               </select>
             </div>
-
+          
             <div class="flex items-center justify-center w-full">
               <button id="js-add-expense-desktop"
                 class="bg-[#07D5C4] text-white flex justify-center items-center px-7 py-3 gap-1 text-xs rounded-2xl text-outline-black-38 drop-shadow-[0_2px_2px_rgba(0,0,0,0.56)] cursor-pointer sm:text-base transition-all hover:bg-[#0bbdae]">
@@ -115,9 +116,67 @@
         </div>
       </div>
     </div>
+  -->
+    <div
+        class="setBudgetContainer flex items-center justify-center w-[90%]  sm:flex max-w-[550px] min-h-[200px] xl:w-[500px]">
+     
+    <div class="outer-card w-full p-4">
+       <div class = "flex items-center gap-2 pb-1">
+      <img src="images/budget.png" alt="Budget logo" class="w-9">
+     <h1 class = "font-['Lilita_One'] text-white text-xl text-outline-black">Manage Budget</h1>
+      </div>
+     <div class="inner-card py-7 px-3">
+      
+          <div class="flex items-center justify-center w-[40%] sm:w[100%]"">
+        <img class=" w-full min-w-[50px] max-w-[120px]" src="images/budgeting.png" alt = "Budgeting logo">
+          </div>
+       <div class="flex flex-col items-start justify-center w-[60%] p-2">
+            <h1 class="font-['DM_Sans'] font-bold w-full text-xs sm:text-base">Current Budget Money</h1>
+            <p
+              class="currentBudget text-[#079F9F] font-['DM_Sans'] font-bold text-[21px] sm:text-[28px] md:text-3xl w-[90%] truncate">
+            </p>
+            <button
+              class="bg-[#07D5C4] text-white flex items-center p-2 gap-1 text-[11px] rounded-2xl text-outline-black-38 drop-shadow-[0_4px_2px_rgba(0,0,0,0.56)] cursor-pointer sm:text-sm md:text-base font-['DM_Sans'] transition-all hover:bg-[#0bbdae]" id = "js-set-budget"><img
+                src="../images/mini-coin.png" alt="Mini coin logo"
+                class="w-[24px] filter drop-shadow-[0_0_2px_rgba(0,0,0,0.38)]">Set Budget</button>
+          </div>
+      
+     </div>
+    </div>
+    </div>
 
+    <!-- Add/Edit Budget -->
+  <div
+    class="js-set-budget-modal w-full fixed inset-0 bg-black/50 z-50 flex hidden items-center justify-center">
+    <div class="js-close-budget-modal absolute top-5 right-5 text-white text-xl">
+      <i class="fa-solid fa-x cursor-pointer"></i>
+    </div>
 
+    <div class="outer-card max-w-[500px] p-4">
+      <div class="inner-card rounded-xl p-6 flex flex-row items-center gap-4 w-full">
 
+        <div class="flex flex-col justify-between gap-4">
+          <div class="relative">
+            <input type="text" id="budget-amount" class="js-amountInput peer input-cozy" placeholder="Amount">
+            <label for="amount" class="label-cozy">Amount</label>
+          </div>
+        </div>
+
+        <div class="flex flex-col justify-between gap-4">
+          <button
+            class="bg-[#07D5C4] text-white flex justify-center p-2 gap-1 text-xs rounded-2xl w-full text-outline-black-38 drop-shadow-[0_2px_2px_rgba(0,0,0,0.56)] cursor-pointer sm:text-base transition-all hover:bg-[#0bbdae]" id = "js-add-budget">
+            Add Budget
+          </button>
+
+           <button
+            class="bg-[#07D5C4] text-white flex justify-center p-2 gap-1 text-xs rounded-2xl w-full text-outline-black-38 drop-shadow-[0_2px_2px_rgba(0,0,0,0.56)] cursor-pointer sm:text-base transition-all hover:bg-[#0bbdae]" id = "js-edit-budget">
+            Edit Budget
+           </button>
+
+      </div>
+    </div>
+  </div>
+  </div>
 
     <div class="xl:col-span-4 flex items-start justify-center gap-8 flex-wrap">
       <!-- Your Expenses Card -->
@@ -127,11 +186,11 @@
           <img src="images/wallet.png" alt="Wallet logo" class="w-9">
           <h1 class="font-['Lilita_One'] text-white text-xl text-outline-black ">Your Expenses</h1>
         </div>
-        <div class="inner-card rounded-r-none rounded-l-none flex flex-1 flex-col p-0 rounded-b-xl justify-start">
+        <div class="inner-card rounded-r-none rounded-l-none flex flex-1 flex-col p-0 rounded-b-xl justify-start ">
           <div class="date-container h-[30px] font-['DM_Sans'] pb-3 px-3 pt-1">
           </div>
           <div
-            class="expenses-container flex flex-col gap-3 overflow-y-auto w-full h-full items-center justify-center py-4 px-2 flex-1 ">
+            class="expenses-container flex flex-col gap-3 overflow-y-auto w-full h-full max-h-[262px] items-center justify-center py-4 px-2 flex-1 ">
             <h1 class="font-['DM_Sans'] text-center">
               No expenses today yet. Start tracking now 💸.
             </h1>
@@ -182,7 +241,7 @@
 
 
   <!-- Floating Add Expense Button -->
-  <div class="fixed bottom-5 right-5 z-11 rounded-[100%] bg-[#14D7C6] js-show-add-expense p-4 sm:hidden">
+  <div class="fixed bottom-5 right-5 z-11 rounded-[100%] bg-[#14D7C6] js-show-add-expense p-4">
     <img src="../images/coin-button.png" alt="Coin button logo " class="w-[35px] h-[30px]">
   </div>
 
@@ -247,7 +306,7 @@
     </div>
   </div>
 
-  <!-- Add Expense Modal for Phone -->
+  <!-- Add Expense Modal -->
   <div
     class="add-expense-option-container w-full fixed inset-0 bg-black/50 z-50 flex hidden items-center justify-center">
     <div class="js-close-add-expense absolute top-5 right-5 text-white text-xl">
@@ -345,6 +404,8 @@
 
 
   </div>
+
+  <div id="notif-container"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

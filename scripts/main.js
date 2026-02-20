@@ -15,6 +15,8 @@ import { initDateFilter } from './features/expenses/viewExpense.js';
 import { initEditExpense } from './features/expenses/editExpense.js';
 import { initDeleteExpense } from './features/expenses/deleteExpense.js';
 import { initTDateFilter } from './features/transactions/viewTransactions.js';
+import { initAddEditBudget, initSetBudgetModal } from './budget/addBudget.js';
+import { renderBudget } from './ui/renderBudget.js';
 
 
 
@@ -27,6 +29,9 @@ initAddWithdrawOption();
 initAddWithdraw();
 initAddExpenseOption();
 initReceipts();
+renderBudget();
+initSetBudgetModal();
+initAddEditBudget();
 initAddExpense();
 initDeleteExpense();
 updateTotalExpenses();

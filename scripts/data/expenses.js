@@ -5,6 +5,8 @@ import { loadSavingsFromStorage, saveToLocalStorage } from "../core/storage.js";
 import {updateTotalExpenses} from "../features/expenses/totalExpenses.js";
 import { updateExpensesChart } from "../charts/expensesChart.js";
 import { getCurrentExpenses } from "../features/expenses/viewExpense.js";
+import { budget } from "./budget.js";
+import { renderBudget } from "../ui/renderBudget.js";
 
 
 const savedData = loadSavingsFromStorage("expenses");
@@ -22,9 +24,15 @@ export function addExpense(description, amount, category, date = dayjs().format(
     color: getCategoryColor(category),
     logo: getCategoryLogo(category),
   };
+
+
    
   expenses.push(expense);
   saveToLocalStorage("expenses", expenses);
+  
+  budget.deduct(amount);
+
+  renderBudget();
   renderExpensesHTML();
   updateTotalExpenses();
   updateRecentExpenses();
@@ -34,14 +42,25 @@ export function addExpense(description, amount, category, date = dayjs().format(
 }
 
 export function deleteExpense(id) {
+
+
+  const expenseToDelete = expenses.find(exp => exp.id === id);
+   
+  if(expenseToDelete) {
+  budget.refund(expenseToDelete.amount);
+  }
+
  expenses = expenses.filter((expense) => 
-  expense.id != id)
+  expense.id !== id)
+
  saveToLocalStorage("expenses", expenses);
+  renderBudget();
  renderExpensesHTML();
  updateTotalExpenses();
  updateRecentExpenses();
  updateBiggestExpense();
  updateExpensesChart(getCurrentExpenses());
+ 
  }
 
 

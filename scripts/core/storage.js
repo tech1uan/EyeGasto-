@@ -16,5 +16,7 @@ export function loadSavingsFromStorage(name) {
 } else if (name === "expenses") {
   return saved ? JSON.parse(saved):[]
 
+} else if (name === "budget") {
+  return saved ? JSON.parse(saved):0;
 }
 }

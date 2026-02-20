@@ -1,0 +1,27 @@
+
+
+  @keyframes bounceIn {
+    0%   { transform: translateY(-20px) scale(0.9); opacity: 0; }
+    60%  { transform: translateY(4px) scale(1.02); opacity: 1; }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
+  }
+  @keyframes slideOut {
+    to { transform: translateX(120%); opacity: 0; }
+  }
+  @keyframes shrink {
+    from { width: 100%; } to { width: 0%; }
+  }
+
+  .notif { 
+    animation: bounceIn 0.45s cubic-bezier(.36,.07,.19,.97) forwards; border-radius: 20px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; border: 2px solid; position: relative; overflow: hidden; cursor: pointer; 
+  }
+  .notif.hide { 
+    animation: slideOut 0.35s ease forwards;
+   }
+  .notif-bar {
+     position: absolute; bottom: 0; left: 0; height: 3px; border-radius: 0 0 0 20px; animation: shrink 4s linear forwards;
+     }
+
+  #notif-container {
+     position: fixed; top: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; width: 310px;
+     }

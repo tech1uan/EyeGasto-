@@ -272,9 +272,6 @@
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
   }
-  .mt-5 {
-    margin-top: calc(var(--spacing) * 5);
-  }
   .mr-3 {
     margin-right: calc(var(--spacing) * 3);
   }
@@ -305,6 +302,9 @@
   .h-\[30px\] {
     height: 30px;
   }
+  .h-\[50px\] {
+    height: 50px;
+  }
   .h-auto {
     height: auto;
   }
@@ -313,6 +313,30 @@
   }
   .max-h-\[50vh\] {
     max-height: 50vh;
+  }
+  .max-h-\[236px\] {
+    max-height: 236px;
+  }
+  .max-h-\[250px\] {
+    max-height: 250px;
+  }
+  .max-h-\[255px\] {
+    max-height: 255px;
+  }
+  .max-h-\[256px\] {
+    max-height: 256px;
+  }
+  .max-h-\[257px\] {
+    max-height: 257px;
+  }
+  .max-h-\[258px\] {
+    max-height: 258px;
+  }
+  .max-h-\[260px\] {
+    max-height: 260px;
+  }
+  .max-h-\[262px\] {
+    max-height: 262px;
   }
   .min-h-\[200px\] {
     min-height: 200px;
@@ -371,6 +395,9 @@
   .w-full {
     width: 100%;
   }
+  .max-w-\[120px\] {
+    max-width: 120px;
+  }
   .max-w-\[150px\] {
     max-width: 150px;
   }
@@ -386,8 +413,20 @@
   .max-w-\[550px\] {
     max-width: 550px;
   }
+  .max-w-\[570px\] {
+    max-width: 570px;
+  }
+  .max-w-\[590px\] {
+    max-width: 590px;
+  }
   .min-w-0 {
     min-width: calc(var(--spacing) * 0);
+  }
+  .min-w-\[30px\] {
+    min-width: 30px;
+  }
+  .min-w-\[50px\] {
+    min-width: 50px;
   }
   .min-w-\[80px\] {
     min-width: 80px;
@@ -404,6 +443,9 @@
   .flex-shrink-0 {
     flex-shrink: 0;
   }
+  .shrink {
+    flex-shrink: 1;
+  }
   .border-collapse {
     border-collapse: collapse;
   }
@@ -414,6 +456,9 @@
   .-translate-x-1\/2 {
     --tw-translate-x: calc(calc(1/2 * 100%) * -1);
     translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+  .transform {
+    transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
   }
   .cursor-pointer {
     cursor: pointer;
@@ -453,6 +498,9 @@
   }
   .justify-center {
     justify-content: center;
+  }
+  .justify-end {
+    justify-content: flex-end;
   }
   .justify-start {
     justify-content: flex-start;
@@ -608,6 +656,9 @@
   .p-7 {
     padding: calc(var(--spacing) * 7);
   }
+  .p-12 {
+    padding: calc(var(--spacing) * 12);
+  }
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
   }
@@ -635,6 +686,9 @@
   .py-6 {
     padding-block: calc(var(--spacing) * 6);
   }
+  .py-7 {
+    padding-block: calc(var(--spacing) * 7);
+  }
   .py-11 {
     padding-block: calc(var(--spacing) * 11);
   }
@@ -643,9 +697,6 @@
   }
   .pt-4 {
     padding-top: calc(var(--spacing) * 4);
-  }
-  .pt-5 {
-    padding-top: calc(var(--spacing) * 5);
   }
   .pt-10 {
     padding-top: calc(var(--spacing) * 10);
@@ -658,6 +709,9 @@
   }
   .text-center {
     text-align: center;
+  }
+  .text-end {
+    text-align: end;
   }
   .align-middle {
     vertical-align: middle;
@@ -829,13 +883,6 @@
       }
     }
   }
-  .hover\:bg-\[\#0ba89b\] {
-    &:hover {
-      @media (hover: hover) {
-        background-color: #0ba89b;
-      }
-    }
-  }
   .hover\:bg-\[\#0bbdae\] {
     &:hover {
       @media (hover: hover) {
@@ -843,24 +890,10 @@
       }
     }
   }
-  .hover\:bg-\[\#099c90\] {
-    &:hover {
-      @media (hover: hover) {
-        background-color: #099c90;
-      }
-    }
-  }
   .hover\:bg-green-700 {
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-green-700);
-      }
-    }
-  }
-  .hover\:bg-red-700 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-red-700);
       }
     }
   }
@@ -1113,6 +1146,26 @@
   inherits: false;
   initial-value: 0;
 }
+@property --tw-rotate-x {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-rotate-y {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-rotate-z {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-skew-x {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-skew-y {
+  syntax: "*";
+  inherits: false;
+}
 @property --tw-space-y-reverse {
   syntax: "*";
   inherits: false;
@@ -1300,6 +1353,11 @@
       --tw-translate-x: 0;
       --tw-translate-y: 0;
       --tw-translate-z: 0;
+      --tw-rotate-x: initial;
+      --tw-rotate-y: initial;
+      --tw-rotate-z: initial;
+      --tw-skew-x: initial;
+      --tw-skew-y: initial;
       --tw-space-y-reverse: 0;
       --tw-border-style: solid;
       --tw-font-weight: initial;
