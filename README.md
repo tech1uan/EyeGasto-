@@ -1,8 +1,6 @@
 # 👁️ EyeGasto – Smart Expense Tracker
 
-EyeGasto is a cozy modern and responsive **expense tracker web app** that helps users manage their money like a simple digital bank account.
-
-Track expenses, monitor your balance, set daily budgets, and analyze your spending habits with interactive charts — all in one clean interface.
+EyeGasto is a cozy modern and responsive **expense tracker web app** that helps users manage their money, track expenses, set daily budgets, and view spending insights — all in a clean and interactive interface.
 
 ---
 
@@ -26,57 +24,45 @@ Track expenses, monitor your balance, set daily budgets, and analyze your spendi
 
 # ✨ Features
 
-## ✨ Cozy UI & Animations
+## 🏦 Budget & Balance Tracking
+- Set a daily budget, track expenses, and monitor balance in real time  
+- Automatic budget deduction and refunds when adding or deleting expenses  
+- Notifications for low budget, budget fully spent, or **budget exceeded**  
+- Original budget saved for accurate tracking  
 
-- EyeGasto features a cozy and friendly interface with custom-made animations.  
-The start card smoothly fades in to welcome users, shiny interactive buttons add a playful feel, and subtle UI animations appear each time the app opens to make the experience smooth, lively, and enjoyable.
+## ➕ Expense Management
+- Add, edit, and delete expenses with categories  
+- Instant balance and budget updates  
+- Confirmation prompts and error handling  
 
-## 💰 Balance / Savings System
+## 📊 Analytics Dashboard
+- Category-wise spending charts and insights  
+- Total expenses, biggest expense, and recent transactions  
 
-- Add money to your balance  
-- Withdraw money anytime  
-- Real-time balance tracking  
-- Transaction recording  
+## 👋 Personalized Welcome System
+- First-time users enter their name and receive a welcome message  
+- Returning users see **randomized greetings**, making the app feel smart and engaging  
 
+## 🔔 Smart Notifications
+- Alerts for budget status, overspending, and user greetings  
+- Smooth animated notification cards  
+
+## 💾 Data Storage
+- User name, savings, expenses, budgets, and transactions stored in Local Storage  
+- Data persists across sessions  
+
+## 📱 Responsive Design
+- Works on desktop, tablet, and mobile  
+- Add to Home Screen (PWA-friendly)
+
+### Budget Visualization
+
+- The app dynamically highlights the current budget in **green** when funds are available.
+- When the budget reaches **0 or goes below zero**, the budget amount turns **red**.
+- This provides instant visual feedback to help users track overspending and manage their expenses effectively.
 ---
 
-# 📊 Daily Budget Tracking
-
-EyeGasto includes a **daily budget system**.
-
-- Set your daily budget
-- Expenses automatically deduct from the budget
-- Deleting an expense refunds the budget
-- Helps users stay within their spending limit
-
-### Notifications
-
-- ⚠ Budget running low  
-- 🚨 Budget fully spent  
-
----
-
-# ➕ Expense Management
-
-### Add Expense
-Create expenses with:
-
-- Name  
-- Amount  
-- Category  
-
-### Edit Expense
-- Update existing expenses
-- Data updates instantly
-
-### Delete Expense
-- Confirmation before deletion
-- Budget auto-adjusts
-- Error handling included
-
----
-
-# 📂 Categories
+# 📂 Expense Categories
 
 - 🍔 Food  
 - 🚗 Transport  
@@ -89,106 +75,16 @@ Create expenses with:
 - 💳 Debt  
 - 📦 Others  
 
-Each category includes custom styling and icons.
-
 ---
 
 # 📅 Expense Filters
-
-Filter your expenses by:
-
-- Today  
-- Last 7 Days  
-- All Time  
-
----
-
-# 📈 Analytics Dashboard
-
-The dashboard provides insights like:
-
-- Total Expenses  
-- Biggest Expense Today  
-- Recent Transactions  
-- Category Spending Chart  
-
-Powered by **Chart.js**.
-
----
-
-# 👋 Personalized Welcome System
-
-EyeGasto includes a **Start Card Modal**.
-
-### First Time Users
-- Enter your name
-- Receive a welcome message
-
-### Returning Users
-The app remembers the user and displays:
-
-```
-Welcome back, John 👋
-```
-
-This makes the experience more personal.
-
----
-
-# 🔔 Smart Notifications
-
-The system alerts users when:
-- You've entered a budget for today
-- Budget is low
-- Budget is exhausted
-- User logs in
-- Welcome messages appear
-
----
-
-# 🧾 Transactions History
-
-Users can view transaction history filtered by:
-
-- Today  
-- Last 7 Days  
-- All Time  
-
----
-
-# 💾 Data Storage
-
-Currently using **Local Storage**.
-
-Stored data includes:
-
-- User name
-- Savings
-- Expenses
-- Budget
-- Transactions
-
-⚠ Clearing browser storage removes saved data.
-
-Future updates may include a backend database.
-
----
-
-# 📱 Responsive Design
-
-EyeGasto works across:
-
-- Desktop
-- Tablet
-- Mobile
-
-Users can also install it using **Add to Home Screen**.
+- Filter transactions by **Today**, **Last 7 Days**, or **All Time**
 
 ---
 
 # 📷 Screenshots
 
-## Desktop
+## Dashboard
 ![Dashboard](./screenshots/main-ui1.png)
 ![Dashboard](./screenshots/main-ui2.png)
 
@@ -205,25 +101,19 @@ Users can also install it using **Add to Home Screen**.
 
 ## Notifications
 ![Notif](./screenshots/notif1.png)
-![Notif](./screenshots/notif5.png)
 ![Notif](./screenshots/notif2.png)
 ![Notif](./screenshots/notif3.png)
 ![Notif](./screenshots/notif4.png)
+![Notif](./screenshots/notif5.png)
+![Notif](./screenshots/notif6.png)
 
-## Tooltip
-![Tooltip](./screenshots/tooltip.png)
-
-## Confirmation (Error Handling)
-![Confirmation](./screenshots/confirmation.png)
-
-## Add Expense and Edit Expense (Error Handling)
+## Add/Edit Expenses & Confirmation
 ![Add](./screenshots/add-expense.png)
 ![Edit](./screenshots/edit-expense.png)
+![Confirmation](./screenshots/confirmation.png)
 
-## Transactions
+## Transactions & Filters
 ![Transactions](./screenshots/transactions.png)
-
-## Filters
 ![Filters](./screenshots/date-filter1.png)
 ![Filters](./screenshots/date-filter2.png)
 
@@ -231,27 +121,27 @@ Users can also install it using **Add to Home Screen**.
 
 # 🧠 Purpose of This Project
 
-This project was built to practice:
-
-- JavaScript logic
-- Financial tracking systems
-- UI/UX design
-- Chart data visualization
-- Deploying a production-ready web app
+- Practice JavaScript logic and financial tracking systems  
+- Learn UI/UX design and interactive animations  
+- Work with chart data visualization using Chart.js  
+- Build and deploy a production-ready web app  
 
 ---
 
 # 🔮 Future Improvements
 
-- Database integration
-- User accounts
-- Cloud sync
-- Export reports
-- Monthly budgets
-- Dark mode
-- Offline support (PWA)
+- Database & user accounts  
+- Cloud sync & offline support (PWA)  
+- Export reports & monthly budgets  
+- Dark mode  
 
 ---
+
+# 📦 Installation
+
+```bash
+git clone https://github.com/your-username/eyegasto.git
+cd eyegasto
 
 # 📦 Installation
 
