@@ -381,6 +381,18 @@
   .h-\[30px\] {
     height: 30px;
   }
+  .h-\[clamp\(30px\,5vw\,40px\)\] {
+    height: clamp(30px, 5vw, 40px);
+  }
+  .h-\[clamp\(30px\,5vw\,45px\)\] {
+    height: clamp(30px, 5vw, 45px);
+  }
+  .h-\[clamp\(30px\,5vw\,55px\)\] {
+    height: clamp(30px, 5vw, 55px);
+  }
+  .h-\[clamp\(30px\,5vw\,65px\)\] {
+    height: clamp(30px, 5vw, 65px);
+  }
   .h-auto {
     height: auto;
   }
@@ -461,6 +473,21 @@
   }
   .w-\[100px\] {
     width: 100px;
+  }
+  .w-\[clamp\(35px\,5vw\,45px\)\] {
+    width: clamp(35px, 5vw, 45px);
+  }
+  .w-\[clamp\(35px\,5vw\,50px\)\] {
+    width: clamp(35px, 5vw, 50px);
+  }
+  .w-\[clamp\(35px\,5vw\,60px\)\] {
+    width: clamp(35px, 5vw, 60px);
+  }
+  .w-\[clamp\(35px\,5vw\,70px\)\] {
+    width: clamp(35px, 5vw, 70px);
+  }
+  .w-\[clamp\(35px\,5vw\,100px\)\] {
+    width: clamp(35px, 5vw, 100px);
   }
   .w-auto {
     width: auto;
@@ -704,9 +731,6 @@
   .bg-\[\#07D5C4\] {
     background-color: #07D5C4;
   }
-  .bg-\[\#14D7C6\] {
-    background-color: #14D7C6;
-  }
   .bg-black {
     background-color: var(--color-black);
   }
@@ -869,9 +893,6 @@
   }
   .font-\[\'DM_Sans\'\] {
     font-family: 'DM Sans';
-  }
-  .font-\[\'Lacquer\'\] {
-    font-family: 'Lacquer';
   }
   .font-\[\'Lilita_One\'\] {
     font-family: 'Lilita One';

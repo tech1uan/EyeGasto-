@@ -1,6 +1,7 @@
 import { getCurrentExpenses } from "../features/expenses/viewExpense.js";
 import { groupExpensesByCategory } from "../features/expenses/groupExpenses.js";
 
+Chart.register(ChartDataLabels);
 
 export function updateExpensesChart() {
 
@@ -65,7 +66,12 @@ function showChart(expenses, canvasParent, legendDiv) {
   const ctx = canvas.getContext('2d');
 
   if (window.expensesChartInstance) {
-  window.expensesChartInstance.destroy();
+  window.expensesChartInstance.data.labels = categoryNames;
+  window.expensesChartInstance.data.datasets[0].data = categoryAmounts;
+  window.expensesChartInstance.data.datasets[0].backgroundColor = categoryColors;
+  window.expensesChartInstance.update();
+  createLegend(grouped, safeTotal, legendDiv);
+  return;
 } 
 
     window.expensesChartInstance = new Chart(ctx, {
@@ -95,8 +101,9 @@ function showChart(expenses, canvasParent, legendDiv) {
             callbacks: {
               label: function(context) {
                 const name = context.label;
-                const amount = (context.parsed);
-                const percent = ((amount / safeTotal) * 100).toFixed(2)
+                const amount = parseFloat(context.parsed);
+                 const currentTotal = context.dataset.data.reduce((a, b) => a + b, 0);
+                const percent = ((amount / currentTotal) * 100).toFixed(2);
                 return `${name}: ₱${amount.toLocaleString()} (${percent}%)`;
               }
             }
@@ -104,8 +111,9 @@ function showChart(expenses, canvasParent, legendDiv) {
           datalabels: {
             color: '#fff',
             font: { weight: 'bold', size: 16, family: "'DM Sans', sans-serif" },
-            formatter: function(value) {
-              const percent = ((value / safeTotal) * 100).toFixed(1)
+            formatter: function(value, context) {
+                 const currentTotal = context.dataset.data.reduce((a, b) => a + b, 0);
+              const percent = ((value / currentTotal) * 100).toFixed(1)
               if(percent > 5) {
               return percent ? percent + '%' : '';
               } else {
@@ -137,7 +145,7 @@ function createLegend(grouped, safeTotal, legendDiv) {
 
   for (let categoryName in grouped) {
     const data = grouped[categoryName];
-    const amount = data.total;
+    const amount = parseFloat(data.total);
     const color = data.color;
     const percent = Math.min(((amount / safeTotal) * 100).toFixed(1), 100);
 
