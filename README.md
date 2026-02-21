@@ -205,6 +205,7 @@ Users can also install it using **Add to Home Screen**.
 
 ## Notifications
 ![Notif](./screenshots/notif1.png)
+![Notif](./screenshots/notif5.png)
 ![Notif](./screenshots/notif2.png)
 ![Notif](./screenshots/notif3.png)
 ![Notif](./screenshots/notif4.png)
