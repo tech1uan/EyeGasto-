@@ -1,6 +1,6 @@
 # 👁️ EyeGasto – Smart Expense Tracker
 
-EyeGasto is a modern and responsive **expense tracker web app** that helps users manage their money, track expenses, set daily budgets, and view spending insights — all in a clean and interactive interface.
+EyeGasto is a cozy modern and responsive **expense tracker web app** that helps users manage their money, track expenses, set daily budgets, and view spending insights — all in a clean and interactive interface.
 
 ---
 
