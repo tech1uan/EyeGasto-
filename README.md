@@ -209,6 +209,7 @@ Users can also install it using **Add to Home Screen**.
 ![Notif](./screenshots/notif2.png)
 ![Notif](./screenshots/notif3.png)
 ![Notif](./screenshots/notif4.png)
+![Notif](./screenshots/notif6.png)
 
 ## Tooltip
 ![Tooltip](./screenshots/tooltip.png)
