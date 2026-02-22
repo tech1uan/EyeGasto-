@@ -219,5 +219,9 @@ export function initDLReportBtn() {
     console.error("Download button not found");
     return;
   }
-  button.addEventListener("click", saveDataToPDF);
+  
+  button.addEventListener("click", (e) => {
+    e.preventDefault();
+    saveDataToPDF();
+  });
 }
