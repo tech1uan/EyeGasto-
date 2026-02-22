@@ -17,7 +17,10 @@ import { initDeleteExpense } from './features/expenses/deleteExpense.js';
 import { initTDateFilter } from './features/transactions/viewTransactions.js';
 import { initAddEditBudget, initSetBudgetModal } from './budget/addBudget.js';
 import { renderBudget } from './ui/renderBudget.js';
-import { initShowGreetings } from './notifs/notifications.js';
+import { initShowGreetings, isNewUser, showNotif } from './notifs/notifications.js';
+import { initDLReportBtn } from './saveData/saveToPDF.js';
+
+
 
 
 
@@ -44,6 +47,7 @@ initTDateFilter();
 updateExpensesChart(expenses);
 initExpensesTooltip();
 initEditExpense();
+initDLReportBtn();
 }
 
 

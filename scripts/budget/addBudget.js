@@ -50,7 +50,6 @@ export function initAddEditBudget() {
 
 })
 
-
   editButton.addEventListener('click', () => {
     const amount = Number(input.value);
   

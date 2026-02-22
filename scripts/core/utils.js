@@ -1,14 +1,8 @@
-
 export function formatToPeso(amount) {
- 
-  return amount.toLocaleString("en-PH", {
-    style: "currency",
-    currency: "PHP",
-  });
+  const num = Number(amount) || 0;
 
-
+  return `₱${num.toFixed(2)}`;
 }
-
 
 export function formatDate(date) {
    

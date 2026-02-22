@@ -18,9 +18,14 @@ export let budget = {
     this.originalBudget += amount;
     saveToLocalStorage('budget', this.budget);
     saveToLocalStorage('budgetOriginal', this.originalBudget); 
+    saveToLocalStorage('budgetSet', true);
   },
 
   editBudget(amount) {
+    if(amount === 0) {
+     saveToLocalStorage('budgetSet', false);
+    }
+
     if (isNaN(amount) || amount < 0) return alert('Please enter a valid amount!');
     this.budget = amount;
     this.originalBudget = amount;                      
@@ -33,12 +38,22 @@ export let budget = {
   },
 
   deduct(amount) {
+    const budgetSet = loadSavingsFromStorage('budgetSet');
+
+    if(!budgetSet)
+      return;
+
       this.budget = this.budget - amount;
       saveToLocalStorage('budget', this.budget);
       this.checkBudgetStatus()
+
   },
 
   refund(amount) {
+     const budgetSet = loadSavingsFromStorage('budgetSet');
+    if(!budgetSet)
+      return;
+    
     this.budget = Math.min(this.budget + amount, this.originalBudget);
     saveToLocalStorage('budget', this.budget);
     this.checkBudgetStatus(); 

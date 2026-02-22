@@ -41,7 +41,8 @@
   <div class="star star-7"></div>
 
 
-  <div class="grid grid-cols-1 gap-8 border-black place-items-center xl:grid-cols-4 xl:auto-rows-min super-container">
+
+  <div class="grid grid-cols-1 gap-8 border-black place-items-center xl:grid-cols-4 xl:auto-rows-min super-container" id="dl-button">
 
     <!-- Header Section -->
     <div class="reveal-1 w-full flex flex-row px-3 pt-10 items-center justify-center xl:col-span-4 min-w-[330px] gap-2">
@@ -53,6 +54,10 @@
         </p>
       </div>
     </div>
+
+     <button class="reveal-1 absolute top-3 right-5 p-1 px-2 eye-gasto-button rounded z-10" id="dl-button">
+  <i class="fa-solid fa-download cursor-pointer"></i>
+</button>
 
     <div class="xl:col-span-4 flex justify-center gap-8 flex-wrap">
 
@@ -489,7 +494,8 @@
     </p>
 
   </div>
-
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>

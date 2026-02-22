@@ -3,7 +3,7 @@ import { loadSavingsFromStorage, saveToLocalStorage } from "../core/storage.js";
 let savedUser = loadSavingsFromStorage('user');
 let savedName = loadSavingsFromStorage('savedName');
 
-let isNewUser = savedUser === null ? true : false;
+export let isNewUser = savedUser === null ? true : false;
 let username = savedName || "Tracker";
 
 export const user = {
@@ -43,6 +43,7 @@ export function initShowGreetings () {
      if(isNewUser) {
       showNotif('newUser')
         isNewUser = false;
+      setTimeout(() => showNotif('pdfReady'), 2000);
 
       saveToLocalStorage('user', isNewUser);
     } 
@@ -51,7 +52,9 @@ export function initShowGreetings () {
    
   if(!isNewUser){
     showNotif('existingUser');
+    setTimeout(() => showNotif('pdfReady'), 2000);
   }
+
   }
 
 const NOTIF_TYPES = {
@@ -118,6 +121,27 @@ existingUser: {
   border: 'rgba(0,150,255,0.45)',
   bar: '#0096ff',
 },
+pdfReady: {
+  emoji: '💾',
+  title: `Your Data is Ready to Download!`,
+  message: {
+    a: `You can now export your expense report as a PDF. Tap the download button to save your data!`,
+    b: `PDF export is available! Download your full expense and transaction history anytime.`,
+    c: `Your EyeGasto report is ready. Download it as a PDF and keep your records safe. 📥`,
+    d: `New feature! You can now download your budget data as a PDF report.`,
+    e: `Export your expenses and transactions to PDF — great for reviewing or sharing your budget.`,
+    f: `Keep a copy of your finances! Download your data as a PDF report anytime you need it.`,
+    g: `Your expense history, transactions, and category breakdown — now downloadable as PDF!`,
+    h: `Stay organized! Export your full EyeGasto report to PDF with just one tap.`,
+    i: `PDF download is here! Your budget data is now just a tap away.`,
+    j: `Back up your budget! Download your expense report as a PDF and keep your records handy.`,
+    k: `New: Export your data to PDF! Track your progress and share your budget report easily.`,
+    l: `Your financial data deserves a backup. Download your EyeGasto report as a PDF today!`,
+  },
+  bg: 'linear-gradient(135deg,#0a1a2e,#0d3b5e)',
+  border: 'rgba(30,144,255,0.45)',
+  bar: '#1e90ff',
+},
 };
 
 export function showNotif(type) {
@@ -132,6 +156,14 @@ export function showNotif(type) {
    const randomMessage = existingUserMessages[randomIndex];
     message = t.message[randomMessage];
    }
+
+   if(type === "pdfReady") {
+   let pdfUpdateMessages = Object.keys(t.message);
+   let randomIndex = Math.floor(Math.random() * pdfUpdateMessages.length);
+   const randomMessage = pdfUpdateMessages[randomIndex];
+    message = t.message[randomMessage];
+   }
+  
 
   const title = type === 'newUser' ? `Welcome Aboard <strong>${user.name}</strong>!`: t.title;
 

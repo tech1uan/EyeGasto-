@@ -1,5 +1,6 @@
 import { loadSavingsFromStorage, saveToLocalStorage } from "../../core/storage.js";
 import { formatToPeso } from "../../core/utils.js";
+import { getExpensesForToday } from "../../data/expenses.js";
 import { getCurrentExpenses } from "./viewExpense.js";
 
 const savedData = loadSavingsFromStorage("biggestExpense");
@@ -9,7 +10,7 @@ let biggestExpense = savedData || [0];
 
 export function updateBiggestExpense() {
  
-const expenses = getCurrentExpenses();
+const expenses = getExpensesForToday();
 
  biggestExpense = expenses.reduce((max, expense) => 
    expense.amount > max.amount ? expense : max , 
