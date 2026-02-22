@@ -178,9 +178,16 @@ export function showNotif(type) {
       <div class="fredoka font-bold" style="color:#fff;font-size:15px;margin-bottom:2px">${title}</div>
       <div style="color:rgba(210,240,245,0.85);font-size:12px;font-weight:600;line-height:1.4">${message}</div>
     </div>
-    <button onclick="dismissNotif(this)" style="color:rgba(255,255,255,0.35);font-size:16px;background:none;border:none;cursor:pointer;padding:0;flex-shrink:0">✕</button>
+    <button class = "dismiss-btn" style="color:rgba(255,255,255,0.35);font-size:16px;background:none;border:none;cursor:pointer;padding:0;flex-shrink:0">✕</button>
     <div class="notif-bar" style="background:${t.bar}"></div>
   `;
+
+  const dismissBtn = el.querySelector('.dismiss-btn');
+
+  dismissBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dismissNotif(el);
+  })
 
   el.onclick = (e) => { 
     if (e.target.tagName !== 'BUTTON')
