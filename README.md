@@ -45,7 +45,20 @@ EyeGasto is a cozy modern and responsive **expense tracker web app** that helps 
 
 ## 🔔 Smart Notifications
 - Alerts for budget status, overspending, and user greetings  
-- Smooth animated notification cards  
+- Smooth animated notification cards
+
+## 📄 Export Data as PDF *(New!)*
+- Export your full **EyeGasto Data Report** as a downloadable PDF with one tap  
+- Report includes:
+  - 📌 Biggest expense of the day  
+  - 🕐 Recent expenses  
+  - 🗂️ Expenses broken down by category with percentage share  
+  - 📅 Today's expenses and transactions  
+  - 📆 This week's expenses and transactions  
+  - 🗃️ All-time expenses and transactions  
+- Each table includes a **total row** for quick reference  
+- Auto-generated with the current date and page numbers  
+
 
 ## 💾 Data Storage
 - User name, savings, expenses, budgets, and transactions stored in Local Storage  
@@ -116,6 +129,10 @@ EyeGasto is a cozy modern and responsive **expense tracker web app** that helps 
 ![Transactions](./screenshots/transactions.png)
 ![Filters](./screenshots/date-filter1.png)
 ![Filters](./screenshots/date-filter2.png)
+
+## Export Data as PDF
+![Export](./screenshots/dataSave1.png)
+![Export](./screenshots/dateSave2.png)
 
 ---
 
