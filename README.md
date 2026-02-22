@@ -131,8 +131,8 @@ EyeGasto is a cozy modern and responsive **expense tracker web app** that helps 
 ![Filters](./screenshots/date-filter2.png)
 
 ## Export Data as PDF
-![Export](./screenshots/dataSave1.png)
-![Export](./screenshots/dateSave2.png)
+![Save](./screenshots/saveData1.png)
+![Save](./screenshots/saveData2.png)
 
 ---
 
