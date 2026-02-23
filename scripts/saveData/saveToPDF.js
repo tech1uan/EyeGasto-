@@ -1,15 +1,5 @@
-import {
-  getExpensesForToday,
-  getExpensesForWeek,
-  getAllExpenses
-} from "../data/expenses.js";
-
-import {
-  getTransactionsForToday,
-  getTransactionsForWeek,
-  getAllTransactions
-} from "../features/transactions/groupTransactions.js";
-
+import { getExpensesForToday, getExpensesForWeek, getAllExpenses} from "../data/expenses.js";
+import {getTransactionsForToday,getTransactionsForWeek,getAllTransactions} from "../features/transactions/groupTransactions.js";
 import { groupExpensesByCategory } from "../features/expenses/groupExpenses.js";
 import { getCurrentExpenses } from "../features/expenses/viewExpense.js";
 
@@ -92,7 +82,6 @@ export function saveDataToPDF() {
     y = doc.lastAutoTable.finalY + 10;
   }
 
-
   sectionTitle("Biggest Expense Today");
 
   const todayExpenses = getExpensesForToday();
@@ -150,7 +139,6 @@ export function saveDataToPDF() {
     y = doc.lastAutoTable.finalY + 10;
   }
 
-
   sectionTitle("Expenses by Category");
 
   const grouped = groupExpensesByCategory(allCurrentExpenses);
@@ -191,9 +179,6 @@ export function saveDataToPDF() {
     y = doc.lastAutoTable.finalY + 10;
   }
 
-  // ─────────────────────────────────────────
-  // SECTION 4: Expense & Transaction Tables
-  // ─────────────────────────────────────────
   printTable("Today's Expenses", getExpensesForToday());
   printTable("Today's Transactions", getTransactionsForToday());
   printTable("Expenses This Week", getExpensesForWeek());
