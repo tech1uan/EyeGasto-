@@ -157,7 +157,7 @@ EyeGasto is a cozy modern and responsive **expense tracker web app** that helps 
 # 📦 Installation
 
 ```bash
-git clone https://github.com/your-username/eyegasto.git
+git clone https://github.com/tech1uan/eyegasto.git
 cd eyegasto
 
 # 📦 Installation
@@ -165,7 +165,7 @@ cd eyegasto
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/eyegasto.git
+git clone https://github.com/tech1uan/eyegasto.git
 ```
 
 Navigate into the folder:
