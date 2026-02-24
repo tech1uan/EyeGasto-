@@ -12,7 +12,6 @@
   }
 
  
-
  .input-cozy {
   @apply w-full p-2 text-sm border-2 rounded-xl bg-white text-black placeholder-transparent transition-all duration-200 ease-out focus:outline-none focus:border-blue-500 sm:text-base;
  }
