@@ -11,7 +11,6 @@ server.use(express.json())
 server.use(express.static('../frontend'));
 
 
-
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
 })
