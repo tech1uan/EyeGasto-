@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login in Eyegasto!</title>
+  <link href="./src/output.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Lacquer&family=Lilita+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicon/favicon-16x16.png">
+  <link rel="manifest" href="./favicon/site.webmanifest">
+  <link rel="stylesheet" href="./animations/styles.css">
+
+</head>
+
+<body class="bg-[#0d1b3e] overflow-x-hidden p-3 flex items-center justify-center min-h-screen">
+
+  <div class="bubble bubble-1"></div>
+  <div class="bubble bubble-2"></div>
+  <div class="bubble bubble-3"></div>
+  <div class="bubble bubble-4"></div>
+  <div class="bubble bubble-5"></div>
+
+  <div class="star star-1"></div>
+  <div class="star star-2"></div>
+  <div class="star star-3"></div>
+  <div class="star star-4"></div>
+  <div class="star star-5"></div>
+  <div class="star star-6"></div>
+  <div class="star star-7"></div>
+
+
+      <div id="greeting-card"
+        class="absolute z-10 w-[90%] max-w-sm bg-[#1a2f6e] rounded-[2rem] border border-white/10 px-8 py-10"
+        style="box-shadow: 0 0 60px rgba(0,212,200,.12), 0 24px 80px rgba(0,0,0,.5);">
+  
+      <div class="mt-2 space-y-2 font-['Poppins']">
+        <p id="message" class="text-center text-sm text-red-400 bg-red-400/30 border border-red-400/30 rounded-lg py-2 px-1 hidden"></p>
+        <p id="success" class="text-center text-sm text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 rounded-lg py-2 px-1 hidden"></p>
+      </div>
+
+
+        <div class="glow-tr absolute -top-5 -right-5 w-16 h-16 rounded-full bg-[#00d4c8] blur-xl pointer-events-none">
+        </div>
+        <div class="glow-bl absolute -bottom-5 -left-5 w-12 h-12 rounded-full bg-[#00d4c8] blur-xl pointer-events-none">
+        </div>
+
+
+        <div class="reveal-1 flex items-center justify-center gap-2.5 mb-1">
+          <div class="w-15 h-5 flex items-center justify-center text-2xl relative eye-bubble rounded-4xl"><img
+              class=" absolute w-full " src="./images/eye-gasto-logo.png" alt="EyeGasto logo"></div>
+          <span class="font-['Lilita_One'] text-4xl tracking-wide text-white"
+            style="text-shadow: 0 0 24px rgba(0,212,200,.45);">EyeGasto!</span>
+        </div>
+
+        <p
+          class="reveal-2 text-center text-[10px] tracking-[.22em] text-white/30 font-bold mb-7 font-['DM_Sans']">
+          Track your expenses and savings.
+        </p>
+
+        <div
+          class="reveal-3 relative bg-gradient-to-br from-[#00d4c8] via-[#009e94] to-[#007a74] rounded-2xl px-5 py-5 text-center mb-7 overflow-hidden">
+          <div class="absolute -top-6 -right-6 w-20 h-20 rounded-full bg-white/10 pointer-events-none"></div>
+          <div class="absolute -bottom-4 -left-4 w-14 h-14 rounded-full bg-white/[.07] pointer-events-none"></div>
+
+          <div class="relative z-10 flex justify-center gap-2 mb-2">
+            <span class="emoji-bounce-1 text-3xl"><img class="w-8" src="images/money-bag.png" alt="money-bag"></span>
+            <span class="emoji-bounce-2 text-3xl"><img class="w-8" src="images/chart.png" alt="line-graph"></span>
+            <span class="emoji-bounce-3 text-3xl"><img class="w-8" src="images/search.png" alt="magnifying-class"></span>
+          </div>
+
+          <h2 class="relative z-10 font-['Lilita_One'] text-2xl tracking-wide text-white "
+            style="text-shadow: 0 2px 8px rgba(0,0,0,.2);">Welcome, New Tracker!</h2>
+          <p class=" font-['DM_Sans'] relative z-10 text-xs text-white/80 font-bold mt-0.5">
+            Let's take control of your finances together!
+          </p>
+        </div>
+
+
+        <label for="user"
+          class="reveal-4 block text-[11px] font-black tracking-widest uppercase text-[#00d4c8] mb-2 font-['DM_Sans']">
+          Username</label>
+
+        <div class="reveal-5 relative mb-6">
+          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-lg pointer-events-none select-none"><img class="w-5" src="images/user.png" alt="user-logo"></span>
+          <input id="username-input" type="text" maxlength="30" placeholder="Enter a username"
+            class="name-input w-full pl-11 pr-4 py-3.5 bg-white/5 border-2 border-[#00d4c8]/30 rounded-2xl text-white font-black text-sm placeholder-white/25 transition-all duration-300 font-['DM_Sans']" />
+        </div>
+
+           <label for="password"
+          class="reveal-4 block text-[11px] font-black tracking-widest uppercase text-[#00d4c8] mb-2 font-['DM_Sans']">
+          Password</label>
+
+        <div class="reveal-5 relative mb-6">
+          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-lg pointer-events-none select-none"><img class="w-5" src="images/shield.png" alt="password-logo"></span>
+          <input id="password-input" type="text" maxlength="30" placeholder="Enter a password"
+            class="name-input w-full pl-11 pr-4 py-3.5 bg-white/5 border-2 border-[#00d4c8]/30 rounded-2xl text-white font-black text-sm placeholder-white/25 transition-all duration-300 font-['DM_Sans']" />
+        </div>
+
+
+        <button id="register-btn"
+          class="btn-shine reveal-6 w-full flex items-center justify-center gap-2.5 py-4 rounded-2xl font-['Bangers'] text-xl tracking-widest text-white bg-gradient-to-r from-[#00d4c8] to-[#009e94] cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:brightness-110 active:translate-y-0"
+          style="box-shadow: 0 6px 24px rgba(0,212,200,.4);">
+          <span class="text-xl relative z-10"><img class="w-8" src="images/rocket.png" alt="rocket-icon"></span>
+          <span class="relative z-10 font-[Lilita_one] ">Start Tracking Now!</span>
+        </button>
+
+        <p class="reveal-6 text-center text-[11px] text-white/30 font-semibold mt-5">
+          <span class="font-bold font-[DM_Sans] text-[#00d4c8] ">Dont have an account? <a href="register.html">Register Now!</a>
+        </p>
+
+      </div>
+     
+      <script src="scripts/ui/register.js" type="module"></script>
+</body>
+
+</html>
