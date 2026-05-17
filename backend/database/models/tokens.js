@@ -1,37 +1,5 @@
 import pool from "../config.js";
 
-export async function createUser(name,password) {
-  
-  try {
-      const [result] = await pool.query(`
-       INSERT INTO users(username,password)
-       VALUES (?,?)
-     `,[name,password]);
-
-     return {
-      id:result.insertId,
-      username:name,
-     }
-  } catch (error) {
-    throw error
-  }
-}
-
-
-export async function getUserByUsername(username) {
-  try {
-    const [result] = await pool.query(
-      `
-      SELECT * FROM USERS
-      WHERE username = ?
-      `
-    ,[username])
-
-    return result[0];
-  } catch (error) {
-    throw error
-  }
-}
 
 export async function insertRefreshToken(userId,token,expiresAt) {
   try {
@@ -52,20 +20,21 @@ export async function insertRefreshToken(userId,token,expiresAt) {
 }
 
 
-export async function getUserTokens(userId) {
+export async function getRefreshTokenById(id) {
   try {
     const [result] = await pool.query(
       `
       SELECT * FROM refresh_tokens
-      WHERE user_id = ?
-      `,[userId]
+      WHERE token_id = ?
+      `,[id]
     )
 
-    return result;
+    return result[0];
   } catch (error) {
     throw error;
   }
 }
+
 
 export async function deleteAllUserTokens(userId) {
   try {
