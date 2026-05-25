@@ -22,7 +22,10 @@
 
  .eye-gasto-button {
   @apply text-white bg-gradient-to-r from-[#00d4c8] to-[#009e94] transition-all duration-300 ease-in-out hover:-translate-y-1 hover:brightness-110 active:translate-y-0 cursor-pointer
- }
+ }  
+  .bg-custom {
+   background-image: linear-gradient(180deg, #007A74 0%, #009E94 20%, #23736F 100%);
+  }
 
 }
 

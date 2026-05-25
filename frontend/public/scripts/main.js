@@ -1,21 +1,27 @@
 
 import { initLogoutBtn } from './auth/logout.js';
 import { initSetBudgetModal } from './budget/addBudget.js';
+import { updateExpensesChart } from './charts/expensesChart.js';
 import { getUserExpenses } from './data/expenses.js';
+import { getUser, loadUser } from './data/user.js';
 import {initAddExpense, initAddExpenseOption } from './features/expenses/addExpense.js';
-import { initDeleteExpense } from './features/expenses/deleteExpense.js';
-import { initEditExpense } from './features/expenses/editExpense.js';
+
+import { initEditExpensesTools } from './features/expenses/initEditExpensesTools.js';
+import { renderTotalExpensesHTML } from './features/expenses/totalExpenses.js';
 import { getCurrentExpenses, initExpensesFilter, initExpensesPage } from './features/expenses/viewExpense.js';
 import {initTransactionsFilter } from './features/transactions/viewTransactions.js';
 import { initUser, showNotif } from './notifs/notifications.js';
 import { initDLReportBtn } from './saveData/saveToPDF.js';
+import { initNavbar } from './ui/navbar.js';
 import { renderBudget } from './ui/renderBudget.js';
 import { initDateFilter } from './ui/renderDateToday.js';
 import { initExpensesTooltip, renderExpensesHTML } from './ui/renderExpenses.js';
+import { initGastooMessages, initGreetings } from './ui/renderMascot.js';
 
 import { initReceipts } from './ui/renderReceipts.js';
 import { renderSavingsHTML } from './ui/renderSavings.js'
 import {initAddWithdraw, initAddWithdrawOption } from './withdrawals/addWithdraw.js';
+ 
 
 export async function authFetch(url, options = {}) {
   console.log(`[AUTH FETCH] → ${options.method || 'GET'} ${url}`);
@@ -46,6 +52,8 @@ if(res.status === 401) {
 return res;
 }
 
+
+
 async function initApp() {
   console.log('App is initializing!')
 try {
@@ -62,23 +70,25 @@ await initUser();
 showNotif('existingUser');
 renderSavingsHTML();
 initExpensesPage();
-initAddWithdrawOption()
-initAddWithdraw();
-initLogoutBtn();
+renderExpensesHTML();
+updateExpensesChart();
+renderBudget();
+renderTotalExpensesHTML();
 initReceipts();
 initDateFilter();
-initTransactionsFilter();
-renderBudget();
-initSetBudgetModal();
-initAddExpenseOption();
-initAddExpense();
+initEditExpensesTools();
 initExpensesTooltip();
-renderExpensesHTML();
-initDeleteExpense();
-initEditExpense();
+initNavbar();
+/* initLogoutBtn();
+initTransactionsFilter();
+initSetBudgetModal();
+initAddExpenseOption()
+initAddExpense();
 initExpensesFilter();
 initDLReportBtn();
-
+*/
+initGreetings();
+initGastooMessages();
 } catch (error) {
   console.error(error);
   return window.location.href = '/login'

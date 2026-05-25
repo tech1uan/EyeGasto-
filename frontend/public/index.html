@@ -24,7 +24,7 @@
 
 </head>
 
-<body class="bg-[#0d1b3e] overflow-x-hidden p-3 flex items-center justify-center min-h-screen">
+<body class="bg-[#0d1b3e] overflow-x-hidden flex min-h-screen flex-col relative">
 
   <div class="bubble bubble-1"></div>
   <div class="bubble bubble-2"></div>
@@ -40,258 +40,154 @@
   <div class="star star-6"></div>
   <div class="star star-7"></div>
 
+   <!--Flaating Navbar-->
 
+ <div class=" fixed bottom-5 right-4 left-4 w-[90%] px-1 py-3  bg-white rounded-[10px] z-10 flex justify-evenly items-center">
+    <button class="active nav-btn flex flex-col text-gray-400 items-center gap-1" data-section="home" data-title="Home">
+    <i class="fa-solid fa-house text-lg"></i>
+    <span class="text-[10px] font-['DM_Sans'] font-bold">Home</span>
+   </button>
+  <button class=" nav-btn flex flex-col items-center gap-1 text-gray-400" data-section="expenses" data-title="Expenses">
+    <i class="fa-solid fa-receipt text-lg"></i>
+    <span class="text-[10px] font-['DM_Sans']">Expenses</span>
+  </button>
+  
+<div class="flex flex-col items-center -mt-8">
+  <div class="bg-white rounded-full p-1.5 ">
+    <button class="w-14 h-14 rounded-full bg-[#23736F] flex items-center flex-col relative shadow-lg">
+      <img 
+        src="images/gastoo-assets/gastoo_head_nav.png" 
+        alt="Gastoo's head navigation"
+      >
+      <i class="absolute bottom-0.5 fa-solid fa-plus text-white text-[10px]"></i>
+    </button>
+  </div>
+</div>
+  <button class=" nav-btn flex flex-col items-center gap-1 text-gray-400" data-section="analytics" data-title="Analytics">
+    <i class="fa-solid fa-chart-pie text-lg"></i>
+    <span class="text-[10px] font-['DM_Sans']">Analytics</span>
+  </button>
 
-  <div class="grid grid-cols-1 gap-8 border-black place-items-center xl:grid-cols-4 xl:auto-rows-min super-container">
+  <button class="nav-btn  flex flex-col items-center gap-1 text-gray-400" data-section="profile" data-title="Profile">
+    <i class="fa-solid fa-user text-lg"></i>
+    <span class="text-[10px] font-['DM_Sans']">Profile</span>
+  </button>
+ </div>
 
-    <!-- Header Section -->
-    <div class="reveal-1 w-full flex flex-row px-3 pt-10 items-center justify-center xl:col-span-4 min-w-[330px] gap-2">
-      <img class="w-[100px] flex-shrink-0 h-auto" src="./images/gastoo-logo.png" alt="Eye Gasto logo">
-      <div class="flex flex-col items-center justify-center">
-        <h1 class="font-['Lilita_One'] text-white text-[clamp(2.6rem,5vw,3.5rem)]  text-outline-black">GASTOO!</h1>
-        <p class="text-white font-['DM_Sans'] text-center text-sm text-outline-black text-[clamp(0.75rem,2vw,1rem)]">
-          Track your expenses and savings.
-        </p>
+    <div class="home-navbar flex justify-between w-full p-3">
+      <div class="flex items-center gap-3">
+        <i class = "fa-solid fa-bars text-white text-2xl"></i>
+        <p class="nav-title text-white font-['DM_Sans']"></p>
+      </div>
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-bell text-white"></i>
+        <img src="images/user.png" class="rounded-2xl w-8 h-8" alt="User default avatar"></div>
+      </div>
+   
+    <div class="hidden section home-section hidden">
+  
+    <div class="w-full mt-5">
+      <div class="greeting text-white text-m font-['DM_Sans'] flex gap-1 justify-end w-full px-2"></div>
+      <div class="bg-custom w-full h-30 flex items-center justify-between px-2">
+      <div class="gastoo-container  w-[110px] h-[110px] flex-none shrink-0">
+      </div>
+
+      <div class="relative w-full h-20">
+         <div class="bg-white absolute bottom-4 -left-0.5 h-5 w-5 rotate-45 z-0"> </div>
+       <div class="font-['DM_Sans'] bg-white flex-1 w-full h-full rounded-lg relative z-10 shadow-2xl p-2">
+        <div class="font-bold font-['DM_Sans ] text-[#23736F] ">I'm Gastoo!</div>
+        <div class="gastoo-greet font-['DM_Sans ] text-black text-sm" data-type="home"></div>
+      </div>
+      <div>
+        
+      </div>
+    </div>
+    </div>
+
+    <div class="xl:col-span-4 flex justify-center gap-8 flex-wrap">
+      
+      <div class=" reveal-3 mt-20 w-full relative flex items-center justify-center bg-gradient-to-b from-white from-0% to-[#45E7EE] to-100% pt-22 pb-5 rounded-[20px] px-4">
+
+        <div class="grid grid-cols-2 gap-2">
+          <div class="expenses-category-container bg-white shadow-md rounded-2xl p-1">
+            <h1 class="text-black font-['DM_Sans'] font-bold text-[12px] text-center">EXPENSES BY CATEGORY</h1>
+
+            <div class="chart-card-container">
+           
+              <canvas id="expensesChart">
+
+              </canvas>
+            </div>
+
+            <div id="expensesLegend"></div>
+          </div>
+
+          <div class="amounts-container flex flex-col items-center justify-evenly">
+            
+            <div class="budget-container bg-white shadow-md rounded-2xl w-full">
+
+              <div class="w-full p-3">
+
+              <h1 class="font-['DM_Sans'] text-black font-bold text-[12px] tracking-widest opacity-[50%]">TODAY'S BUDGET</h1>
+              <div class="budgetAmounts font-bold flex items-center font-['DM_Sans']">
+                
+              </div>
+              <div class="bar-track bg-[#e5e7eb] rounded-lg h-[8px] w-full">
+                <div class="bar-fill h-full rounded-lg bg-[#22c55e] w-[0%] transition-all duration-700 ease-in" id="budgetBar"></div>
+              </div>
+            </div>
+
+           </div>
+
+            <div class="total-expenses-container bg-white shadow-md rounded-2xl p-3 w-full">
+              <h1 class="font-['DM_Sans'] text-black font-bold text-[12px]  tracking-widest opacity-[50%]">TOTAL EXPENSES</h1>
+              <p class="total-expenses font-bold text-2xl text-[#079F9F] font-['DM_Sans']"></p>
+            </div>
+          </div>
+
+         <div class="expenses-super-container col-span-2 w-full">
+              <div class="expenses-header flex justify-between">
+                <h1 class="font-bold text-black opacity-[50%] tracking-widest">YOUR EXPENSES</h1>
+                <a href="">See All</a>
+              </div>
+            
+            <div class="expenses-main-container bg-[#EBF8F7]/65 shadow-md rounded-xl p-2 h-[300px] overflow-y-auto">
+              <div class="date-today flex justify-between font-['DM_Sans']">
+
+              </div>
+              <div class="expenses-container">
+                
+              </div>
+            </div>
+
+            </div>
+
+        </div>
+        
+        <!-- Savings Vault Card -->
+      <div class="reveal-2 outer-card max-w-[550px] w-[90%] xl:w-[500px] p-3 absolute -top-15 ">
+       
+
+          <i class="fa-solid fa-receipt js-receipt-btn text-gray-500 text-xl absolute top-2 right-2 cursor-pointer"></i>
+          <div class="flex items-start justify-evenly w-full text-white">
+           
+          <div class="flex flex-col">
+            <h1 class="font-['DM_Sans'] font-bold w-full text-white text-sm sm:text-base">Total Saved Money</h1>
+            <p
+              class="savings-balance font-['DM_Sans'] font-bold text-[25px]  md:text-3xl w-[90%] truncate"> 
+            </p>
+        
+          </div>
+    
+          <div class="flex items-center justify-center w-[40%] sm:w[100%]">
+        <img class=" w-full min-w-[130px] max-w-[150px]" src="./images/money-bag.png" alt="Money bag big logo">
+          </div>
+        </div>
+      </div>
+
       </div>
     </div>
     
-    <button class="reveal-1 absolute top-3 right-5 p-1 px-2 eye-gasto-button rounded z-10" id="dl-button">
-      <i class="fa-solid fa-download cursor-pointer"></i>
-    </button>  
-    <button class="reveal-1 absolute top-3 right-3.5 p-1 px-2 eye-gasto-button rounded z-10" id="logout-btn">
-      <i class="fa-solid fa-right-from-bracket cursor-pointer"></i>
-    </button>
-
-
-    <div class="xl:col-span-4 flex justify-center gap-8 flex-wrap">
-
-
-      <!-- Savings Vault Card -->
-      <div class="reveal-2 outer-card max-w-[550px] w-[90%] xl:w-[500px] p-3 sm:p-4">
-        <div class="flex items-start gap-2 pb-2">
-          <img src="images/savings.png" alt="Savings logo" class="w-10">
-
-          <div class="flex flex-col">
-            <h1 class="font-['Lilita_One'] text-white text-xl text-outline-black leading-tight">
-              Savings Vault
-            </h1>
-            <p class="text-[11px] sm:text-xs text-white/80 font-['DM_Sans'] leading-snug">
-              Money is safe here. Not used for expenses.
-            </p>
-          </div>
-        </div>
-        <div class="inner-card js-savings-container relative p-3">
-          <i class="fa-solid fa-receipt js-receipt-btn text-gray-500 text-xl absolute top-2 right-2 cursor-pointer"></i>
-          <div class="flex flex-col items-start justify-center w-[60%] p-2">
-            <h1 class="font-['DM_Sans'] font-bold w-full text-xs sm:text-base">Current Savings</h1>
-            <p
-              class="savings-balance text-[#079F9F] font-['DM_Sans'] font-bold text-[21px] sm:text-[28px] md:text-3xl w-[90%] truncate"> 
-            </p>
-            <button
-              class=" add-withdraw-money eye-gasto-button text-white flex items-center p-2 gap-1 text-[11px] rounded-2xl  drop-shadow-[0_4px_2px_rgba(0,0,0,0.56)] cursor-pointer sm:text-sm md:text-base font-['DM_Sans']"><img
-                src="./images/mini-coin.png" alt="Mini coin logo"
-                class="w-[24px] filter drop-shadow-[0_0_2px_rgba(0,0,0,0.38)]">Manage Savings
-            </button>
-          </div>
-
-          <div class="flex items-center justify-center w-[40%] sm:w[100%]">
-        <img class=" w-full min-w-[80px] max-w-[150px]" src="./images/moneybag-big.png" alt="Money bag big logo">
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="reveal-3 setBudgetContainer flex items-center justify-center w-[90%] sm:flex max-w-[550px] min-h-[200px] xl:w-[500px]">
-
-        <div class="outer-card w-full p-3 py-5">
-          <div class="flex items-start gap-2 pb-2">
-            <img src="images/budget.png" alt="Budget logo" class="w-9">
-
-            <div class="flex flex-col">
-              <h1 class="font-['Lilita_One'] text-white text-xl text-outline-black leading-tight">
-                Spending Budget
-              </h1>
-              <p class="text-[11px] sm:text-xs text-white/80 font-['DM_Sans'] leading-snug">
-                Expenses will subtract from this amount.
-              </p>
-            </div>
-          </div>
-          <div class="inner-card py-7 px-3">
-
-            <div class="flex items-center justify-center w-[40%]">
-              <img class=" w-full min-w-[50px] max-w-[120px]" src="images/budgeting.png" alt="Budgeting logo">
-            </div>
-            <div class="flex flex-col items-start justify-center w-[60%] p-2">
-              <h1 class="font-['DM_Sans'] font-bold w-full text-xs sm:text-base">Current Budget</h1>
-              <p
-                class="currentBudget text-[#079F9F] font-['DM_Sans'] font-bold text-[21px] sm:text-[28px] md:text-3xl w-[90%] truncate">
-              </p>
-              <button
-                class="eye-gasto-button text-white flex items-center p-2 px-4 gap-1 text-[11px] rounded-2xl  drop-shadow-[0_4px_2px_rgba(0,0,0,0.56)] cursor-pointer sm:text-sm md:text-base font-['DM_Sans'] w-auto "
-                id="js-set-budget"><img src="./images/mini-coin.png" alt="Mini coin logo"
-                  class="w-[24px] filter drop-shadow-[0_0_2px_rgba(0,0,0,0.38)]">Set Budget</button>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      <!-- Add/Edit Budget -->
-      <div class="js-set-budget-modal w-full fixed inset-0 bg-black/50 z-50 flex hidden items-center justify-center">
-        <div class="js-close-budget-modal absolute top-5 right-5 text-white text-xl">
-          <i class="fa-solid fa-x cursor-pointer"></i>
-        </div>
-
-        <div class="outer-card max-w-[500px] p-4">
-          <div class="inner-card rounded-xl p-6 flex flex-row items-center gap-4 w-full">
-
-            <div class="flex flex-col justify-between gap-4 w-[50%]">
-              <div class="relative">
-                <input type="text" id="budget-amount" class="js-amountInput peer input-cozy" placeholder="Amount">
-                <label for="amount" class="label-cozy">Amount</label>
-              </div>
-            </div>
-
-            <div class="flex flex-col justify-between gap-4 w-[50%]">
-              <button
-                class="eye-gasto-button flex justify-center p-2 gap-1 text-xs rounded-2xl w-full text-outline-black-38 drop-shadow-[0_2px_2px_rgba(0,0,0,0.56)] cursor-pointer sm:text-base"
-                id="js-add-budget">
-                Add Budget
-              </button>
-
-              <button
-                class="eye-gasto-button text-white flex justify-center p-2 gap-1 text-xs rounded-2xl w-full text-outline-black-38 drop-shadow-[0_2px_2px_rgba(0,0,0,0.56)] cursor-pointer sm:text-base"
-                id="js-edit-budget">
-                Edit Budget
-              </button>
-
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="reveal-4 xl:col-span-4 flex items-start justify-center gap-8 flex-wrap">
-        <!-- Your Expenses Card -->
-        <div
-          class="outer-card bg-[#4FECF3] rounded-2xl w-[90%] md:w-[45%] max-w-[350px] min-h-[350px] flex flex-col xl:w-[350px]">
-
-          <div class="flex items-start gap-2 px-3 pt-3 pb-1">
-            <img src="images/wallet.png" alt="Expenses logo" class="w-9">
-
-            <div class="flex flex-col">
-              <h1 class="font-['Lilita_One'] text-white text-xl text-outline-black leading-tight">
-                Your Expenses
-              </h1>
-              <p class="text-[11px] sm:text-xs text-white/90 font-['DM_Sans'] leading-snug">
-                All expenses you add will appear here.
-              </p>
-            </div>
-          </div>
-          <div class="inner-card rounded-r-none rounded-l-none flex flex-1 flex-col rounded-b-xl justify-start ">
-              <div class = "flex flex-row justify-between px-3 py-2">
-                    <h1 class = "date-today"></h1>
-                    <select name="filter-expenses" id="filter-expenses">
-                      <option value="today">Today</option>
-                      <option value="last7">Last 7 Days</option>
-                      <option value="alltime">All Time</option>
-                    </select>
-              </div>
-            <div
-              class="expenses-container flex flex-col gap-3 overflow-y-auto w-full h-full max-h-[262px] items-center justify-center py-4 px-2 flex-1 ">
-              <h1 class="font-['DM_Sans'] text-center">
-                No expenses today yet. Start tracking now 💸.
-              </h1>
-            </div>
-          </div>
-        </div>
-
-        <!-- Total Expenses Card  -->
-        <div class="reveal-5 outer-card max-w-[350px] min-h-[350px] w-[90%] md:w-[45%] flex flex-col xl:w-[350px] p-4">
-          <div class="inner-card flex flex-col h-full flex-1 p-3">
-            <h1 class="font-bold font-[DM_Sans] w-full text-center">Total Expenses</h1>
-
-            <div class="total-expenses-container">
-              <h1 class="total-expenses w-full text-center text-[#079F9F] font-['DM_Sans'] font-bold text-3xl">P0.00
-              </h1>
-            </div>
-
-            <div class="font-semibold font-[DM_Sans] w-full">Recent Expenses:</div>
-            <div class="recent-expenses-container flex flex-col items-center">
-
-            </div>
-
-            <div class="biggest-expense-container flex gap-3 flex-col items-center">
-
-            </div>
-          </div>
-        </div>
-
-
-        <!-- Expenses Chart Card (Initially Hidden) -->
-        <div
-          class="reveal-6 chart-card-container outer-card max-w-[350px] min-h-[280px] w-[90%] md:w-[45%] flex flex-col gap-2 xl:w-[350px] p-4">
-
-          <div class="inner-card rounded-2xl py-6 shadow-inner flex flex-col gap-10 h-full">
-            <div class="title-container">
-              <h3 class="text-xl font-bold text-gray-800 text-center w-full">
-                Expenses by Category
-              </h3>
-            </div>
-            <div class="w-full flex items-center justify-center">
-              <canvas id="expensesChart"></canvas>
-            </div>
-          </div>
-          <div id="expensesLegend" class="bg-white backdrop-blur-sm rounded-xl p-2 space-y-2 hidden"></div>
-
-        </div>
-      </div>
-    </div>
-
-
-    <!-- Floating Add Expense Button -->
-    <div
-      class="reveal-6 fixed bottom-5 right-5 z-11 rounded-[100%] eye-gasto-button js-show-add-expense p-4 cursor-pointer">
-      <img src="./images/coin-button.png" alt="Coin button logo " class="w-[clamp(35px,5vw,45px)] 
-      h-[clamp(30px,5vw,40px)] ">
-    </div>
-
-    <!-- Add/Withdraw Modal -->
-    <div
-      class="add-withdraw-option-container w-full fixed inset-0 bg-black/50 z-50 flex hidden items-center justify-center">
-      <div class="js-close-add-withdraw absolute top-5 right-5 text-white text-xl">
-        <i class="fa-solid fa-x cursor-pointer"></i>
-      </div>
-
-      <div class="outer-card max-w-[500px] p-4">
-        <div class="inner-card rounded-xl p-6 flex flex-row items-center gap-4 w-full">
-
-          <div class="flex flex-col justify-between gap-4">
-            <div class="relative">
-              <input type="text" id="description" class="js-description peer input-cozy" placeholder="Description">
-              <label for="description" class="label-cozy">Description</label>
-            </div>
-            <div class="relative">
-              <input type="text" id="amount" class="js-amountInput peer input-cozy" placeholder="Amount">
-              <label for="amount" class="label-cozy">Amount</label>
-            </div>
-          </div>
-
-          <div class="flex flex-col justify-between gap-4">
-            <button
-              class="eye-gasto-button text-white flex justify-center p-2 gap-1 text-xs rounded-2xl w-full text-outline-black-38 drop-shadow-[0_2px_2px_rgba(0,0,0,0.56)] cursor-pointer js-add-button sm:text-base ">
-              Add Money
-            </button>
-            <button
-              class=" js-withdraw-button eye-gasto-button text-white flex items-center p-2 gap-1 text-xs rounded-2xl
-              w-full text-outline-black-38 drop-shadow-[0_2px_2px_rgba(0,0,0,0.56)] cursor-pointer sm:text-base ">
-              Withdraw Money
-            </button>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
     <!-- Transactions Modal -->
     <div
       class=" transactions-container w-full fixed inset-0 bg-black/50 z-50 flex flex-col items-center hidden
@@ -422,8 +318,29 @@
           </div>
         </div>
 
-
       </div>
+
+    <div class="hidden section expenses-section">
+
+      <div class=" flex flex-col gap-3">
+        <h1 class="text-white font-bold font-['DM_Sans'] text text-2xl text-center">Expenses</h1>
+        <div class="bg-custom w-full h-30 flex items-center justify-between px-2">
+         <div class="gastoo-container  w-[110px] h-[110px] flex-none shrink-0">
+        </div>
+
+        <div class="relative w-full h-20">
+         <div class="bg-white absolute bottom-4 -left-0.5 h-5 w-5 rotate-45 z-0"> </div>
+       <div class="font-['DM_Sans'] bg-white flex-1 w-full h-full rounded-lg relative z-10 shadow-2xl p-2">
+        <div class="font-bold font-['DM_Sans ] text-[#23736F] ">I'm Gastoo!</div>
+        <div class="gastoo-greet font-['DM_Sans ] text-black text-sm" data-type="expenses"></div>
+      </div>
+      <div>
+        
+      </div>
+      </div>
+      </div>
+    
+    </div>
 
       <div id="notif-container"></div>
 

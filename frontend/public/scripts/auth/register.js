@@ -1,3 +1,5 @@
+import { hideLoading, showLoading } from "../ui/loading.js";
+
 const button = document.getElementById('register-btn');
 
 
@@ -6,6 +8,7 @@ const username = document.getElementById('username-input').value
 const email = document.getElementById('email-input').value;
 const password = document.getElementById('password-input').value
 const confirmPassword = document.getElementById('confirm-password-input').value;
+const registerBtn = document.getElementById('register-btn');
 
 
 const message = document.getElementById('message');
@@ -28,6 +31,8 @@ if(!username || !email || !password || !confirmPassword) {
     
   return;
 }
+
+showLoading(registerBtn);
 
 localStorage.setItem('email', email);
 
@@ -60,6 +65,7 @@ try {
       success.style.display = 'none';
     },2000)
   }} catch (error) {
+  hideLoading(registerBtn);
   console.log(error);
 }
 }

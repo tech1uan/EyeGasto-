@@ -273,7 +273,6 @@ input:-webkit-autofill:focus{
 
 
 
-
 .gastoo-container {
    background-image: url('/images/gastoo-assets/idle.png');
    background-repeat: no-repeat;
@@ -291,4 +290,25 @@ input:-webkit-autofill:focus{
   } to {
     background-position: -14080px 0;
   }
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid white;
+  border-top: 2px solid transparent;
+  border-radius: 100%;
+  display: inline-block;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.active {
+  color: #23736F;
+
 }

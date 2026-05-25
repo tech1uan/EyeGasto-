@@ -1,27 +1,34 @@
+import { hideLoading, showLoading } from "../ui/loading.js";
 
 const button = document.getElementById('login-btn')
+let messageTimer = null;
+
+
+function showMessage(el,text, duration = 3000) {
+    clearTimeout(messageTimer);
+    el.style.display = 'block';
+    el.innerText = text,
+    messageTimer = setTimeout(() => {
+      el.style.display = 'none';
+      el.innerText = '';
+    }, duration);
+  }
+
+
 async function login() {
+  
   const login = document.getElementById('login-input').value;
   const password = document.getElementById('password-input').value;
   const message = document.getElementById('message');
   const success = document.getElementById('success');
-  
-  message.style.display = 'none';
-  message.innerText = '';
-  success.style.display = 'none';
-  success.innerText = '';
+  const loginBtn = document.getElementById('login-btn');
 
   if(!login || !password) {
-    message.style.display = 'block';
-    message.innerText = 'Please fill in all fields'
-
-  setTimeout(() => {
-    message.style.display = 'none';
-    message.innerText = '';
-  }, 2000)
-
-  return;
+    showMessage(message, 'Please fill in all fields', 2000);
+    return;
   }
+
+  showLoading(loginBtn);
 
   try {
     const res = await fetch('/auth/login', {
@@ -35,25 +42,25 @@ async function login() {
 
     const data = await res.json();
 
+     if(res.status === 429) {
+      showMessage(message, data.msg, 5000);
+      return;
+     }
+
+
     if(!res.ok) {
-      message.style.display = 'block';
-      message.innerText = `${data.msg}`
-      setTimeout(() => {
-        message.style.display = 'none'
-      }, 3000);
+     showMessage(message, data.msg, 5000)
+
     } else {
-      success.style.display = 'block';
-      success.innerText = `Logged in successfully!`;
-      setTimeout(() => {
-        success.style.display = 'none';
-      },3000);
-     
+      showMessage(success, 'Logged in successfully!', 3000);
      window.location.href = '/index.html'
     }
     
 
   } catch (error) {
     console.log(error);
+  } finally {
+       hideLoading(loginBtn);
   }
 }
 

@@ -103,8 +103,8 @@ export let budget = {
    const data = await getUserBudget();
    if(!data) return;
 
-   this.budget = data.budget.remaining_budget;
-   this.originalBudget = data.budget.original_amount;
+   this.budget = data.remainingBudget;
+   this.originalBudget = data.originalBudget;
     
    return {
     budget: this.budget,

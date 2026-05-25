@@ -9,16 +9,13 @@ budgetRouter.get('/summary/today', authMiddleware, async (req,res,next) => {
   try {
      const {userId} = req.user
 
-     if(!userId) {
-      const error = new Error('Invalid or missing token!');
-      error.status = 401;
-      return next(error);
-     }
-
      const budget = await getUserBudgetSummaryToday(userId)
+
+
     res.status(200).json({
       success:true,
-      budget
+      remainingBudget: budget.remaining_budget,
+      originalBudget: budget.original_amount
     })
   } catch (error) {
     next(error)

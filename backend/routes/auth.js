@@ -9,10 +9,31 @@ import validate from '../middleware/validate.js';
 import {matchedData} from 'express-validator';
 import { emailValidator, loginIdentifierValidator, loginPasswordValidator,registerPasswordValidator, registerUsernameValidator } from '../validators/authValidators.js';
 import transporter from '../services/mailer.js';
+import rateLimit from 'express-rate-limit';
 
 
 export const authRouter = express.Router();
 const isProduction = process.env.NODE_ENV === 'production';
+
+
+const loginLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 5,
+  message: {msg:'Too many login attempts. Try again later.'},
+});
+
+const verifyLimiter = rateLimit({
+  windowMs: 10 * 60  * 1000,
+  max: 3,
+  message: {msg: 'Too many verification attempts.'}
+})
+
+const resendLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 3,
+  message: {msg: 'Too many resend attempts.'},
+})
+
 
 authRouter.post('/register', [... registerUsernameValidator, ...emailValidator, ...registerPasswordValidator], validate,
   async (req,res,next) => {
@@ -52,7 +73,7 @@ try {
 
 });
 
-authRouter.post('/verify-email', async (req,res,next) => {
+authRouter.post('/verify-email', verifyLimiter, async (req,res,next) => {
   const {email, code} = req.body;
    
   try {
@@ -83,7 +104,7 @@ authRouter.post('/verify-email', async (req,res,next) => {
  }
 })
 
-authRouter.post('/resend-code', async (req,res,next) => {
+authRouter.post('/resend-code', resendLimiter, async (req,res,next) => {
   const {email} = req.body;
 
   try {
@@ -134,7 +155,7 @@ authRouter.post('/resend-code', async (req,res,next) => {
   }
 })
 
-authRouter.post('/login', [ 
+authRouter.post('/login', loginLimiter, [ 
   ...loginIdentifierValidator,
     ...loginPasswordValidator],validate,
   

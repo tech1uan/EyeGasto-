@@ -7,7 +7,7 @@ export async function updateExpensesChart() {
 
   const expenses = await getCurrentExpenses();
   
-  const canvasParent = document.querySelector('.chart-card-container .inner-card'); 
+  const canvasParent = document.querySelector('.chart-card-container'); 
   const legendDiv = document.getElementById('expensesLegend');
 
   const noExpenses = !expenses || expenses.length === 0;
@@ -47,7 +47,7 @@ function showNoDataMessage(canvasParent, legendDiv) {
   if (legendDiv) legendDiv.innerHTML = '';
 }
 
-function showChart(expenses, canvasParent, legendDiv) {
+export function showChart(expenses, canvasParent, legendDiv) {
   const grouped = groupExpensesByCategory(expenses);
 
   const categoryNames = Object.keys(grouped);
@@ -152,12 +152,12 @@ function createLegend(grouped, safeTotal, legendDiv) {
 
     html += `
       <div class="flex items-center justify-between py-3 px-4 hover:bg-white/30 rounded-xl transition-all duration-200 cursor-pointer font-['DM_Sans']">
-        <div class="flex items-center gap-3 flex-1">
-            <div style="width: 16px; height: 16px; border-radius: 50%; background-color: ${color}; box-shadow: 0 1px 2px rgba(0,0,0,0.1);"></div>
-          <span class="text-gray-800 font-semibold text-sm mr-3">${categoryName}</span>
+        <div class="flex items-center justify-center flex-1">
+            <div style="width: 10px; margin-right:2px; height: 10px; border-radius: 50%; background-color: ${color}; box-shadow: 0 1px 2px rgba(0,0,0,0.1);"></div>
+          <span class="text-gray-800 font-semibold text-[11px] mr-3">${categoryName}</span>
         </div>
-        <div class="flex items-center gap-3">
-          <span class="text-gray-900 font-bold text-sm">₱${amount.toLocaleString()}</span>
+        <div class="flex items-center">
+          <span class="text-gray-900 font-bold text-[12px]">₱${amount.toLocaleString()}</span>
           <span class="text-gray-600 text-xs bg-white/50 px-2 py-1 rounded-full">${percent}%</span>
         </div>
       </div>

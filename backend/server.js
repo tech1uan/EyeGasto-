@@ -1,4 +1,7 @@
 import express from 'express';
+import dotenv from 'dotenv';
+
+dotenv.config();
 import cors from 'cors';
 import router from './routes/central.js';
 import errorHandler from './middleware/errorHandler.js';

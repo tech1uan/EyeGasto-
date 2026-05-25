@@ -13,6 +13,8 @@ export async function renderExpensesHTML(expenses) {
   
    removeJustifyCenter(container);
 
+   console.log('Expenses' ,  expenses[0].logo);
+
 container.innerHTML = expenses.map(expense => `
   <div class="group expense-card relative flex w-full items-center rounded-xl p-2 py-3 bg-white gap-2.5 shadow-[0_4px_4px_rgba(0,0,0,0.25)] hover:shadow-[0_6px_6px_rgba(0,0,0,0.3)] transition-all">
     
@@ -34,11 +36,23 @@ container.innerHTML = expenses.map(expense => `
     <h1 class="text-[#079F9F] font-['DM_Sans'] flex-shrink-0 font-bold text-sm sm:text-lg whitespace-nowrap">
       ${formatToPeso(expense.amount)}
     </h1>
-    
-    <i class="fa-solid fa-trash js-trash-button cursor-pointer flex-shrink-0 hover:text-red-600 transition-colors" data-id="${expense.expense_id}" data-name ="${expense.description}"></i>
 
-    <i class="fa-solid fa-pen js-edit-button cursor-pointer flex-shrink-0 hover:text-blue-600 transition-colors" data-id="${expense.expense_id}" data-name ="${expense.description}"></i>
 
+      <div class="relative js-show-button cursor-pointer">
+          <i class="fas fa-ellipsis-h pointer-events-none"></i>
+          
+          <div class="hidden bg-white rounded-sm absolute top-0 right-0 shadow-md z-10 js-dropdown flex">
+              <i class="fa-solid fa-trash js-trash-button cursor-pointer p-2 hover:text-red-600 transition-colors" 
+                data-id="${expense.expense_id}" 
+                data-name="${expense.description}">
+              </i>
+              <i class="fa-solid fa-pen js-edit-button cursor-pointer p-2 hover:text-blue-600 transition-colors" 
+                data-id="${expense.expense_id}" 
+                data-name="${expense.description}">
+              </i>
+          </div>
+      </div>
+          
   </div>
 `).join('');
 
