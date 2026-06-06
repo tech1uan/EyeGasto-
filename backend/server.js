@@ -32,7 +32,6 @@ server.use(express.json())
 
 server.use(express.static(publicPath));
 
-
 server.get('/login', (req,res) => {
   res.sendFile(path.join(publicPath,'login.html'))
 })
@@ -48,7 +47,6 @@ server.get('/app/auth', authMiddleware, (req,res) => {
 server.use('/', router);
 server.use(notFound);
 server.use(errorHandler);
-
 
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`Server is running on port ${PORT}`)

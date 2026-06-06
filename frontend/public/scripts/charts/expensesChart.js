@@ -34,9 +34,9 @@ function showNoDataMessage(canvasParent, legendDiv) {
       overlay = document.createElement('div');
       overlay.className = 'no-data-overlay flex flex-col items-center justify-center absolute inset-0 bg-white/10';
       overlay.innerHTML = `
-        <div class="text-6xl mb-4">📊</div>
+        <div class="text-4xl mb-4">📊</div>
         <p class="text-gray-600 font-semibold">No data yet</p>
-        <p class="text-gray-500 text-sm mt-2">Add expenses to see your chart</p>
+        <p class="text-gray-500 text-sm mt-2 text-center">Add expenses to see your chart</p>
       `;
       canvasParent.style.position = 'relative';
       canvasParent.appendChild(overlay);
@@ -134,10 +134,6 @@ export function showChart(expenses, canvasParent, legendDiv) {
   createLegend(grouped, safeTotal, legendDiv);
   }
 
-
-
-
-
 function createLegend(grouped, safeTotal, legendDiv) {
   if (!legendDiv) return;
 
@@ -151,14 +147,14 @@ function createLegend(grouped, safeTotal, legendDiv) {
 
 
     html += `
-      <div class="flex items-center justify-between py-3 px-4 hover:bg-white/30 rounded-xl transition-all duration-200 cursor-pointer font-['DM_Sans']">
+      <div class="flex items-center px-2 hover:bg-white/30 rounded-xl transition-all duration-200 cursor-pointer font-['DM_Sans']">
         <div class="flex items-center justify-center flex-1">
-            <div style="width: 10px; margin-right:2px; height: 10px; border-radius: 50%; background-color: ${color}; box-shadow: 0 1px 2px rgba(0,0,0,0.1);"></div>
-          <span class="text-gray-800 font-semibold text-[11px] mr-3">${categoryName}</span>
+            <div style="width: 8px; margin-right:2px; height: 8px; border-radius: 50%; background-color: ${color}; box-shadow: 0 1px 2px rgba(0,0,0,0.1);"></div>
+          <span class="text-gray-800 font-semibold text-[9px] mr-3">${categoryName}</span>
         </div>
         <div class="flex items-center">
-          <span class="text-gray-900 font-bold text-[12px]">₱${amount.toLocaleString()}</span>
-          <span class="text-gray-600 text-xs bg-white/50 px-2 py-1 rounded-full">${percent}%</span>
+          <span class="text-gray-900 font-bold text-[9px]">₱${amount.toLocaleString()}</span>
+          <span class="text-gray-600 text-[9px] bg-white/50 px-2 py-1 rounded-full">${percent}%</span>
         </div>
       </div>
     `;

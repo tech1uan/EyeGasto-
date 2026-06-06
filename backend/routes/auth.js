@@ -163,7 +163,6 @@ authRouter.post('/login', loginLimiter, [
     async (req,res,next) => {
     const {login,password} = matchedData(req);
 
-      console.log(password);
   try {
       const user = login.includes('@') ?
       await getUserByEmail(login) : await getUserByUsername(login);

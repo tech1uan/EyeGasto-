@@ -13,19 +13,22 @@ import { budget } from "../../data/budget.js";
 
 
 export function initEditExpense () {
-   const container =  document.querySelector('.expenses-container');
-   container.addEventListener('click', (e) => {
-    if (e.target.classList.contains("js-edit-button")) {
-      const id = Number(e.target.dataset.id);
+   const containers =  document.querySelectorAll('.expenses-container, .expenses-container-b ');
+   containers.forEach(c => {
+    c.addEventListener('click', (e) => {
+    const button = e.target.closest('.js-edit-button');
+
+    if(button) {
+      const id =  Number(button.dataset.id);
       openEditForm(id);
     }
+   })
    })
 }
 
 async function openEditForm(id) {
   
   const expense = getExpensesFromCache(id);
-  console.log(expense.category);
   document.getElementById('edit-expense-description').value = expense.description;
   document.getElementById('edit-expense-amount').value = expense.amount
   document.getElementById('edit-category').value = expense.category_id;
@@ -38,12 +41,14 @@ async function openEditForm(id) {
   }
  
   modal.classList.remove("hidden");
+  modal.classList.add("flex");
    
   const saveButton = document.getElementById('js-save-edit');
-
+  const editExpenseInnerContainer = document.querySelector('.edit-expense-inner-container');
  saveButton.onclick = async () => {
+    modal.classList.add('hidden');
   confirmMessage(`Do you wish to save this changes to <strong>${expense.description}</strong>?`, async() => {
-  modal.classList.add('hidden');
+  modal.classList.remove("flex");
   
   const {expense_id} = expense;
   const updatedDescription = document.getElementById('edit-expense-description').value.trim();
@@ -74,7 +79,8 @@ async function openEditForm(id) {
   }
 
   const expenses = await getCurrentExpenses();
-  renderExpensesHTML(expenses);
+  renderExpensesHTML(expenses, "home");
+  renderExpensesHTML(expenses,"expenses")
 
   await Promise.all([
   updateTotalExpenses(),
@@ -87,3 +93,4 @@ async function openEditForm(id) {
   })
  };
 }
+

@@ -8,34 +8,51 @@ import { getCurrentExpenses } from "./viewExpense.js";
 import { budget } from "../../data/budget.js";
 import { updateExpensesChart } from "../../charts/expensesChart.js";
 import { updateRecentExpenses } from "./recentExpenses.js";
+import { showMessage } from "../../withdrawals/addWithdraw.js";
+   
 
-  export function initAddExpenseOption() {
-    const showButton = document.querySelector('.js-show-add-expense');
-    const modal = document.querySelector('.add-expense-option-container');
-    const closeButton = document.querySelector('.js-close-add-expense');
-
-    showButton.addEventListener('click', () => modal.classList.remove('hidden'));
-    closeButton.addEventListener('click', () => modal.classList.add('hidden'));
+   export async function initCategoryShortcut() {
     
-  }
+    const container = document.querySelector(".category-container");
+    const select = document.getElementById("category");
 
-  export function hideAddExpense() {
-    document.querySelector('.add-expense-option-container').classList.add('hidden');
-  }
+    container.addEventListener('click', (e) => {
+
+      const button = e.target.closest('.js-category-btn');
+      
+      if(!button) return;
+
+      select.value = button.value;
+
+      document.querySelectorAll('.js-category-btn').forEach(btn => {
+        btn.classList.remove('category-active')
+      })
+
+      button.classList.add('category-active');
+
+    });;
+     
+   
+   }
 
   export async function handleAddExpense () {
 
     const descriptionInput = document.getElementById('expense-description');
     const amountInput = document.getElementById('expense-amount');
     const categorySelect = document.getElementById('category');
+    const error = document.getElementById('error-expense');
+    const success = document.getElementById('success-expense');
 
 
     const description = descriptionInput.value.trim();
     const amount =  Number(amountInput.value);
     const categoryId = Number(categorySelect.value);
-
-    if (!description || !amount || !categoryId) 
-    return alert("Please fill all fields!");
+  
+    if (!description || !amount || !categoryId) {
+      showMessage(error, 'Please fill in all fields');
+      return
+    }
+    
     
     confirmMessage(`Are you sure you want to add <strong>${description}</strong> as your expense?`, async () => {
     const data = await addExpense(description,amount,categoryId);
@@ -54,55 +71,50 @@ import { updateRecentExpenses } from "./recentExpenses.js";
     updateRecentExpenses(),
     updateExpensesChart()
     ])
-      renderExpensesHTML(expenses),
+      renderExpensesHTML(expenses, "home")
+      renderExpensesHTML(expenses, "expenses")
     budget.checkBudgetStatus();
 
     descriptionInput.value = '';
     amountInput.value = '';
     categorySelect.value = '';
 
-    hideAddExpense();
-  })
-  }
-
-
-  /*
-  export function handleAddExpenseDesktop () {
-    const descriptionInput = document.getElementById('expense-description-desktop');
-    const amountInput = document.getElementById('expense-amount-desktop');
-    const categorySelect = document.getElementById('category-desktop');
-
-
-  const description = descriptionInput.value.trim();
-  const amount =  Number(amountInput.value);
-  const categoryValue = categorySelect.value;
-
-  
-
-    if (!description || !amount || !categoryValue) 
-    return alert("Please fill all fields!");
-
-
-    confirmMessage(`Are you sure you want to add <strong>${description}</strong> as your expense?`, () => {
-    addExpense(description,amount,categoryValue);
-    descriptionInput.value = '';
-    amountInput.value = '';
-    categorySelect.value = '';
-
-    renderExpensesHTML();
-    hideAddExpense();
 
   })
   }
-  */
+
+
 
   export function initAddExpense() {
     const addExpenseBtn = document.getElementById('js-add-expense');
     addExpenseBtn.addEventListener('click', handleAddExpense);
 
-    /*
-    const addExpenseDesktop = document.getElementById('js-add-expense-desktop');
-    addExpenseDesktop.addEventListener('click', handleAddExpenseDesktop)
-    */
   }
+
+  export function initAddExpenseNavigator  () {
+    
+
+    const button = document.getElementById('add-expense-navigator');
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const expensesNavBtn = document.querySelector('.expenses-nav');
+
+    
+    button.addEventListener('click' , () => {
+    const expensesNavigatorContainer = document.querySelector('.expenses-nav-container');
+    const expensesSection = document.querySelector('.expenses-section');
+    const homeSection = document.querySelector('.home-section');
+
+   
+    expensesNavigatorContainer.classList.add('hidden');
+    expensesSection.classList.remove('hidden');
+    homeSection.classList.add('hidden');
+
+        navButtons.forEach(nav => {
+            nav.classList.remove('active')
+        })
+        expensesNavBtn.classList.add('active');
+    })
+   
+  }
+
 

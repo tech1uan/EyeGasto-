@@ -8,13 +8,15 @@ import { updateRecentExpenses } from "./recentExpenses.js";
 import { updateExpensesChart } from "../../charts/expensesChart.js";
 
 export async function initDeleteExpense() {
-const container = document.querySelector('.expenses-container');
+const containers = document.querySelectorAll('.expenses-container, .expenses-container-b');
 
+containers.forEach(container => {
 container.addEventListener('click', async (e) => {
-  if (e.target.classList.contains('js-trash-button')) {
 
-    const expenseId = Number(e.target.dataset.id);
-    const expenseName = e.target.dataset.name;
+  const btn = e.target.closest('.js-trash-button')
+
+    const expenseId = Number(btn.dataset.id);
+    const expenseName = btn.dataset.name;
     confirmMessage(`Do you want to delete <strong>${expenseName}?</strong>`, async () => {
 
     const data = await deleteExpense(expenseId);
@@ -24,7 +26,8 @@ container.addEventListener('click', async (e) => {
     }
 
     const expenses = await getCurrentExpenses();
-    renderExpensesHTML(expenses);
+    renderExpensesHTML(expenses, "home");
+    renderExpensesHTML(expenses, "expenses")
     
     await Promise.all([
       updateTotalExpenses(),
@@ -37,5 +40,7 @@ container.addEventListener('click', async (e) => {
     budget.checkBudgetStatus();
     }
   )
-}});
+});
+})
+
 }

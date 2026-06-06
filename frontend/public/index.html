@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EyeGasto</title>
+  <title>Gastoo</title>
   <link href="./src/output.css" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -40,26 +40,27 @@
   <div class="star star-6"></div>
   <div class="star star-7"></div>
 
-   <!--Flaating Navbar-->
+   <!--Floating Navbar-->
 
  <div class=" fixed bottom-5 right-4 left-4 w-[90%] px-1 py-3  bg-white rounded-[10px] z-10 flex justify-evenly items-center">
-    <button class="active nav-btn flex flex-col text-gray-400 items-center gap-1" data-section="home" data-title="Home">
+    <button class="active nav-btn home-nav flex flex-col text-gray-400 items-center gap-1" data-section="home" data-title="Home">
     <i class="fa-solid fa-house text-lg"></i>
     <span class="text-[10px] font-['DM_Sans'] font-bold">Home</span>
    </button>
-  <button class=" nav-btn flex flex-col items-center gap-1 text-gray-400" data-section="expenses" data-title="Expenses">
-    <i class="fa-solid fa-receipt text-lg"></i>
+  <button class=" nav-btn expenses-nav flex flex-col items-center gap-1 text-gray-400" data-section="expenses" data-title="Expenses">
+    <i class="fa-solid fa-wallet text-lg"></i>
     <span class="text-[10px] font-['DM_Sans']">Expenses</span>
   </button>
   
-<div class="flex flex-col items-center -mt-8">
+<div class="flex flex-col -bg-white -mt-8">
   <div class="bg-white rounded-full p-1.5 ">
-    <button class="w-14 h-14 rounded-full bg-[#23736F] flex items-center flex-col relative shadow-lg">
+    <button id="expenses-nav-btn" class="w-14 h-14 rounded-full bg-[#23736F] cursor-pointer items-center flex-col relative shadow-lg">
       <img 
         src="images/gastoo-assets/gastoo_head_nav.png" 
         alt="Gastoo's head navigation"
+        class="-mt-2"
       >
-      <i class="absolute bottom-0.5 fa-solid fa-plus text-white text-[10px]"></i>
+      <i class="absolute bottom-1.5 left-1/2 -translate-x-1/2  fa-solid fa-plus text-white text-[10px]"></i>
     </button>
   </div>
 </div>
@@ -84,7 +85,7 @@
         <img src="images/user.png" class="rounded-2xl w-8 h-8" alt="User default avatar"></div>
       </div>
    
-    <div class="hidden section home-section hidden">
+    <div class="hidden section home-section pb-22 ">
   
     <div class="w-full mt-5">
       <div class="greeting text-white text-m font-['DM_Sans'] flex gap-1 justify-end w-full px-2"></div>
@@ -110,7 +111,7 @@
 
         <div class="grid grid-cols-2 gap-2">
           <div class="expenses-category-container bg-white shadow-md rounded-2xl p-1">
-            <h1 class="text-black font-['DM_Sans'] font-bold text-[12px] text-center">EXPENSES BY CATEGORY</h1>
+            <h1 class="text-black font-['DM_Sans'] font-bold text-[12px] text-center opacity-[50%]">EXPENSES BY CATEGORY</h1>
 
             <div class="chart-card-container">
            
@@ -119,7 +120,7 @@
               </canvas>
             </div>
 
-            <div id="expensesLegend"></div>
+            <div id="expensesLegend" class="overflow-y-scroll h-10 overflow-x-hidden"></div>
           </div>
 
           <div class="amounts-container flex flex-col items-center justify-evenly">
@@ -145,21 +146,29 @@
             </div>
           </div>
 
-         <div class="expenses-super-container col-span-2 w-full">
+         <div class=" expenses-super-container col-span-2 w-full">
               <div class="expenses-header flex justify-between">
                 <h1 class="font-bold text-black opacity-[50%] tracking-widest">YOUR EXPENSES</h1>
-                <a href="">See All</a>
+                <button class="font-bold see-all-nav text-[#23736F]">See All</button>
               </div>
             
             <div class="expenses-main-container bg-[#EBF8F7]/65 shadow-md rounded-xl p-2 h-[300px] overflow-y-auto">
+               <div class="flex flex-row w-full justify-between">
               <div class="date-today flex justify-between font-['DM_Sans']">
 
               </div>
-              <div class="expenses-container">
+              <div class = "flex flex-row justify-between">
+                    <select name="filter-expenses" class="filter-expenses">
+                      <option value="today">Today</option>
+                      <option value="last7">Last 7 Days</option>
+                      <option value="alltime">All Time</option>
+                    </select>
+                </div>
+               </div>
+              <div class="expenses-container mt-3 flex flex-col gap-2 items-center h-full">
                 
               </div>
             </div>
-
             </div>
 
         </div>
@@ -168,7 +177,7 @@
       <div class="reveal-2 outer-card max-w-[550px] w-[90%] xl:w-[500px] p-3 absolute -top-15 ">
        
 
-          <i class="fa-solid fa-receipt js-receipt-btn text-gray-500 text-xl absolute top-2 right-2 cursor-pointer"></i>
+          <i class="fa-solid fa-receipt js-receipt-btn text-white text-xl absolute top-2 right-2 cursor-pointer"></i>
           <div class="flex items-start justify-evenly w-full text-white">
            
           <div class="flex flex-col">
@@ -222,108 +231,14 @@
               </div>
           </div>
 
-          <!-- Add Expense Modal -->
-          <div
-            class="add-expense-option-container w-full fixed inset-0 bg-black/50 z-50 flex hidden items-center justify-center">
-            <div class="js-close-add-expense absolute top-5 right-5 text-white text-xl cursor-pointer">
-              <i class="fa-solid fa-x"></i>
-            </div>
-            <div class="outer-card max-w-[550px] p-4">
-              <div class="flex items-center gap-2 pb-1">
-                <img src="images/add-expense.png" alt="Add expense logo" class="w-9">
-                <h1 class="font-['Lilita_One'] text-white text-xl text-outline-black">Add Expense</h1>
-              </div>
-              <div class="inner-card flex flex-col gap-3 w-full items-center sm:flex-row p-3">
-
-                <div class="w-full flex flex-row gap-2 flex-wrap max-w-[350px] sm:w-[800px]">
-                  <div class="relative w-[50%]">
-                    <input type="text" id="expense-description" placeholder="Description" class="peer input-cozy">
-                    <label for="expense-description" class="label-cozy">Description</label>
-                  </div>
-                  <div class="relative w-[45%]">
-                    <input type="number" id="expense-amount" placeholder="Amount" class="peer input-cozy" min="0">
-                    <label for="expense-amount" class="label-cozy">Amount</label>
-                  </div>
-                  <select name="category" id="category" aria-placeholder="Category"
-                    class="w-full p-2 text-sm border-2 rounded-xl bg-white text-black sm:text-base">
-                    <option value="" selected disabled hidden>Category</option>
-                    <option value="1">Foods</option>
-                    <option value="2">Transport</option>
-                    <option value="3">Shopping</option>
-                    <option value="4">Bills</option>
-                    <option value="5">Health</option>
-                    <option value="6">Entertainment</option>
-                    <option value="7">Education</option>
-                    <option value="8">Savings</option>
-                    <option value="9">Debt</option>
-                    <option value="10">Others</option>
-                  </select>
-                </div>
-
-                <div class="flex gap-3 items-center justify-center w-full">
-                  <button id="js-add-expense"
-                    class="eye-gasto-button text-white flex justify-center items-center px-7 py-3 gap-1 text-xs rounded-2xl text-outline-black-38 drop-shadow-[0_2px_2px_rgba(0,0,0,0.56)] cursor-pointer sm:text-base">
-                    Add Expense
-                  </button>
-                </div>
-
-              </div>
-            </div>
-          </div>
-
-          <!-- Edit Expense Option (Initially Hidden) -->
-          <div
-            class="edit-expense-option-container w-full fixed inset-0 bg-black/50 z-50 flex hidden items-center justify-center">
-            <div class="js-close-edit-expense absolute top-5 right-5 text-white text-xl cursor-pointer">
-              <i class="fa-solid fa-x"></i>
-            </div>
-            <div class="outer-card max-w-[550px] p-4">
-              <div class="flex items-center gap-2 pb-1">
-                <img src="images/add-expense.png" alt="Add expense logo" class="w-9">
-                <h1 class="font-['Lilita_One'] text-white text-xl text-outline-black">Edit Expense</h1>
-              </div>
-              <div class="inner-card flex flex-col gap-3 w-full items-center sm:flex-row p-3">
-
-                <div class="w-full flex flex-row gap-2 flex-wrap max-w-[350px] sm:w-[800px]">
-                  <div class="relative w-[50%]">
-                    <input type="text" id="edit-expense-description" placeholder="Description" class="peer input-cozy">
-                    <label for="edit-expense-description" class="label-cozy">Description</label>
-                  </div>
-                  <div class="relative w-[45%]">
-                    <input type="number" id="edit-expense-amount" placeholder="Amount" class="peer input-cozy" min="0">
-                    <label for="edit-expense-amount" class="label-cozy">Amount</label>
-                  </div>
-                  <select name="category" id="edit-category" aria-placeholder="Category"
-                    class="w-full p-2 text-sm border-2 rounded-xl bg-white text-black sm:text-base">
-                    <option value="" selected disabled hidden>Category</option>
-                    <option value="1">Foods</option>
-                    <option value="2">Transport</option>
-                    <option value="3">Shopping</option>
-                    <option value="4">Bills</option>
-                    <option value="5">Health</option>
-                    <option value="6">Entertainment</option>
-                    <option value="7">Education</option>
-                    <option value="8">Savings</option>
-                    <option value="9">Debt</option>
-                    <option value="10">Others</option>
-                  </select>
-                </div>
-
-                <button id="js-save-edit"
-                  class=" bg-green-500 text-white flex justify-center items-center px-7 py-3 gap-1 text-xs rounded-2xl drop-shadow-[0_2px_2px_rgba(0,0,0,0.56)] cursor-pointer sm:text-base">Save
-                  Edit</button>
-              </div>
-
-            </div>
-          </div>
+      
         </div>
 
       </div>
 
     <div class="hidden section expenses-section">
 
-      <div class=" flex flex-col gap-3">
-        <h1 class="text-white font-bold font-['DM_Sans'] text text-2xl text-center">Expenses</h1>
+      <div class=" flex flex-col gap-3 mt-11">
         <div class="bg-custom w-full h-30 flex items-center justify-between px-2">
          <div class="gastoo-container  w-[110px] h-[110px] flex-none shrink-0">
         </div>
@@ -334,16 +249,417 @@
         <div class="font-bold font-['DM_Sans ] text-[#23736F] ">I'm Gastoo!</div>
         <div class="gastoo-greet font-['DM_Sans ] text-black text-sm" data-type="expenses"></div>
       </div>
+      
       <div>
         
       </div>
       </div>
       </div>
-    
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <div class="category-selection-header pl-2 pt-3">
+          <h1 class="text-white font-['DM_Sans']">Category</h1>
+          </div>
+
+          <div class="category-container flex w-full items-center gap-2 overflow-x-auto whitespace-nowrap px-2 scroll-smooths">
+           
+            <div class="flex flex-col items-center shrink-0">
+            <button class="js-category-btn bg-white rounded-xl p-2 shrink-0" id = "foods" value="1">
+            <img class= "h-7 w-7" src="images/category/foods-drinks.png" alt="Foods and drinks category logo">
+            </button>
+            <p class="font-['DM_Sans'] text-white text-[11px]">Foods</p>
+            </div>
+
+           <div class="flex flex-col items-center shrink-0">
+          <button class="js-category-btn bg-white rounded-xl p-2 shrink-0" id = "transport" value="2">
+            <img class="h-7 w-7" src="images/category/transport.png" alt="Transport category logo">
+          </button>
+            <p class="font-['DM_Sans'] text-white text-[11px]">Transport</p>
+          </div>
+
+          <div class="flex flex-col items-center shrink-0">
+          <button class="js-category-btn bg-white rounded-xl p-2 shrink-0"id = "shopping" value="3">
+            <img class="h-7 w-7" src="images/category/shopping.png" alt="Shopping category logo">
+          </button>
+            <p class="font-['DM_Sans'] text-white text-[11px]">Shopping</p>
+          </div>
+
+            <div class="flex flex-col items-center shrink-0">
+                <button class="js-category-btn bg-white rounded-xl p-2 shrink-0" id = "bills" value="4">
+                  <img  class="h-7 w-7" src="images/category/bills-utilities.png" alt="Bills category logo">
+              </button>
+             <p class="font-['DM_Sans'] text-white text-[11px]">Bills</p>
+            </div>
+          
+          <div class="flex flex-col items-center shrink-0">
+            <button class="js-category-btn bg-white rounded-xl p-2 shrink-0"  id = "health" value="5">
+            <img  class="h-7 w-7" src="images/category/health.png" alt="Health category logo">
+            </button>
+             <p class="font-['DM_Sans'] text-white text-[11px]">Health</p>
+          </div>
+
+          <div class="flex flex-col items-center shrink-0">
+            <button class="js-category-btn bg-white rounded-xl p-2 shrink-0" id="education" value="7">
+            <img  class="h-7 w-7" src="images/category/education.png" alt="Education category logo">
+            </button> 
+              <p class="font-['DM_Sans'] text-white text-[11px]">Education </p>
+          </div>
+          
+          <div class="flex flex-col items-center shrink-0">
+            <button class="js-category-btn bg-white rounded-xl p-2 shrink-0" id="savings" value="8">
+            <img  class="h-7 w-7" src="images/category/savings.png" alt="Savings category logo">
+            </button>
+            <p class="font-['DM_Sans'] text-white text-[11px]">Savings </p>
+          </div>
+
+          <div class="flex flex-col items-center shrink-0">
+          <button class="js-category-btn bg-white rounded-xl p-2 shrink-0" id = "debt" value="9">
+           <img  class="h-7 w-7" src="images/category/debt.png" alt="Debt category logo">
+          </button>
+           <p class="font-['DM_Sans'] text-white text-[11px]">Debt</p>
+          </div>
+
+          <div class="flex flex-col items-center shrink-0">
+          <button class="js-category-btn bg-white rounded-xl p-2 shrink-0" id = "others" value="10">
+            <img  class="h-7 w-7" src="images/category/belongings.png" alt="Others category logo">
+          </button>
+           <p class="font-['DM_Sans'] text-white text-[11px]">Others</p>
+          </button>
+          </div>
+
+        <div class="flex flex-col items-center shrink-0">
+          <button class="js-category-btn bg-white rounded-xl p-2 shrink-0" id = "entertainment" value="6">
+           <img  class="h-7 w-7" src="images/category/entertainment.png" alt="Entertainment category logo">
+          </button>
+           <p class="font-['DM_Sans'] text-white text-[11px]">Entertainment </p>
+        </div>
+          
+        </div>
+
+                
+        </div>
+      
+     <div class=" reveal-2 w-full h-screen flex flex-col absolute top-100 bg-gradient-to-b from-white from-0% to-[#45E7EE] to-100% rounded-[20px]">
+     </div>
+      
+
+     <div class="relative flex flex-col items-center justify-center mt-5 px-3">
+          <div class="reveal-3 flex flex-col gap-1 bg-custom rounded-2xl max-w-[400px] w-[95%] xl:w-[500px] p-3 ">
+             
+         <p class="tracking-wide text-[12px] font-['DM_Sans'] text-white/50 font-bold text-center">
+                EXPENSE TRACKER
+              </p>
+              <h1 class="font-bold font-['DM_Sans'] text-white text-lg text-center">
+                Record New Expense
+              </h1>
+                 <div class="mt-2 space-y-2 font-['Poppins']">
+                  <p id="error-expense" class=" font-['DM_Sans'] text-center text-sm text-red-400 bg-red-400/30 border border-red-400/30 rounded-lg py-2 px-1 hidden"></p>
+                  <p id="success-expense" class=" font-['DM_Sans'] text-center text-sm text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 rounded-lg py-2 px-1 hidden"></p>
+                </div>
+
+                <div class="w-full grid grid-cols-2 gap-2 max-w-[350px] sm:w-[800px]">
+                   <label for="expense-description" class="label-normal text-[11px] font-semibold uppercase tracking-widest font-['DM_Sans'] ">Description</label>
+                  <div class="relative w-[100%] col-span-2">
+                        <i class="fa-solid fa-pen-to-square absolute z-1000 left-2 top-3 text-white"></i>
+                      <input type="text" id="expense-description" class="bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder:text-white/40 rounded-xl py-2.5 w-full text-sm font-['Poppins'] outline-none focus:bg-white/20 focus:border-white/50 focus:ring-2 focus:ring-white/10 p-8 transition-all duration-200" min="0" placeholder="Describe what you had spent..">
+                  </div>
+                  
+                  <div class = "col-span-1">
+                   <label for="expense-amount" class="label-normal  text-[11px] font-semibold uppercase tracking-widest font-['DM_Sans']">Amount</label>
+                  <div class="relative w-[100%]">
+                      <i class="fa-solid fa-peso-sign absolute z-1000 left-3 top-3 text-white"></i>
+                     <input type="number" id="expense-amount" placeholder="Amount" class="input-cozy bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder:text-white/40 rounded-xl py-2.5 pl-9 pr-3 text-sm font-['Poppins'] outline-none focus:bg-white/20 focus:border-white/50 focus:ring-2 focus:ring-white/10 transition-all duration-200" min="0">
+                  </div>
+                  </div>
+
+                  <div class="flex items-end">
+                  <select name="category" id="category" aria-placeholder="Category"
+                    class="w-full qp-2 text-sm border-1 rounded-xl text-black border-black focus:outline-none bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder:text-white/40 rounded-xl py-2.5 w-full pr-3 text-sm font-['Poppins'] outline-none focus:bg-white/20 focus:border-white/50 focus:ring-2 focus:ring-white/10 pl-4 transition-all duration-200" min="0" >
+                    <option value="" selected disabled hidden>Category</option>
+                    <option value="1">Foods</option>
+                    <option value="2">Transport</option>
+                    <option value="3">Shopping</option>
+                    <option value="4">Bills</option>
+                    <option value="5">Health</option>
+                    <option value="6">Entertainment</option>
+                    <option value="7">Education</option>
+                    <option value="8">Savings</option>
+                    <option value="9">Debt</option>
+                    <option value="10">Others</option>
+                  </select>
+                  </div>
+                </div>
+
+              <div class="flex items-center justify-center w-full mt-2">
+                <button
+                  id="js-add-expense"
+                  class="bg-white  w-full flex items-center justify-center gap-2 font-['DM_Sans'] text-[#0d9f9f] font-bold py-3 px-7 rounded-2xl text-sm cursor-pointer transition-all duration-200 active:scale-95 hover:brightness-110"
+                >
+                  <i class="fa-solid fa-receipt"></i>
+                  Add Expense
+                </button>
+              </div>
+
+          </div>
+             <div class="reveal-2 expenses-super-container w-full">
+              <div class="expenses-header flex justify-between">
+                <h1 class="font-bold text-black opacity-[50%] tracking-widest">YOUR EXPENSES</h1>
+          
+              </div>
+            
+            <div class="expenses-main-container bg-[#EBF8F7]/65 shadow-md rounded-xl p-2 h-[300px] overflow-y-auto">
+              <div class="flex justify-between">
+              <div class="date-today flex justify-between font-['DM_Sans']">
+
+              </div>
+               <div class = "flex flex-row justify-between">
+                    <select name="filter-expenses" class="filter-expenses">
+                      <option value="today">Today</option>
+                      <option value="last7">Last 7 Days</option>
+                      <option value="alltime">All Time</option>
+                    </select>
+                </div>
+              </div>
+              <div class="expenses-container-b mt-3 flex flex-col items-center h-full">
+                
+              </div>
+            </div>
+
+            </div>
+
+    </div>
     </div>
 
-      <div id="notif-container"></div>
+    <div class=" expenses-nav-container h-full fixed z-50 flex items-center justify-center hidden" style=" background: rgba(0,0,0,0.6);">
+            <button
+            id="js-close-modal"
+            class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 text-white hover:text-gray-700 transition absolute top-0 right-1"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
 
+      <div class="finances-container bg-white rounded-2xl fixed flex flex-col items-center gap-2 pb-3 m-3 relative w-[90%]">
+      
+         
+        <div class="bg-[#23736F] m-auto p-7 rounded-2xl rounded-bl-none rounded-br-none w-full">
+        <h1 class="tracking-wide font-black font-['DM_Sans'] text-white/50">FINANCE MANAGER</h1>
+        <h1 class="font-['DM_Sans'] text-white font-bold text-xl tracking-tight">
+          Manage your Finances
+        </h1>
+        </div>
+
+        <div class="expenses-nav-inner-container">
+        <h1 class="font-bold font-['DM_Sans'] text-[#23736F] w-full text-lg pl-4">Savings</h1>
+        <div class="flex gap-3 px-2 ">
+
+        
+       <button id="add-savings-navigator" data-type="add-savings"
+    class="finance-nav border-1 border-[#23736F] rounded-xl   font-['DM_Sans'] p-3 cursor-pointer font-bold flex flex-col items-center justify-center gap-1">
+
+        <i class="fa-solid fa-piggy-bank text-2xl text-[#23736F] bg-[#d4f0ee] p-3 rounded-xl"></i>
+
+          <span class="text-sm">Add Savings</span>
+
+          <p class="text-[11px] font-normal text-center">
+              Deposit money in your account
+          </p>
+      </button>
+
+      <button id="withdraw-savings-navigator" data-type="withdraw-savings"
+          class="finance-nav border-1 border-[#23736F] rounded-xl font-['DM_Sans'] p-3 cursor-pointer font-bold flex flex-col items-center gap-1">
+
+             <i class="fa-solid fa-money-bill-wave text-2xl text-[#23736F] bg-[#d4f0ee] p-3 rounded-xl"></i>
+
+          <span class="text-sm">Withdraw Savings</span>
+
+          <p class="text-[11px] font-normal text-center">
+              Withdraw money from your account
+          </p>
+      </button>
+              </div>
+
+        <h1 class="font-bold font-['DM_Sans'] text-[#23736F] pl-4 w-full text-lg">
+      Expenses
+    </h1>
+
+    <div class="flex border-1 border-[#23736F] rounded-md gap-2 p-3 self-start w-[90%] ml-4">
+     <i class="fa-solid fa-receipt text-2xl text-[#23736F] bg-[#d4f0ee] p-3 px-4 rounded-xl"></i>
+      <div class="flex flex-col justify-center">
+        <span class = "font-bold font-['DM_Sans'] text-sm">Add Expense</span>
+      <button
+        id="add-expense-navigator" data-type="add-expense"
+        class="finance-nav text-[#23736F] font-['DM_Sans'] cursor-pointer font-bold flex items-center gap-2 w-full">
+
+        <p class="text-[11px] font-normal">
+                Record a new expense transaction
+          </p>
+      </div>
+      </button>
+
+    </div>
+    </div>
+
+    <div class="add-withdraw-option-container hidden bg-[#079F9F] m-1 p-4 w-[90%] rounded-lg hidden">
+      <p class="tracking-wide text-[12px] font-['DM_Sans'] text-white/50 font-bold text-center">SAVINGS GOAL</p>
+      <h1 class="font-bold font-['DM_Sans'] text-white text-center text-lg">Update Savings</h1>
+       
+     <div class="mt-2 space-y-2 font-['Poppins']">
+        <p id="error" class=" font-['DM_Sans'] text-center text-sm text-red-400 bg-red-400/30 border border-red-400/30 rounded-lg py-2 px-1 hidden"></p>
+        <p id="success" class=" font-['DM_Sans'] text-center text-sm text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 rounded-lg py-2 px-1 hidden"></p>
+      </div>
+
+      <div class="flex flex-col gap-2 items-center mt-2">
+      <div class="description-container flex flex-col">
+      <label for="Description" class="text-white font-['DM_Sans'] text-sm font-semibold tracking-tight">Description</label>
+
+      <div class=" relative flex items-center">
+        <i class="fa-solid fa-pen-to-square absolute z-1000 left-3 text-white"></i>
+      <input
+        type="text"
+        id="description"
+        placeholder="What are you saving for?"
+        class="description w-full bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder:text-white/40 rounded-xl py-2.5 pl-9 pr-3 text-sm font-['Poppins'] outline-none focus:bg-white/20 focus:border-white/50 focus:ring-2 focus:ring-white/10 transition-all duration-200"
+      >
+      </div>
+      </div>
+
+      <div class="amount-container flex flex-col">
+      <label for="Amount" class="text-white font-['DM_Sans'] text-sm font-semibold tracking-tight">Amount</label>
+
+      <div class="flex relative items-center">
+        <i class="fa-solid fa-peso-sign absolute z-1000 left-3 text-white"></i>
+      <input
+          type="text"
+          id="amount"
+          placeholder="Enter amount"
+          class="amount w-full bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder:text-white/40 rounded-xl py-2.5 pl-9 pr-3 text-sm font-['Poppins'] outline-none focus:bg-white/20 focus:border-white/50 focus:ring-2 focus:ring-white/10 transition-all duration-200"
+        >
+      </div>
+      </div>
+
+      <div class="w-full flex flex-col gap-2 mt-2">
+
+      <div class="flex items-center justify-evenly gap-2">
+        <button
+      id="js-add-button"
+      class="flex items-center cursor-pointer justify-center gap-2 bg-white hover:bg-white/90 text-[#0d9f9f] font-bold font-['DM_Sans'] rounded-xl py-3 w-[50%] text-sm transition-all duration-200 active:scale-95"
+    >
+      <i class="fa-solid fa-plus"></i>
+      Add
+    </button>
+
+      <button
+        id="js-withdraw-button"
+        class=" cursor-pointer flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/25 text-white font-bold font-['DM_Sans'] rounded-xl py-3 w-[50%] text-sm transition-all duration-200 active:scale-95"
+      >
+        <i class="fa-solid fa-arrow-down"></i>
+        Withdraw
+      </button>
+      </div>
+      <button
+        class="w-full cursor-pointer bg-transparent hover:bg-white/10 border border-white/20 text-white hover:text-white font-medium font-['DM_Sans'] rounded-xl py-3 text-sm transition-all duration-200"
+      id="js-cancel-btn">
+        Cancel 
+      </button>
+      </div>
+
+      </div>
+
+    </div>
+
+    </div>
+
+    </div>
+  <!-- Edit Expense Option (Initially Hidden) -->
+<div class="edit-expense-option-container w-full fixed inset-0 z-[100] hidden items-center justify-center" style="background: rgba(0,0,0,0.6);">
+
+  <div class="relative edit-expense-inner-container w-full mx-4 max-w-[460px] rounded-[22px] overflow-hidden"
+       style="background: rgba(255,255,255,0.055); border: 1px solid rgba(29,158,117,0.22); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 8px 48px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.07);">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between px-6 py-5" style="border-bottom: 1px solid rgba(29,158,117,0.15);">
+      <div class="flex items-center gap-[10px]">
+        <div class="flex items-center justify-center w-9 h-9 rounded-[10px]"
+             style="background: linear-gradient(135deg,#1a6b52,#0f4d3c); border: 1px solid rgba(29,158,117,0.4); box-shadow: 0 3px 12px rgba(29,158,117,0.2);">
+          <i class="fa-solid fa-pen text-[14px]" style="color:#5DCAA5;"></i>
+        </div>
+        <h1 class="font-['DM_Sans'] font-bold text-[18px] m-0" style="color:#e8f5f0;">Edit Expense</h1>
+      </div>
+      <button class="js-close-edit-expense flex items-center justify-center w-[30px] h-[30px] rounded-full cursor-pointer transition-all hover:bg-white/15"
+              style="background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);">
+        <i class="fa-solid fa-x text-[11px]" style="color: rgba(200,230,220,0.7);"></i>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="flex flex-col gap-[14px] p-6">
+      <div class="grid grid-cols-2 gap-3">
+
+        <!-- Description -->
+        <div class="flex flex-col gap-[6px]">
+          <label for="edit-expense-description"
+                 class="text-[11px] font-semibold uppercase tracking-widest font-['DM_Sans']"
+                 style="color: rgba(160,210,195,0.7);">
+            Description
+          </label>
+          <input type="text" id="edit-expense-description" placeholder="e.g. Groceries"
+                 class="rounded-[12px] px-[14px] py-[10px] text-[14px] outline-none transition-all w-full font-['DM_Sans'] placeholder:text-white/20"
+                 style="background: rgba(255,255,255,0.07); border: 1px solid rgba(29,158,117,0.2); color: #e8f5f0;">
+        </div>
+
+        <!-- Amount -->
+        <div class="flex flex-col gap-[6px]">
+          <label for="edit-expense-amount"
+                 class="text-[11px] font-semibold uppercase tracking-widest font-['DM_Sans']"
+                 style="color: rgba(160,210,195,0.7);">
+            Amount (₱)
+          </label>
+          <input type="number" id="edit-expense-amount" placeholder="0.00" min="0"
+                 class="rounded-[12px] px-[14px] py-[10px] text-[14px] outline-none transition-all w-full font-['DM_Sans'] placeholder:text-white/20"
+                 style="background: rgba(255,255,255,0.07); border: 1px solid rgba(29,158,117,0.2); color: #e8f5f0;">
+        </div>
+
+        <!-- Category -->
+        <div class="flex flex-col gap-[6px] col-span-2">
+          <label for="edit-category"
+                 class="text-[11px] font-semibold uppercase tracking-widest font-['DM_Sans']"
+                 style="color: rgba(160,210,195,0.7);">
+            Category
+          </label>
+          <select id="edit-category" name="category"
+                  class="rounded-[12px] px-[14px] py-[10px] text-[14px] outline-none cursor-pointer transition-all w-full font-['DM_Sans'] appearance-none"
+                  style="background: rgba(255,255,255,0.07); border: 1px solid rgba(29,158,117,0.2); color: #e8f5f0;">
+            <option value="" selected disabled hidden style="background:#0f3d32;">Select a category</option>
+            <option value="1"  style="background:#0f3d32;">Foods</option>
+            <option value="2"  style="background:#0f3d32;">Transport</option>
+            <option value="3"  style="background:#0f3d32;">Shopping</option>
+            <option value="4"  style="background:#0f3d32;">Bills</option>
+            <option value="5"  style="background:#0f3d32;">Health</option>
+            <option value="6"  style="background:#0f3d32;">Entertainment</option>
+            <option value="7"  style="background:#0f3d32;">Education</option>
+            <option value="8"  style="background:#0f3d32;">Savings</option>
+            <option value="9"  style="background:#0f3d32;">Debt</option>
+            <option value="10" style="background:#0f3d32;">Others</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- Save Button -->
+      <button id="js-save-edit"
+              class="w-full flex items-center justify-center gap-2 py-[13px] rounded-[13px] text-white text-[15px] font-semibold font-['DM_Sans'] cursor-pointer transition-all hover:opacity-90 active:scale-[0.98] mt-1"
+              style="background: linear-gradient(135deg,#1d9e75,#0f6e56); box-shadow: 0 4px 20px rgba(29,158,117,0.35);">
+        <i class="fa-solid fa-floppy-disk text-[15px]"></i>
+        Save Changes
+      </button>
+    </div>
+
+  </div>
+</div>
+
+      
+      <div id="notif-container"></div>
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
       <script

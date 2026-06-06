@@ -7,15 +7,18 @@ export function initEditExpensesTools() {
     initEditExpense();
     initDeleteExpense();
     
-    const container = document.querySelector('.expenses-container');
-    if(!container) return;
+    const containers = document.querySelectorAll('.expenses-container, .expenses-container-b');
+    if(!containers) return;
 
-    container.addEventListener('click', (e) => {
+    containers.forEach(c => {
+    c.addEventListener('click', (e) => {
        const btn = e.target.closest('.js-show-button');
 
        if(btn) {
-        const dropdown = document.querySelector('.js-dropdown');
-        dropdown.classList.toggle('hidden')
+        const dropdown = btn.querySelector('.js-dropdown');
+        if(dropdown) {
+            dropdown.classList.toggle('hidden');
+        }
        }
     });
 
@@ -25,5 +28,6 @@ export function initEditExpensesTools() {
                 d.classList.add('hidden');
             })
          }
+    })
     })
 }

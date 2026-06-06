@@ -312,3 +312,8 @@ input:-webkit-autofill:focus{
   color: #23736F;
 
 }
+
+.category-active {
+  background-color: #37b9b3;
+  transition: all ease-in 0.1s;
+}

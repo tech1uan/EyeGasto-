@@ -21,9 +21,11 @@ export async function getCurrentExpenses() {
 }
 
 export async function initExpensesFilter() {
-  const selectElement = document.getElementById('filter-expenses');
-    selectElement.addEventListener("change", async (e) => {
-    currentView = e.target.value;
+  const selectElements = document.querySelectorAll('.filter-expenses');
+
+    selectElements.forEach(el => {
+      el.addEventListener("change", async (e) => {
+      currentView = e.target.value;
 
     const expenses = await getCurrentExpenses();
 
@@ -33,10 +35,12 @@ export async function initExpensesFilter() {
       updateExpensesChart()
   ])
 
-   renderExpensesHTML(expenses);
-  
+   renderExpensesHTML(expenses, "home");
+   renderExpensesHTML(expenses, "expenses");
+
     
   })
+    })
 }
 
 export async function initExpensesPage() {
@@ -54,10 +58,12 @@ export async function initExpensesPage() {
       updateExpensesChart()
   ])
 
- renderExpensesHTML(expenses);
+ renderExpensesHTML(expenses, "home");
+ renderExpensesHTML(expenses, "expenses");
 }
 
 export function getExpensesFromCache(id) {
   return cachedExpenses.find(e => e.expense_id == id);
+  
 }
 

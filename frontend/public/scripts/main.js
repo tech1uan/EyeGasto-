@@ -4,7 +4,7 @@ import { initSetBudgetModal } from './budget/addBudget.js';
 import { updateExpensesChart } from './charts/expensesChart.js';
 import { getUserExpenses } from './data/expenses.js';
 import { getUser, loadUser } from './data/user.js';
-import {initAddExpense, initAddExpenseOption } from './features/expenses/addExpense.js';
+import {initAddExpense, initAddExpenseNavigator, initCategoryShortcut } from './features/expenses/addExpense.js';
 
 import { initEditExpensesTools } from './features/expenses/initEditExpensesTools.js';
 import { renderTotalExpensesHTML } from './features/expenses/totalExpenses.js';
@@ -15,12 +15,13 @@ import { initDLReportBtn } from './saveData/saveToPDF.js';
 import { initNavbar } from './ui/navbar.js';
 import { renderBudget } from './ui/renderBudget.js';
 import { initDateFilter } from './ui/renderDateToday.js';
-import { initExpensesTooltip, renderExpensesHTML } from './ui/renderExpenses.js';
+import { initExpensesTooltip } from './ui/renderExpenses.js';
 import { initGastooMessages, initGreetings } from './ui/renderMascot.js';
 
 import { initReceipts } from './ui/renderReceipts.js';
 import { renderSavingsHTML } from './ui/renderSavings.js'
-import {initAddWithdraw, initAddWithdrawOption } from './withdrawals/addWithdraw.js';
+import { initAddWithdraw } from './withdrawals/addWithdraw.js';
+
  
 
 export async function authFetch(url, options = {}) {
@@ -32,7 +33,6 @@ export async function authFetch(url, options = {}) {
   })
  
 if(res.status === 401) {
-    console.warn(`[AUTH ERROR] 401 from → ${url}`);
   let refresh = await fetch('/auth/token', {
     method: 'POST',
     credentials:'include',
@@ -70,7 +70,6 @@ await initUser();
 showNotif('existingUser');
 renderSavingsHTML();
 initExpensesPage();
-renderExpensesHTML();
 updateExpensesChart();
 renderBudget();
 renderTotalExpensesHTML();
@@ -79,12 +78,14 @@ initDateFilter();
 initEditExpensesTools();
 initExpensesTooltip();
 initNavbar();
+initAddExpense();
+initExpensesFilter();
+initCategoryShortcut();
+initAddExpenseNavigator();
+initAddWithdraw();
 /* initLogoutBtn();
 initTransactionsFilter();
 initSetBudgetModal();
-initAddExpenseOption()
-initAddExpense();
-initExpensesFilter();
 initDLReportBtn();
 */
 initGreetings();

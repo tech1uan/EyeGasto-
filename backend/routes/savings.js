@@ -1,6 +1,9 @@
 import express from 'express';
 import { authMiddleware } from '../middleware/authMiddleware.js';
 import { addSaving, deductSaving, getUserSavings } from '../database/models/savings.js';
+import { inputAmount } from '../validators/inputValidators.js';
+import validate from '../middleware/validate.js';
+import { getUserByUserID } from '../database/models/users.js';
 
 
 export const savingsRouter = express.Router();
@@ -31,10 +34,10 @@ savingsRouter.get('/', authMiddleware, async (req,res,next) => {
   
 })
 
-savingsRouter.post('/add', authMiddleware, async(req,res,next) => {
+savingsRouter.post('/add', authMiddleware, inputAmount, validate,  async(req,res,next) => {
   try {
     const userId = req.user.userId;
-    const {balance} = req.body
+    const {amount} = req.body
 
     if(!userId) {
       const error = new Error('Invalid or missing token!')
@@ -42,17 +45,17 @@ savingsRouter.post('/add', authMiddleware, async(req,res,next) => {
       return next(error);
     }
 
-    await addSaving(userId,balance);
+    await addSaving(userId,amount);
     res.status(200).json({msg:'Balance updated successfuly!'});
   } catch (error) {
     next(error);
   }
 })
 
-savingsRouter.post('/deduct', authMiddleware, async(req,res,next) => {
+savingsRouter.post('/deduct', authMiddleware, inputAmount, validate, async(req,res,next) => {
   try {
     const userId = req.user.userId;
-    const balance = req.body.balance;
+    const {amount} = req.body;
 
     if(!userId) {
       const error = new Error('Invalid or missing token!')
@@ -60,8 +63,25 @@ savingsRouter.post('/deduct', authMiddleware, async(req,res,next) => {
       return next(error);
     }
 
-    await deductSaving(userId,balance);
-    res.json({msg:'Balance updated successfuly!'});
+    const userSavings = await getUserSavings(userId);
+
+     if(!userSavings) {
+      return res.status(404).json({
+        msg:'Savings account not found!'
+      })
+     }
+
+     if(userSavings.balance < amount) {
+      return res.status(400).json({msg: 'Insufficient funds!'});
+     }
+
+     await deductSaving(userId, amount);
+
+    return res.json({
+      msg:'Balance updated successfully!'
+     })
+
+
   } catch (error) {
     next(error);
   }

@@ -20,51 +20,47 @@ export async function getUserSavings() {
  }
 }
 
-export async function addSavings(balance) {
+export async function addSavings(amount) {
   try {
     const res = await authFetch('/savings/add', {
       method: 'POST',
       headers: {
         'Content-type':'application/json'
       }, 
-      body: JSON.stringify({balance})
+      body: JSON.stringify({amount})
     })
     const data = await res.json();
 
     if(!res.ok) {
-      console.log(data.msg)
+      return {success: false, error: data};
     } else {
-      console.log(data);
-      return data;
+      return {success: true, data};
     }
 
   } catch (error) {
-    console.log(error);
-    return null;
+       return {success: false, error};
   }
 }
 
-export async function deductSavings(balance) {
+export async function deductSavings(amount) {
   try {
     const res = await authFetch('/savings/deduct', {
       method: 'POST',
       headers: {
         'Content-type':'application/json'
       }, 
-      body: JSON.stringify({balance})
+      body: JSON.stringify({amount})
     })
   
     const data = await res.json();
 
     if(!res.ok) {
-      console.log(data.msg)
+       return {success: false, error: data};
     } else {
-      console.log(data);
-      return data
+      return {success: true, data};
     }
     
   } catch (error) {
-    console.log(error);
     return null;
   }
 }

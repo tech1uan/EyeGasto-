@@ -33,7 +33,6 @@ transactionsRouter.post('/add', authMiddleware, async (req,res,next) => {
 
    const savingsId = savings.id;
    
-   console.log(savingsId, "SAVINGS ID")
    await addTransaction(userId,savingsId,amount,description,type);
   
    res.status(200).json({msg:'Transaction added!'})
