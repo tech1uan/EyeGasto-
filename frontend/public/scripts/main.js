@@ -1,31 +1,35 @@
 
 import { initLogoutBtn } from './auth/logout.js';
-import { initSetBudgetModal } from './budget/addBudget.js';
+import { initBudgetModal, initSaveBudget } from './budget/budgetActions.js';
 import { updateExpensesChart } from './charts/expensesChart.js';
 import { getUserExpenses } from './data/expenses.js';
-import { getUser, loadUser } from './data/user.js';
+import { getUser, initChangePasswordEdit, initClearDataBtn, initEditProfileBtn, initGreetings, initSaveChangesOnProfileEdit, initSetNewPassword, loadUser } from './data/user.js';
+import {initAnalytics, initAnalyticsFilter } from './features/analytics/analytics.js';
+import { initToolTipForHeatmap, updateExpenseHeatMap } from './features/analytics/analyticsHeatMap.js';
+import { updateBudgetComparisonChart } from './features/analytics/budgetComparisonChart.js';
 import {initAddExpense, initAddExpenseNavigator, initCategoryShortcut } from './features/expenses/addExpense.js';
 
 import { initEditExpensesTools } from './features/expenses/initEditExpensesTools.js';
 import { renderTotalExpensesHTML } from './features/expenses/totalExpenses.js';
 import { getCurrentExpenses, initExpensesFilter, initExpensesPage } from './features/expenses/viewExpense.js';
+import { initFeedbackModal } from './features/feedback/feedback.js';
+import { initEditGoalModal, initGoal } from './features/savings_goal/goal.js';
+
 import {initTransactionsFilter } from './features/transactions/viewTransactions.js';
-import { initUser, showNotif } from './notifs/notifications.js';
+import { initUser, renderNotifications, showNotif } from './notifs/notifications.js';
+import { checkSpendingTrend, sendDailyNotifications } from './notifs/pushNotifications.js';
 import { initDLReportBtn } from './saveData/saveToPDF.js';
 import { initNavbar } from './ui/navbar.js';
-import { renderBudget } from './ui/renderBudget.js';
+import { initBudgetTabFilter, renderBudget } from './ui/renderBudget.js';
 import { initDateFilter } from './ui/renderDateToday.js';
 import { initExpensesTooltip } from './ui/renderExpenses.js';
-import { initGastooMessages, initGreetings } from './ui/renderMascot.js';
+import { initGastooMessages } from './ui/renderMascot.js';
 
 import { initReceipts } from './ui/renderReceipts.js';
 import { renderSavingsHTML } from './ui/renderSavings.js'
 import { initAddWithdraw } from './withdrawals/addWithdraw.js';
 
- 
-
 export async function authFetch(url, options = {}) {
-  console.log(`[AUTH FETCH] → ${options.method || 'GET'} ${url}`);
 
   let res = await fetch(url, {
     ...options,
@@ -33,16 +37,19 @@ export async function authFetch(url, options = {}) {
   })
  
 if(res.status === 401) {
+  console.log("🔄 Access token expired. Attempting refresh...");
   let refresh = await fetch('/auth/token', {
     method: 'POST',
     credentials:'include',
   });
 
   if(!refresh.ok) {
-    window.location.href = '/login'
-    return;
+    console.error("❌ Refresh token expired or invalid. Redirecting to login.");
+    window.location.replace('/login');
+    return res;
   }
 
+  console.log("✅ Token refreshed successfully! Retrying original request...");
     res = await fetch(url, {
       ...options,
       credentials: 'include'
@@ -53,7 +60,6 @@ return res;
 }
 
 
-
 async function initApp() {
   console.log('App is initializing!')
 try {
@@ -61,10 +67,11 @@ try {
   method: 'GET',
 })
 
-if(!res.ok) {
-   console.log('Token not refreshed!')
-  return window.location.href = '/login'
-}
+if (!res.ok) {
+       console.error('🛑 Authentication failed completely. Exiting initialization.');
+       window.location.replace('/login');
+       return; 
+    }
 
 await initUser();
 showNotif('existingUser');
@@ -83,19 +90,38 @@ initExpensesFilter();
 initCategoryShortcut();
 initAddExpenseNavigator();
 initAddWithdraw();
-/* initLogoutBtn();
+initBudgetModal();
+initSaveBudget();
 initTransactionsFilter();
-initSetBudgetModal();
-initDLReportBtn();
-*/
 initGreetings();
 initGastooMessages();
+initGoal()
+initEditGoalModal();
+initAnalytics();
+initAnalyticsFilter();
+updateBudgetComparisonChart();
+updateExpenseHeatMap();
+initToolTipForHeatmap();
+initDLReportBtn();
+initLogoutBtn();
+initClearDataBtn();
+initEditProfileBtn();
+initSaveChangesOnProfileEdit();
+initChangePasswordEdit();
+initSetNewPassword();
+initBudgetTabFilter();
+await sendDailyNotifications()
+await renderNotifications();
+await initFeedbackModal();
+
 } catch (error) {
-  console.error(error);
-  return window.location.href = '/login'
+  console.error("Initialization crash:", error);
+  return window.location.replace('/login');
 }
 
 }
 
+initApp();
 
-document.addEventListener('DOMContentLoaded', initApp);
+
+

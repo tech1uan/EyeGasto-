@@ -1,6 +1,7 @@
 import express from 'express'
 import { authMiddleware } from '../middleware/authMiddleware.js';
-import { addExpense, deleteExpense, editExpense, getExpensesAllTime, getExpensesForToday, getExpensesForWeek, getRecentExpenses, getTotalExpenseForToday, getTotalExpensesAllTime, getTotalExpensesForWeek } from '../database/models/expenses.js';
+import { addExpense, deleteExpense, editExpense, getComparisonStats, getDailyStats, getExpenseHeatMap, getExpensesAllTime, getExpensesByRange, getExpensesForToday, getExpensesForWeek, getMonthlyStats, getProfileStats, getRecentExpenses, getThisMonthStats, getTotalExpenses } from '../database/models/expenses.js';
+import { deleteInsights } from '../database/models/insights.js';
 
 export const expensesRouter = express.Router();
 
@@ -16,8 +17,7 @@ expensesRouter.get('/', authMiddleware, async(req,res,next) => {
       const error = new Error('No data found!');
       error.status = 404;
       return next(error);
-    }
-
+    } 
     res.status(200).json({success: true, expenses});
 
   } catch (error) {
@@ -55,7 +55,9 @@ expensesRouter.post('/', authMiddleware, async(req,res,next) => {
     }
 
     const expense = await addExpense(userId,description,amount,categoryId)
-    
+    await deleteInsights(userId);
+
+
     res.status(200).json({success: true, expense});
   } catch (error) {
     next(error)
@@ -75,7 +77,8 @@ try {
       }
 
   const result = await deleteExpense(expenseId,userId);
-  
+  await deleteInsights(userId);
+
   res.status(200).json({
     success: true, 
     expense: result
@@ -86,7 +89,6 @@ try {
 }
 
 })
-
 
 expensesRouter.put('/', authMiddleware, async(req,res,next) => {
   try {
@@ -107,7 +109,8 @@ expensesRouter.put('/', authMiddleware, async(req,res,next) => {
     }
 
     const result = await editExpense(amount,categoryId, description,expenseId,userId);
-    
+    await deleteInsights(userId);
+
     res.status(200).json({
       success: true, 
       expense: result
@@ -153,41 +156,73 @@ expensesRouter.get('/alltime', authMiddleware, async(req,res,next) => {
 })
 
 
-expensesRouter.get('/summary/today', authMiddleware, async(req,res,next) => {
+expensesRouter.get('/summary/:range', authMiddleware, async(req,res,next) => {
   try {
     const {userId} = req.user;
+    const {range} = req.params;
 
-    const data = await getTotalExpenseForToday(userId);
+    const data = await getTotalExpenses(userId, range);
 
     res.status(200).json({success: true, expenses:data})
   } catch (error) {
     next(error)
   }
 })
-
-expensesRouter.get('/summary/last7', authMiddleware, async(req,res,next) => {
-  try {
-    const {userId} = req.user;
- 
-    const data = await getTotalExpensesForWeek(userId);
-
-    res.status(200).json({success: true, expenses:data})
-  } catch (error) {
-    next(error)
-  }
-})
-
-expensesRouter.get('/summary/alltime', authMiddleware, async(req,res,next) => {
+expensesRouter.get('/month/stats/', authMiddleware, async (req,res,next) => {
   try {
     const {userId} = req.user;
   
-    const data = await getTotalExpensesAllTime(userId);
-
-    res.status(200).json({success: true, expenses:data})
+    const data = await getThisMonthStats(userId);
+    res.status(200).json({
+      success: true,
+      totalSpent: data
+    })
   } catch (error) {
     next(error)
   }
-})
+});
+
+expensesRouter.get('/profile/stats/', authMiddleware, async (req,res,next) => {
+  try {
+    const {userId} = req.user;
+  
+    const data = await getProfileStats(userId);
+    res.status(200).json({
+      success: true,
+      profileStats: data
+    })
+  } catch (error) {
+    next(error)
+  }
+});
+
+expensesRouter.get('/month/:range', authMiddleware, async (req,res,next) => {
+  try {
+    const {userId} = req.user;
+    const {range} = req.params;
+
+    const data = await getComparisonStats(userId, range);
+    res.status(200).json({
+      stats:data
+    })
+  } catch (error) {
+    next(error)
+  }
+});
+
+expensesRouter.get('/month/stats/:range', authMiddleware, async (req,res,next) => {
+  try {
+    const {userId} = req.user;
+    const {range} = req.params;
+
+    const data = await getMonthlyStats(userId, range);
+    res.status(200).json({
+      stats:data
+    })
+  } catch (error) {
+    next(error)
+  }
+});
 
 expensesRouter.get('/recent', authMiddleware, async(req,res,next) => {
   try {
@@ -200,5 +235,43 @@ expensesRouter.get('/recent', authMiddleware, async(req,res,next) => {
     
   } catch (error) {
     next(error);
+  }
+})
+
+expensesRouter.get('/filter/:range', authMiddleware, async(req,res,next) => {
+  try {
+      const {userId} = req.user
+      const {range} = req.params
+      
+
+      const data = await getExpensesByRange(userId, range);
+      
+      res.status(200).json({success:true, expenses:data})
+  } catch (error) {
+    next(error)
+  }
+})
+
+expensesRouter.get('/heatmap', authMiddleware, async(req,res,next) => {
+  try {
+      const {userId} = req.user
+
+      const data = await getExpenseHeatMap(userId);
+
+      res.status(200).json({success:true, expenses:data})
+  } catch (error) {
+    next(error)
+  }
+})
+
+expensesRouter.get('/daily-stats', authMiddleware, async(req,res,next) => {
+  try {
+      const {userId} = req.user
+
+      const data = await getDailyStats(userId);
+
+      res.status(200).json({success:true, data})
+  } catch (error) {
+    next(error)
   }
 })

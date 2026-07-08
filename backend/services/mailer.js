@@ -8,4 +8,12 @@ const transporter = nodemailer.createTransport({
   }
 })
 
+transporter.verify((error, success) => {
+    if (error) {
+        console.error(error);
+    } else {
+        console.log("Gmail is ready to send emails!");
+    }
+});
+
 export default transporter;

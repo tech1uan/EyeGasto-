@@ -32,6 +32,31 @@
    background-image: linear-gradient(180deg, #007A74 0%, #009E94 20%, #23736F 100%);
   }
 
+  .analytics-card {
+    @apply border-1 border-[#1a3d3d] bg-[#122e2e] rounded-lg p-4
+  }
+
+  .profile-card {
+    @apply border-1 border-[#1a3d3d] bg-[#122e2e] rounded-md p-2.5
+  }
+
+  .profile-card-account, .profile-card-data {
+    @apply border-1 border-[#1a3d3d] bg-[#122e2e] rounded-md 
+  }
+  
+  
+  .analytics-card-title {
+    @apply text-[#6ab3a6] font-['DM_Sans'] text-[13px]
+  }
+
+  .analytics-amount {
+    @apply text-[#e0f5f0] font-['DM_Sans'] text-xl
+  }
+
+  .analytics-tip {
+    @apply text-[#e06a6a] font-['DM_Sans'] text-[12px]
+  }
+
 }
 
 @layer utilities {

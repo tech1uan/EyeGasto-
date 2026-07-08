@@ -1,9 +1,10 @@
 import express from 'express';
 import { authMiddleware } from '../middleware/authMiddleware.js';
-import { addSaving, deductSaving, getUserSavings } from '../database/models/savings.js';
+import { addSaving, deductSaving, getUserSavings, setGoalCompletedNotified } from '../database/models/savings.js';
 import { inputAmount } from '../validators/inputValidators.js';
 import validate from '../middleware/validate.js';
 import { getUserByUserID } from '../database/models/users.js';
+import { updateSavingsGoal } from '../database/models/goal.js';
 
 
 export const savingsRouter = express.Router();
@@ -46,6 +47,7 @@ savingsRouter.post('/add', authMiddleware, inputAmount, validate,  async(req,res
     }
 
     await addSaving(userId,amount);
+    
     res.status(200).json({msg:'Balance updated successfuly!'});
   } catch (error) {
     next(error);
@@ -56,12 +58,6 @@ savingsRouter.post('/deduct', authMiddleware, inputAmount, validate, async(req,r
   try {
     const userId = req.user.userId;
     const {amount} = req.body;
-
-    if(!userId) {
-      const error = new Error('Invalid or missing token!')
-      error.status = 401;
-      return next(error);
-    }
 
     const userSavings = await getUserSavings(userId);
 
@@ -87,3 +83,40 @@ savingsRouter.post('/deduct', authMiddleware, inputAmount, validate, async(req,r
   }
 })
 
+savingsRouter.post('/goal', authMiddleware, inputAmount, validate, async(req,res,next) => {
+  try {
+    const {userId} = req.user;
+    const {description, amount} = req.body;
+
+    const result = await updateSavingsGoal(userId,description,amount);
+
+    if(!result.success) {
+      return res.status(404).json({
+        msg:result.message
+      })
+    }
+
+    return res.status(200).json({
+      msg:result.message,
+      goal: result.goal
+    });
+
+  } catch (error) {
+    next(error)
+  }
+
+})
+
+savingsRouter.patch('/set-goal-notified', authMiddleware, async(req,res,next) => {
+  try {
+    const {userId} = req.user;
+
+    const result = await setGoalCompletedNotified(userId);
+
+    res.status(200).json({success:true, result: result.affectedRows})
+
+  } catch (error) {
+    next(error)
+  }
+
+})

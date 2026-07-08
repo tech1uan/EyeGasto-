@@ -2,6 +2,8 @@ import { addSavings, deductSavings, userSavings } from "../data/savings.js";
 import { renderSavingsHTML } from "../ui/renderSavings.js";
 import { confirmMessage } from "../core/confirmActions.js";
 import { addTransaction } from "../data/transactions.js";
+import { initGoal } from "../features/savings_goal/goal.js";
+import { checkSavingsMilestone } from "../notifs/pushNotifications.js";
 
 
 let messageTimer = null;
@@ -16,6 +18,7 @@ export function showMessage(el,text, duration = 3000) {
   }, duration);
 }
 
+
 function hideAddWithdrawModal() {
 const expensesNavInnerContainer = document.querySelector('.expenses-nav-inner-container');
 const expensesNavContainer = document.querySelector('.expenses-nav-container');
@@ -28,16 +31,17 @@ expensesNavContainer.classList.add('hidden');
 
 export function initAddWithdraw() {
 
-  const addMoneyBtn = document.getElementById('js-add-button');
-  const withdrawMoneyBtn = document.getElementById('js-withdraw-button');
+  const budgetBtn = document.getElementById('js-budget-button');
   const descriptionInput = document.getElementById('description');
   const amountInput = document.getElementById('amount');
   const error = document.getElementById('error');
   const success = document.getElementById('success');
 
 
-  addMoneyBtn.addEventListener('click', () => {
-    let type = 'add';
+  budgetBtn.addEventListener('click', async () => {
+    const type = budgetBtn.dataset.type;
+
+    if(type === 'add') {
     const description = descriptionInput.value.trim();
     const amount = Number(amountInput.value);
 
@@ -46,12 +50,12 @@ export function initAddWithdraw() {
       return;
     }
 
-    if(!amountInput.value || Number(amountInput.value) < 1 || isNaN(amountInput.value)) {
+    if(!amountInput.value || Number(amountInput.value) < 1) {
       showMessage(error, 'Please enter a valid amount');
       return
     }
 
-    confirmMessage(`Are you sure you want to add <strong>₱${amount}?</strong>`, async () => {
+    confirmMessage('green',`Are you sure you want to add <strong>₱${amount}?</strong>`, async () => {
       try {
       const result = await addSavings(amount);
 
@@ -64,45 +68,43 @@ export function initAddWithdraw() {
         return;
       }
       await addTransaction(amount,description,type)
-      renderSavingsHTML();
+      await renderSavingsHTML();
+      await initGoal();
+      checkSavingsMilestone();
       descriptionInput.value = '';
       amountInput.value = '';
       hideAddWithdrawModal();
       } catch (error) {
-      console.error('Error updating savings: ', error);
-      alert('Failed to update savings. Check console.')
+       console.log(error)
       }
     });
-  });
-
-  withdrawMoneyBtn.addEventListener('click', () => {
-    let type = 'withdraw';
+  } else if (type === 'withdraw') {
     const description = descriptionInput.value.trim();
     const amount = Number(amountInput.value);
+    const currentSavings = await userSavings();
 
     if(!description) {
       showMessage(error, 'Please enter a description');
       return;
     }
 
-    if (!amountInput.value || amountInput.value.trim() === '') {
+     if (!amountInput.value || amountInput.value.trim() === '') {
           showMessage(error, 'Please enter an amount');
           return;
         }
-
-
-      if(isNaN(amount)) {
-        showMessage(error, 'Amount must contain digits only.')
-        return;
-      }
 
       if (amount < 1) {
       showMessage(error, 'Amount must be greater than 0');
       return;
       }
 
+      if(amount > currentSavings.money) {
+        showMessage(error, 'Insufficient funds!')
+        return;
+      }
 
-    confirmMessage(`Are you sure you want to withdraw <strong>₱${amount}</strong>?`, async () => {
+
+    confirmMessage('green',`Are you sure you want to withdraw <strong>₱${amount}</strong>?`, async () => {
       try {
 
       const savings = await userSavings();
@@ -118,7 +120,6 @@ export function initAddWithdraw() {
       }
 
      const result = await deductSavings(amount);
-      console.log(result);
       if (!result.success) {
         const msg =
           result.error?.errors[0].msg ||
@@ -129,15 +130,17 @@ export function initAddWithdraw() {
       }
 
       await addTransaction(amount,description,type);
-      renderSavingsHTML();
-       descriptionInput.value = '';
+      await renderSavingsHTML();
+      await initGoal();
+      descriptionInput.value = '';
       amountInput.value = '';
       hideAddWithdrawModal();
       } catch (error) {
       alert('Failed to deduct savings. Check console. ')
       }
     });
-  });
+  }
+});
 
   const closeButton = document.getElementById('js-close-modal')
 

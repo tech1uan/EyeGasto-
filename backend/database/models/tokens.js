@@ -36,6 +36,10 @@ export async function getRefreshTokenById(id) {
 }
 
 
+const token = await getRefreshTokenById(1);
+
+
+
 export async function deleteAllUserTokens(userId) {
   try {
     const [result] = await pool.query(

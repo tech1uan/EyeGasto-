@@ -4,7 +4,10 @@ input:-webkit-autofill:focus{
   -webkit-box-shadow: 0 0 0 1000px rgb(31, 72, 95) inset !important;
   -webkit-text-fill-color: white;
 }
- 
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 10px; }
+
+
  @keyframes bounceIn {
     0%   {
        transform: translateY(-20px) 
@@ -37,7 +40,8 @@ input:-webkit-autofill:focus{
   }
 
   .notif { 
-    animation: bounceIn 0.45s cubic-bezier(.36,.07,.19,.97) forwards; border-radius: 20px; 
+    animation: bounceIn 0.45s cubic-bezier(.36,.07,.19,.97);
+    border-radius: 12px;
     padding: 14px 16px; 
     display: flex; 
     align-items: center; 
@@ -273,29 +277,82 @@ input:-webkit-autofill:focus{
 
 
 
-.gastoo-container {
-   background-image: url('/images/gastoo-assets/idle.png');
-   background-repeat: no-repeat;
-
-   background-size: 14080px 110px;
-
-   animation: gastooIdle 8s steps(128) infinite;
-   image-rendering: pixelated;
-
+.gastoo-container, .gastoo-container-auth {
+    width: 128px;
+    height: 128px;
+    background-repeat: no-repeat;
+    background-size: 15360px 128px;
+    animation: gastooIdle 8s steps(120) infinite;
+    image-rendering: pixelated;
 }
+
+.gastoo-container-auth{
+    background-image: url('/images/gastoo-assets/mascot/happy.png');
+}
+
+.gastoo-happy {
+  background-image: url('/images/gastoo-assets/mascot/happy.png');
+}
+
+.gastoo-excited {
+  background-image: url('/images/gastoo-assets/mascot/excited.png');
+}
+
+.gastoo-concerned {
+  background-image: url('/images/gastoo-assets/mascot/concerned.png');
+}
+.gastoo-proud {
+  background-image: url('/images/gastoo-assets/mascot/proud.png');
+}
+.gastoo-worried {
+  background-image: url('/images/gastoo-assets/mascot/worried.png');
+}
+
+
 
 @keyframes gastooIdle {
   from {
     background-position: 0 0;
   } to {
-    background-position: -14080px 0;
+    background-position: -15360px 0;
   }
 }
+
+/*
+.gastoo-container {
+    background-image: url('/images/gastoo-assets/excited.png');
+    background-repeat: no-repeat;
+
+    background-size: 10890px 110px;
+
+    animation: gastooExcited 3s steps(99) infinite;
+    image-rendering: pixelated;
+}
+
+@keyframes gastooExcited {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -10890px 0;
+    }
+}
+*/
 
 .spinner {
   width: 14px;
   height: 14px;
   border: 2px solid white;
+  border-top: 2px solid transparent;
+  border-radius: 100%;
+  display: inline-block;
+  animation: spin 0.7s linear infinite;
+}
+
+.spinner-expense {
+  width: 14px;
+  height: 14px;
+  border: 2px solid #0d9f9f;
   border-top: 2px solid transparent;
   border-radius: 100%;
   display: inline-block;
@@ -315,5 +372,29 @@ input:-webkit-autofill:focus{
 
 .category-active {
   background-color: #37b9b3;
-  transition: all ease-in 0.1s;
+}
+
+.show-tooltip {
+  opacity:1;
+}
+
+
+.active-day .pulse-dot {
+  background: white;
+  border-color: #079F9F;
+}
+
+.active-day span {
+  color: #079F9F;
+  font-weight: 700;
+}
+
+
+.gastoo-bg-container {
+  background-image: linear-gradient(
+    180deg,
+    #0D928A 0%,
+    #22B7AD 20%,
+    #3C9D97 100%
+  );;
 }

@@ -217,7 +217,7 @@ export async function saveDataToPDF() {
 }
 
 export function initDLReportBtn() {
-  const button = document.getElementById("dl-button");
+  const button = document.getElementById("export-data-btn");
   if (!button) {
     console.error("Download button not found");
     return;

@@ -6,7 +6,6 @@ import { currentView } from "./viewExpense.js";
 export async function updateRecentExpenses () {
     const expenses =  await getUserRecentExpenses(currentView);
      
-    console.log(expenses);
     renderRecentExpensesHTML(expenses);
 }
 

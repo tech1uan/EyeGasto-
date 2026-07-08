@@ -36,20 +36,23 @@ export async function  updateReceiptHTML() {
    if(transactions.length === 0) {
     receiptsContainer.innerHTML =
     `
-    <p class = "text-center pt-4">No transactions yet.</p>
+    <p class = "text-center pt-4 text-white">No transactions yet.</p>
     `
     return;
    }
 
   transactions.forEach((tx)=> {
-
+   
+  const amountColor = tx.type === 'add' ? 'text-teal-300' : 'text-red-400';
   html+= 
+
+
   `
-  <div class="receipt-item p-2 border-b border-gray-300 grid grid-cols-4 py-1">
-  <div class = "text-center">${formatToPeso(tx.amount)}</div>
-  <div class = "text-center">${tx.description}</div>
-  <div class = "text-center">${tx.type}</div>
-  <div class = "text-center">${dayjs(tx.date_time).format('MMMM D, YYYY')}</div>
+  <div class="receipt-item p-2 bg-white/[0.06] border border-white/10 backdrop-blur-sm rounded-xl grid grid-cols-4 py-1">
+  <div class = "text-center ${amountColor} font-bold">${formatToPeso(tx.amount)}</div>
+  <div class = "text-center text-white/75 font-bold">${tx.description}</div>
+  <div class = "text-center text-white/75 font-bold">${tx.type.charAt(0).toUpperCase() + tx.type.slice(1)}</div>
+  <div class = "text-center text-white/60">${dayjs(tx.date_time).format('MMMM D, YYYY')}</div>
   </div >
   
   `

@@ -15,7 +15,7 @@ export async function logout() {
 
 
 export function initLogoutBtn() {
-const button = document.getElementById('logout-btn');
+const button = document.getElementById('logoutBtn');
 if(!button) return; 
 
 button.addEventListener('click', logout)

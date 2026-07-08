@@ -3,164 +3,184 @@ import { groupExpensesByCategory } from "../features/expenses/groupExpensesByCat
 
 Chart.register(ChartDataLabels);
 
+let expensesChart = null;
+
 export async function updateExpensesChart() {
-
   const expenses = await getCurrentExpenses();
-  
-  const canvasParent = document.querySelector('.chart-card-container'); 
-  const legendDiv = document.getElementById('expensesLegend');
 
-  const noExpenses = !expenses || expenses.length === 0;
-
-  if (noExpenses) {
-    showNoDataMessage(canvasParent, legendDiv);
-    document.getElementById('expensesLegend').classList.add("hidden");
-  } else {
-    showChart(expenses, canvasParent, legendDiv);
-    document.getElementById('expensesLegend').classList.remove("hidden");
-  }
-}
-function showNoDataMessage(canvasParent, legendDiv) {
-
-  if (window.expensesChartInstance) {
-    window.expensesChartInstance.data.labels = [];
-    window.expensesChartInstance.data.datasets[0].data = [];
-    window.expensesChartInstance.update();
+  if (!expenses?.length) {
+    showNoData();
+    return;
   }
 
-  if (canvasParent) {
-    let overlay = canvasParent.querySelector('.no-data-overlay');
-    if (!overlay) {
-      overlay = document.createElement('div');
-      overlay.className = 'no-data-overlay flex flex-col items-center justify-center absolute inset-0 bg-white/10';
-      overlay.innerHTML = `
-        <div class="text-4xl mb-4">📊</div>
-        <p class="text-gray-600 font-semibold">No data yet</p>
-        <p class="text-gray-500 text-sm mt-2 text-center">Add expenses to see your chart</p>
-      `;
-      canvasParent.style.position = 'relative';
-      canvasParent.appendChild(overlay);
-    }
-    overlay.style.display = 'flex';
-  }
+  hideNoData();
 
-  if (legendDiv) legendDiv.innerHTML = '';
-}
-
-export function showChart(expenses, canvasParent, legendDiv) {
   const grouped = groupExpensesByCategory(expenses);
 
-  const categoryNames = Object.keys(grouped);
-  const categoryAmounts = categoryNames.map(name => parseFloat(grouped[name].total));
-  const categoryColors = categoryNames.map(name => grouped[name].color);
+  const labels = Object.keys(grouped);
+  const amounts = labels.map(label => parseFloat(grouped[label].total));
+  const colors = labels.map(label => grouped[label].color);
 
-  const total = categoryAmounts.reduce((acc, val) => acc + Number(val), 0);
-  const safeTotal = total > 0 ? total : 1;
+  renderChart(labels, amounts, colors);
 
+}
+
+function showNoData() {
+  document.querySelector('.no-data-overlay')?.classList.remove('hidden');
+  document.querySelector('.chart-card-container')?.classList.add('hidden');
+
+  const legend = document.getElementById('expensesLegend');
+
+  if (legend) {
+    legend.innerHTML = ''; 
+    legend.classList.add('hidden');
+  }
+
+  if (expensesChart) {
+    expensesChart.destroy();
+    expensesChart = null;
+  }
+}
+
+function hideNoData() {
+  document.querySelector('.no-data-overlay')?.classList.add('hidden');
+  document.querySelector('.chart-card-container')?.classList.remove('hidden');
+
+  const legend = document.getElementById('expensesLegend');
+
+  if (legend) {
+    legend.classList.remove('hidden');
+  }
+}
+
+
+const centerTextPlugin = {
+  id: 'centerText',
+  afterDraw(chart) {
+    const { ctx, chartArea } = chart;
+    const dataset = chart.data.datasets[0]?.data ?? [];
+    const total = dataset.reduce((sum, v) => sum + Number(v), 0) || 1;
+
+    let topIndex = 0;
+    dataset.forEach((v, i) => {
+      if (Number(v) > Number(dataset[topIndex])) topIndex = i;
+    });
+
+    const topValue = Number(dataset[topIndex] ?? 0);
+    const topLabel = chart.data.labels?.[topIndex] ?? '';
+    const percent = ((topValue / total) * 100).toFixed(1);
+
+    const cx = (chartArea.left + chartArea.right) / 2;
+    const cy = (chartArea.top + chartArea.bottom) / 2;
+
+    ctx.save();
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    ctx.font = "600 20px 'DM Sans', sans-serif";
+    ctx.fillStyle = '#1f2937';
+    ctx.fillText(`${percent}%`, cx, cy - 10);
+
+    ctx.font = "500 11px 'DM Sans', sans-serif";
+    ctx.fillStyle = '#6b7280';
+    ctx.fillText(topLabel.toLowerCase(), cx, cy + 12);
+
+    ctx.restore();
+  }
+};
+
+function renderChart(labels, data, colors) {
   const canvas = document.getElementById('expensesChart');
-  if (!canvas) return;
 
-   const overlay = canvasParent.querySelector('.no-data-overlay');
-  if (overlay) overlay.style.display = 'none';
+  if (!canvas) return;
 
   const ctx = canvas.getContext('2d');
 
-  if (window.expensesChartInstance) {
-  window.expensesChartInstance.data.labels = categoryNames;
-  window.expensesChartInstance.data.datasets[0].data = categoryAmounts;
-  window.expensesChartInstance.data.datasets[0].backgroundColor = categoryColors;
-  window.expensesChartInstance.update();
-  createLegend(grouped, safeTotal, legendDiv);
-  return;
-} 
+  if (expensesChart) {
+    expensesChart.destroy();
+  }
 
-    window.expensesChartInstance = new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        labels: categoryNames,
-        datasets: [{
-          data: categoryAmounts,
-          backgroundColor: categoryColors,
+  expensesChart = new Chart(ctx, {
+    type: 'doughnut',
+
+    data: {
+      labels,
+      datasets: [
+        {
+          data,
+          backgroundColor: colors,
           borderWidth: 0,
           borderRadius: 8,
           spacing: 2
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        aspectRatio: 1.5,
-        cutout: '60%',
-        animation: { duration: 1000, easing: 'easeOutCubic', animateRotate: true, animateScale: true },
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            backgroundColor: 'rgba(0,0,0,0.8)',
-            padding: 12,
-            cornerRadius: 8,
-            callbacks: {
-              label: function(context) {
-                const name = context.label;
-                const amount = parseFloat(context.parsed);
-                 const currentTotal = context.dataset.data.reduce((a, b) => a + b, 0);
-                const percent = ((amount / currentTotal) * 100).toFixed(2);
-                return `${name}: ₱${amount.toLocaleString()} (${percent}%)`;
-              }
-            }
-          },
-          datalabels: {
-            color: '#fff',
-            font: { weight: 'bold', size: 16, family: "'DM Sans', sans-serif" },
-            formatter: function(value, context) {
-                 const currentTotal = context.dataset.data.reduce((a, b) => a + b, 0);
-              const percent = ((value / currentTotal) * 100).toFixed(1)
-              if(percent > 5) {
-              return percent ? percent + '%' : '';
-              } else {
-                return null;
-              }
-            },
-            anchor: 'center',
-            align: 'center',
-            textStrokeColor: 'rgba(0, 0, 0, 0.5)',
-            textStrokeWidth: 2
-          }
         }
+      ]
+    },
+
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+
+      cutout: '72%',
+
+      animation: {
+        duration: 800
       },
-      plugins: [ChartDataLabels]
-    });
 
+      plugins: {
+        legend: {
+          display: false
+        },
 
-  createLegend(grouped, safeTotal, legendDiv);
-  }
+        tooltip: {
+          backgroundColor: 'rgba(0,0,0,0.8)',
+          padding: 12,
+          cornerRadius: 8,
 
-function createLegend(grouped, safeTotal, legendDiv) {
-  if (!legendDiv) return;
+          callbacks: {
+            label(context) {
+              const value = Number(context.parsed);
 
-  let html = '';
+              const total = context.dataset.data.reduce(
+                (sum, current) => sum + Number(current),
+                0
+              );
 
-  for (let categoryName in grouped) {
-    const data = grouped[categoryName];
-    const amount = parseFloat(data.total);
-    const color = data.color;
-    const percent = Math.min(((amount / safeTotal) * 100).toFixed(1), 100);
+              const safeTotal = total || 1;
+              const percent = ((value / safeTotal) * 100).toFixed(1);
 
+              return `${context.label}: ₱${value.toLocaleString()} (${percent}%)`;
+            }
+          }
+        },
 
-    html += `
-      <div class="flex items-center px-2 hover:bg-white/30 rounded-xl transition-all duration-200 cursor-pointer font-['DM_Sans']">
-        <div class="flex items-center justify-center flex-1">
-            <div style="width: 8px; margin-right:2px; height: 8px; border-radius: 50%; background-color: ${color}; box-shadow: 0 1px 2px rgba(0,0,0,0.1);"></div>
-          <span class="text-gray-800 font-semibold text-[9px] mr-3">${categoryName}</span>
-        </div>
-        <div class="flex items-center">
-          <span class="text-gray-900 font-bold text-[9px]">₱${amount.toLocaleString()}</span>
-          <span class="text-gray-600 text-[9px] bg-white/50 px-2 py-1 rounded-full">${percent}%</span>
-        </div>
-      </div>
-    `;
+        datalabels: {
+          color: '#fff',
 
-    
-  }
+          font: {
+            weight: 'bold',
+            size: 14,
+            family: "'DM Sans', sans-serif"
+          },
 
-  legendDiv.innerHTML = html;
+          formatter(value, context) {
+            const total = context.dataset.data.reduce(
+              (sum, current) => sum + Number(current),
+              0
+            );
+
+            const safeTotal = total || 1;
+            const percent = ((value / safeTotal) * 100).toFixed(1);
+
+            return percent > 5 ? `${percent}%` : '';
+          },
+
+          anchor: 'center',
+          align: 'center'
+        }
+      }
+    },
+
+    plugins: [ChartDataLabels, centerTextPlugin]
+  });
 }
+

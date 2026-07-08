@@ -74,3 +74,36 @@ export async function deductSaving(userId, balance) {
 }
 
 
+export async function resetSavings(connection, userId) {
+  try {
+    const [result] = await connection.query(
+      `
+      UPDATE savings
+      SET goal_name = '',
+      target_amount = 0,
+      balance = 0
+      WHERE user_id = ?
+      `, [userId])
+
+    return result.affectedRows;
+  } catch (error) {
+    throw error
+  }
+}
+
+
+
+export async function setGoalCompletedNotified( userId) {
+  try {
+    const [result] = await pool.query(
+      `
+     UPDATE savings
+     SET goal_completed_notified = 1
+     WHERE user_id = ?;
+      `, [userId])
+
+    return result.affectedRows;
+  } catch (error) {
+    throw error
+  }
+}

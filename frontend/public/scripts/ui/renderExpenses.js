@@ -3,17 +3,24 @@ import { addJustifyCenter, formatToPeso, removeJustifyCenter } from "../core/uti
 export async function renderExpensesHTML(expenses, variant = "home") {
   const selector = variant === "home" ? ".expenses-container" : ".expenses-container-b";
   const container = document.querySelector(selector);
-  const time = dayjs().format('h:mm A')
-
 
   if (!expenses || expenses.length === 0) {
+     container.classList.add(
+    'flex',
+    'flex-col',
+    'items-center',
+    'justify-center',
+    'h-full'
+  );
     container.innerHTML = `
-      <h1 class="font-['DM_Sans'] text-center">No expenses today yet. Start tracking now 💸.</h1>
+      <h1 class=" font-['DM_Sans'] text-center">No expenses today yet. Start tracking now 💸.</h1>
     `;
     addJustifyCenter(container);
     return;
   }
+  
 
+  console.log(container);
   removeJustifyCenter(container);
 
   container.innerHTML = expenses.map(expense => {
@@ -27,7 +34,7 @@ export async function renderExpensesHTML(expenses, variant = "home") {
 
     const tooltip = `
       <span class="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-40 p-2 bg-black text-white text-sm rounded shadow-lg z-50 
-      group-hover:block transition-all duration-300 opacity-0 group-hover:opacity-100 pointer-events-none sm:pointer-events-auto">
+      group-hover:block transition-all duration-300 opacity-0 group-hover:opacity-100 pointer-events-none sm:pointer-events-auto font-['DM_Sans']">
         Description: ${expense.description}<br>
         Date: ${dayjs(expense.date_time).format('MM-DD-YYYY')}<br>
         Category: ${expense.category}<br>
@@ -66,7 +73,7 @@ export async function renderExpensesHTML(expenses, variant = "home") {
           ${categoryBadge}
           ${tooltip}
           <h1 class="text-[#079F9F] font-['DM_Sans'] flex-shrink-0 font-bold text-sm sm:text-lg whitespace-nowrap">${formatToPeso(expense.amount)}</h1>
-          <p class = "font-['DM_Sans'] text-[10px]">[${time}]</p>
+          <p class = "font-['DM_Sans'] text-[10px]">[${dayjs(expense.date_time).format('h:mm A')}]</p>
           ${actions}
         </div>
       `;

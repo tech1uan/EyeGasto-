@@ -7,8 +7,11 @@ import { renderTotalExpensesHTML, updateTotalExpenses } from "./totalExpenses.js
 import { getCurrentExpenses } from "./viewExpense.js";
 import { budget } from "../../data/budget.js";
 import { updateExpensesChart } from "../../charts/expensesChart.js";
-import { updateRecentExpenses } from "./recentExpenses.js";
 import { showMessage } from "../../withdrawals/addWithdraw.js";
+import { hideLoading, showLoading } from "../../ui/loading.js";
+import { initAnalytics } from "../analytics/analytics.js";
+import { checkBudgetData } from "../../budget/budgetActions.js";
+import { checkSpendingTrend } from "../../notifs/pushNotifications.js";
    
 
    export async function initCategoryShortcut() {
@@ -43,7 +46,6 @@ import { showMessage } from "../../withdrawals/addWithdraw.js";
     const error = document.getElementById('error-expense');
     const success = document.getElementById('success-expense');
 
-
     const description = descriptionInput.value.trim();
     const amount =  Number(amountInput.value);
     const categoryId = Number(categorySelect.value);
@@ -52,38 +54,38 @@ import { showMessage } from "../../withdrawals/addWithdraw.js";
       showMessage(error, 'Please fill in all fields');
       return
     }
-    
-    
-    confirmMessage(`Are you sure you want to add <strong>${description}</strong> as your expense?`, async () => {
-    const data = await addExpense(description,amount,categoryId);
-    
-    if(!data) {
-      alert('Failed to add expense!');
-      return null;
-    }
-     
-    const expenses = await getCurrentExpenses();
 
-    await Promise.all([
-   
-    updateTotalExpenses(),
-    renderBudget(),
-    updateRecentExpenses(),
-    updateExpensesChart()
-    ])
-      renderExpensesHTML(expenses, "home")
-      renderExpensesHTML(expenses, "expenses")
-    budget.checkBudgetStatus();
+    confirmMessage('green',`Are you sure you want to add <strong>${description}</strong> as your expense?`, async () => {
+         const addExpenseBtn = document.getElementById('js-add-expense');
+          addExpenseBtn.disabled = true;
+         showLoading(addExpenseBtn);
+          try {
+            await addExpense(description,amount,categoryId);
+            
+              const expenses = await getCurrentExpenses();
 
-    descriptionInput.value = '';
-    amountInput.value = '';
-    categorySelect.value = '';
+              renderExpensesHTML(expenses, "home")
+              renderExpensesHTML(expenses, "expenses")
 
+              await Promise.all([
+              updateTotalExpenses(),
+              updateExpensesChart(),
+              renderBudget()
+              ])
 
+              await checkBudgetData()
+              await checkSpendingTrend();
+
+        
+            } finally {
+              hideLoading(addExpenseBtn);
+              addExpenseBtn.disabled = false;    
+              descriptionInput.value = '';
+              amountInput.value = '';
+              categorySelect.value = '';
+            }
   })
   }
-
-
 
   export function initAddExpense() {
     const addExpenseBtn = document.getElementById('js-add-expense');
@@ -93,7 +95,6 @@ import { showMessage } from "../../withdrawals/addWithdraw.js";
 
   export function initAddExpenseNavigator  () {
     
-
     const button = document.getElementById('add-expense-navigator');
     const navButtons = document.querySelectorAll('.nav-btn');
     const expensesNavBtn = document.querySelector('.expenses-nav');
@@ -103,11 +104,12 @@ import { showMessage } from "../../withdrawals/addWithdraw.js";
     const expensesNavigatorContainer = document.querySelector('.expenses-nav-container');
     const expensesSection = document.querySelector('.expenses-section');
     const homeSection = document.querySelector('.home-section');
-
+    const analyticsSection = document.querySelector('.analytics-section');
    
     expensesNavigatorContainer.classList.add('hidden');
     expensesSection.classList.remove('hidden');
     homeSection.classList.add('hidden');
+    analyticsSection.classList.add('hidden');
 
         navButtons.forEach(nav => {
             nav.classList.remove('active')

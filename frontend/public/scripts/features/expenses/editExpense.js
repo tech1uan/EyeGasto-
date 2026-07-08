@@ -9,6 +9,7 @@ import { getCurrentExpenses, getExpensesFromCache } from "./viewExpense.js";
 import { editExpense } from "../../data/expenses.js";
 import { renderBudget } from "../../ui/renderBudget.js";
 import { budget } from "../../data/budget.js";
+import { initAnalytics } from "../analytics/analytics.js";
 
 
 
@@ -18,10 +19,11 @@ export function initEditExpense () {
     c.addEventListener('click', (e) => {
     const button = e.target.closest('.js-edit-button');
 
-    if(button) {
+    if(!button) return;
+
       const id =  Number(button.dataset.id);
       openEditForm(id);
-    }
+  
    })
    })
 }
@@ -47,7 +49,7 @@ async function openEditForm(id) {
   const editExpenseInnerContainer = document.querySelector('.edit-expense-inner-container');
  saveButton.onclick = async () => {
     modal.classList.add('hidden');
-  confirmMessage(`Do you wish to save this changes to <strong>${expense.description}</strong>?`, async() => {
+  confirmMessage('green',`Do you wish to save this changes to <strong>${expense.description}</strong>?`, async() => {
   modal.classList.remove("flex");
   
   const {expense_id} = expense;
@@ -57,24 +59,20 @@ async function openEditForm(id) {
   
   console.log(updatedCategory);
   if(!updatedDescription ){
-    alert('Description is required!');
     return;
   }
 
   if(isNaN(updatedAmount) || updatedAmount <=0) {
-    alert('Amount must be a valid number!')
     return;
   }
 
   if(!updatedCategory) {
-    alert('Please select a category!');
     return;
   }
 
   const data = await editExpense(expense_id,updatedAmount, updatedCategory, updatedDescription);
 
   if(!data) {
-    alert('Failed to update expense!');
     return;
   }
 
@@ -86,10 +84,10 @@ async function openEditForm(id) {
   updateTotalExpenses(),
   updateRecentExpenses(),
   updateExpensesChart(),
-  renderBudget()
   ])
-
-  budget.checkBudgetStatus();
+  
+  await checkBudgetData()
+  
   })
  };
 }

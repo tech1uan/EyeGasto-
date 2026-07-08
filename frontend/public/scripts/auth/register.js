@@ -4,6 +4,8 @@ const button = document.getElementById('register-btn');
 
 
 async function registerUser() {
+const firstName = document.getElementById('firstname-input').value;
+const lastName = document.getElementById('lastname-input').value
 const username = document.getElementById('username-input').value
 const email = document.getElementById('email-input').value;
 const password = document.getElementById('password-input').value
@@ -20,7 +22,7 @@ success.style.display = 'none';
 success.innerText = '';
 
 
-if(!username || !email || !password || !confirmPassword) {
+if(!firstName || !lastName || !username || !email || !password || !confirmPassword) {
   message.style.display = 'block';
   message.innerText = 'Please fill in all fields';
   
@@ -42,7 +44,7 @@ try {
     headers:{
       'Content-type':'application/json'
     },
-    body:JSON.stringify({username,email,password,confirmPassword})
+    body:JSON.stringify({firstName,lastName,username,email,password,confirmPassword})
   });
   
   const data = await res.json();
@@ -51,6 +53,7 @@ try {
     message.style.display = 'block';
     if(data.errors) {
     message.innerText = data.errors.map(err => err.msg).join(', ');
+    hideLoading(registerBtn);
     } else {
       message.innerText = data.msg;
     }
@@ -60,7 +63,7 @@ try {
     },2000)
     
   } else {
-     window.location.href = '/verify.html'
+     window.location.replace('/verify');
     setTimeout(() => {
       success.style.display = 'none';
     },2000)

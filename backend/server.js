@@ -1,17 +1,21 @@
 import express from 'express';
 import dotenv from 'dotenv';
-
-dotenv.config();
 import cors from 'cors';
-import router from './routes/central.js';
-import errorHandler from './middleware/errorHandler.js';
-import logger from './middleware/logger.js';
-import notFound from './middleware/notFound.js';
 import cookieParser from 'cookie-parser';
-import { authMiddleware } from './middleware/authMiddleware.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
+
+import router from './routes/central.js';
+
+import logger from './middleware/logger.js';
 import latencyCheck from './middleware/latencyCheck.js';
+import { authMiddleware } from './middleware/authMiddleware.js';
+import { authorizeMiddleware } from './middleware/authorizeMiddleware.js';
+import notFound from './middleware/notFound.js';
+import errorHandler from './middleware/errorHandler.js';
+import { optionalAuth } from './middleware/optionalAuth.js';
+
+dotenv.config();
 
 const PORT = process.env.PORT || 8000;
 
@@ -24,30 +28,84 @@ const protectedPath = path.resolve(__dirname, '../frontend/protected');
 const server = express();
 
 server.use(logger);
-server.use(latencyCheck)
+server.use(latencyCheck);
+
 server.use(cors());
 server.use(cookieParser());
-server.use(express.json())
+server.use(express.json());
+
+
+server.get('/', optionalAuth, (req, res) => {
+    if (req.user?.role === 'admin') {
+        return res.redirect('/gastoo-admin-dashboard');
+    }
+
+    return res.sendFile(path.join(publicPath, 'index.html'));
+});
+
+server.get('/login', optionalAuth, (req, res) => {
+    res.set('Cache-Control', 'no-store');
+    if (req.user?.role === 'admin') {
+        return res.redirect('/gastoo-admin-dashboard');
+    }
+
+    if (req.user) {
+        return res.redirect('/');
+    }
+
+    return res.sendFile(path.join(publicPath, 'login.html'));
+});
+
+server.get('/register', optionalAuth, (req, res) => {
+    res.set('Cache-Control', 'no-store');
+    if (req.user?.role === 'admin') {
+        return res.redirect('/gastoo-admin-dashboard');
+    }
+
+    if (req.user) {
+        return res.redirect('/');
+    }
+
+    return res.sendFile(path.join(publicPath, 'register.html'));
+});
+
+
+server.get('/verify', optionalAuth, (req,res) => {
+  if(req.user) {
+    return res.redirect('/')
+  }
+  return res.sendFile(path.join(publicPath, 'verify.html'));
+})
+
+server.get('/gastoo-admin-dashboard', (req, res) => {
+    return res.sendFile(path.join(protectedPath, 'admin.html'));
+});
+
+
+server.get('/index.html', (_, res) => res.redirect('/'));
+server.get('/login.html', (_, res) => res.redirect('/login'));
+server.get('/register.html', (_, res) => res.redirect('/register'));
+
 
 
 server.use(express.static(publicPath));
 
-server.get('/login', (req,res) => {
-  res.sendFile(path.join(publicPath,'login.html'))
-})
+server.use(
+    '/protected',
+    express.static(protectedPath)
+);
 
-server.get('/register',(req,res) => {
-  res.sendFile(path.join(publicPath,'register.html'))
-})
+server.use('/uploads', express.static('uploads'));
 
-server.get('/app/auth', authMiddleware, (req,res) => {
-  res.json({user: req.user})
-})
+server.get('/app/auth', authMiddleware, (req, res) => {
+    return res.json({ user: req.user });
+});
 
 server.use('/', router);
+
 server.use(notFound);
 server.use(errorHandler);
 
-server.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server is running on port ${PORT}`)
-})
+server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});

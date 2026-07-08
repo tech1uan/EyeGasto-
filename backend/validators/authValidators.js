@@ -1,6 +1,21 @@
 import {body,param,query,validationResult,matchedData} from 'express-validator';
 import { getUserByEmail, getUserByUsername } from '../database/models/users.js';
 
+export const registerNameValidator = [
+  body('firstName')
+    .trim()
+    .notEmpty().withMessage('Please provide your first name')
+    .bail()
+    .isLength({ min: 2, max: 50 }).withMessage('First name must be between 2 and 50 characters')
+    .matches(/^[A-Za-z\s\-'\.]+$/).withMessage('First name contains invalid characters'),
+
+  body('lastName')
+    .trim()
+    .notEmpty().withMessage('Please provide your last name')
+    .bail()
+    .isLength({ min: 2, max: 50 }).withMessage('Last name must be between 2 and 50 characters')
+    .matches(/^[A-Za-z\s\-'\.]+$/).withMessage('Last name contains invalid characters')
+];
 
 export const registerUsernameValidator =[
  body('username')
@@ -21,11 +36,13 @@ export const registerPasswordValidator = [
  body('password')
        .trim()
       .notEmpty().withMessage('Please provide a password')
+      .bail()
       .isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
 
 body('confirmPassword')
       .trim()
       .notEmpty().withMessage('Please confirm your password.')
+      .bail()
       .custom((value, {req}) => {
             if(value !== req.body.password)  {
             throw new Error('Passwords do not match');

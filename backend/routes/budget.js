@@ -1,53 +1,24 @@
 import express from 'express';
 import { authMiddleware } from '../middleware/authMiddleware.js';
-import {addBudget,editBudget, getUserBudgetSummaryToday } from '../database/models/budget.js';
-
-export const budgetRouter = express.Router();
-
-
-budgetRouter.get('/summary/today', authMiddleware, async (req,res,next) => {
-  try {
-     const {userId} = req.user
-
-     const budget = await getUserBudgetSummaryToday(userId)
+import {addBudget,editBudget, getBudgetComparison, getUserBudgetSummary } from '../database/models/budget.js';
+import { budgetRangeQueryValidator, budgetRangeValidator, inputAmount } from '../validators/inputValidators.js';
+import validate from '../middleware/validate.js';
+import { matchedData } from 'express-validator';
+import { deleteInsights } from '../database/models/insights.js';
 
 
-    res.status(200).json({
-      success:true,
-      remainingBudget: budget.remaining_budget,
-      originalBudget: budget.original_amount
-    })
-  } catch (error) {
-    next(error)
-  }
-})
+export const budgetRouter = express.Router(); 
 
 
-budgetRouter.post('/add', authMiddleware, async(req,res,next) => {
+budgetRouter.post('/add', authMiddleware, inputAmount, budgetRangeValidator, validate, async(req,res,next) => {
   try {
     const {userId} = req.user;
-    const {amount} = req.body;
-    const parsedAmount = Number(amount);
-    if( parsedAmount == null) {
-      const error = new Error('Please enter an amount!');
-      error.status = 400;
-      return next(error);
-    }
-
-    if(isNaN(parsedAmount)) {
-      const error = new Error('Amount must be a number');
-      error.status = 400;
-      return next(error);
-    }
+    const {amount,range} = matchedData(req);
     
-    if(parsedAmount < 0) {
-      const error = new Error('Amount must be greater than 0');
-      error.status = 400;
-      return next(error);
-    }
 
-    const update = await addBudget(userId,parsedAmount);
-  
+    const update = await addBudget(userId,amount,range);
+    await deleteInsights(userId);
+
     res.status(200).json({msg:'Amount updated successfully!',dbData:update})
 
   } catch (error) {
@@ -55,34 +26,44 @@ budgetRouter.post('/add', authMiddleware, async(req,res,next) => {
   }
 })
 
-
-budgetRouter.put('/edit', authMiddleware, async(req,res,next) => {
+budgetRouter.put('/edit', authMiddleware, inputAmount, budgetRangeValidator, validate, async(req,res,next) => {
   try {
     const {userId} = req.user;
-    const {amount} = req.body;
-    const parsedAmount = Number(amount);
+    const {amount,range} = matchedData(req);
 
-    if(parsedAmount == null) {
-      const error = new Error ('Please enter an amount');
-      error.status = 400;
-      return next(error);
-    }
+    const update =  await editBudget(userId,amount,range);
+      await deleteInsights(userId);
 
-    if(isNaN(parsedAmount)) {
-      const error = new Error ('Amount must be a number!');
-      error.status = 404;
-      return next(error);
-    }
+    res.status(200).json({msg:'Amount updated successfully!', update});
 
-    if(parsedAmount < 0) {
-      const error = new Error('Amount cannot be negative');
-      error.status = 400; 
-      return next(error);
-    }
+  } catch (error) {
+    next(error)
+  }
+})
 
-    const update =  await editBudget(userId,parsedAmount);
+budgetRouter.get('/summary/', authMiddleware, budgetRangeQueryValidator, validate, async (req,res,next) => {
+  try {
+     const {userId} = req.user
+     const {range} = matchedData(req);
 
-    res.json({msg:'Amount updated successfully!', update});
+     const budget = await getUserBudgetSummary(userId,range)
+
+    res.status(200).json({
+      success:true,
+      amounts: budget
+    })
+  } catch (error) {
+    next(error)
+  }
+})
+
+budgetRouter.get('/comparison', authMiddleware, async(req,res,next) => {
+  try {
+    const {userId} = req.user;
+
+    const budgetComparison = await getBudgetComparison(userId);
+
+    res.status(200).json({budgetComparison});
 
   } catch (error) {
     next(error)

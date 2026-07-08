@@ -1,36 +1,131 @@
-import { formatToPeso } from "../core/utils.js";
+import { getRelativeTime } from "../core/utils.js";
 import {  budget } from "../data/budget.js";
+import { pushNotification } from "../notifs/notifications.js";
 
-export async function renderBudget() {
 
-  let el = document.querySelector('.budgetAmounts');
-  const data = await budget.getBudget();
-  if(!data) {
-    return;
+export let currentView = 'daily';
+
+export async function renderBudget(data = null) {
+   if (!data) {
+    data = await budget.getBudget(currentView);
   }
-    el.innerHTML = `
-    <p class="text-sm">${formatToPeso(data.budget)}</p><p class="text-sm text-black opacity-[29%]">/${formatToPeso(data.originalBudget)}</p>
-    `;
- 
 
-  if (data.budget < 0) {
-    el.classList.add("text-red-600"); 
-    el.classList.remove("text-[#079F9F]"); 
+
+
+
+
+  const isDaily = currentView === 'daily';
+
+  const el = isDaily
+    ? document.querySelector('.dailyBudgetAmounts')
+    : document.querySelector('.monthlyBudgetAmounts');
+
+  const bar = isDaily
+    ? document.getElementById('dailyBudgetBar')
+    : document.getElementById('budgetBar');
+    const days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ];
+
+ if (!el || !bar) return;
+  bar.style.width = 0 + '%';
+  
+
+  const today = new Date();
+  
+  const dayNameToday = days[today.getDay()];
+  
+  const pulseDays = document.querySelectorAll('.pulse-day');
+
+  pulseDays.forEach(day => {
+  const isToday = day.dataset.day === dayNameToday;
+
+  day.classList.toggle("active-day", isToday);
+});
+
+
+  const original = Number(data.originalBudget) || 0;
+  const remaining = Number(data.budget) || 0;
+  const spent = original - remaining;
+
+  el.innerHTML = `
+    <p class="text-2xl">
+      ${original.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })}
+    </p>
+
+    <div class="flex w-full gap-2">
+      <p class="text-[11px] text-black/50">
+        Spent: ${spent.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })}
+      </p>
+      <p class="text-[11px] text-black/50">
+        Remaining: ${remaining.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })}
+      </p>
+    </div>
+  `;
+
+  if (remaining < 0) {
+    el.classList.add("text-red-600");
+    el.classList.remove("text-[#079F9F]");
   } else {
     el.classList.remove("text-red-600");
     el.classList.add("text-[#079F9F]");
   }
 
-  const spent = Number(data.originalBudget - data.budget);
-  const total = Number(data.originalBudget);
+  const percent = Math.min(((spent / original) * 100), 100);
 
-  const percent  = Math.min((spent/total) * 100, 100);
+  bar.style.width = percent + '%';
 
-  const budgetBar =  document.getElementById('budgetBar');
+  if (percent === 100) {
+    bar.style.background = '#ef4444';
+  } else {
+    bar.style.background = '#22c55e';
+  }
+}
 
-   budgetBar.style.width = percent + '%';
+export async function initBudgetTabFilter() {
+  const budgetTabDaily = document.getElementById('budget-tab-daily');
+  const budgetTabMonthly = document.getElementById('budget-tab-monthly');
 
-  if(percent === 100) {
-    budgetBar.style.background = '#ef4444';
-  } 
-} 
+  
+ setActiveBtn(budgetTabDaily, budgetTabMonthly)
+
+  budgetTabDaily.addEventListener('click', async () => {
+    currentView = 'daily'
+      setActiveBtn(budgetTabDaily, budgetTabMonthly)
+      document.getElementById('daily-budget-panel').classList.remove('hidden');
+       document.getElementById('monthly-budget-panel').classList.add('hidden');
+      await renderBudget();
+  })
+
+  budgetTabMonthly.addEventListener('click', async () => {
+    currentView = 'monthly'
+          document.getElementById('daily-budget-panel').classList.add('hidden');
+       document.getElementById('monthly-budget-panel').classList.remove('hidden');
+      setActiveBtn(budgetTabMonthly, budgetTabDaily)
+      await renderBudget();
+  })
+}
+
+
+function moveSlider(button) {
+  const slider = document.getElementById('tab-slider');
+  slider.style.width = `${button.offsetWidth}px`;
+  slider.style.transform = `translateX(${button.offsetLeft}px)`;
+}
+
+function setActiveBtn(activeBtn, inactiveBtn) {
+ moveSlider(activeBtn);
+ 
+ activeBtn.classList.add("text-white");
+ activeBtn.classList.remove("text-black/50");
+
+ inactiveBtn.classList.remove("text-white");
+ inactiveBtn.classList.add("text-black/50");
+
+}

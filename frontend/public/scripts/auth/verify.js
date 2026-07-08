@@ -13,7 +13,7 @@ function showMessage(el,text, duration = 3000) {
   }
 
 
-async function verifyEmail() {
+export async function verifyEmail() {
 
   const email = localStorage.getItem('email');
   const code = document.getElementById('code-input').value;
@@ -22,7 +22,7 @@ async function verifyEmail() {
   const verifyBtn = document.getElementById('verify-btn');
 
   if(!email) {
-    window.location.href = '/register.html';
+   window.location.replace('/register');
     return;
   }
 
@@ -42,9 +42,18 @@ showLoading(verifyBtn);
     if(!res.ok) {
       showMessage(message, data.msg, 3000)
     } else {
+
+       console.log("VERIFY SUCCESS");
+
       showMessage(success,data.msg, 3000)
 
-      window.location.href = '/login.html'
+      localStorage.removeItem("email");
+      localStorage.removeItem("resendCooldown");
+      localStorage.removeItem("autoResend");
+
+      setTimeout(()=>{
+      window.location.replace('/login');
+    },1500);
     }
 
   } catch (error) {
@@ -56,30 +65,32 @@ showLoading(verifyBtn);
 
 let countdown;
 
-function startCooldown(duration = 30) {
+export function startCooldown(duration = 3) {
 
   clearInterval(countdown);
   
-  const success = document.getElementById('success');
+  const cooldown = document.getElementById('cooldown');
   const resendBtn = document.getElementById('resend-btn');
-  let seconds = duration;
+  if(!cooldown || !resendBtn) return;
+    let seconds = duration;
+
 
   resendBtn.disabled = true;
 
   localStorage.setItem('resendCooldown', Date.now() + seconds * 1000);
 
-  success.style.display = 'block'
-  success.innerText = `Resend code in ${seconds}s`;
+  cooldown.style.display = 'block'
+  cooldown.innerText = `Resend code in ${seconds}s`;
 
   countdown = setInterval (() => {
 
     seconds--;
-    success.innerText = `Resend code in ${seconds}s`;
+    cooldown.innerText = `Resend code in ${seconds}s`;
 
     if(seconds <=0) {
       clearInterval(countdown);
       resendBtn.disabled = false;
-      success.style.display = 'none'
+      cooldown.style.display = 'none'
 
       localStorage.removeItem('resendCooldown');
     }
@@ -88,8 +99,15 @@ function startCooldown(duration = 30) {
 
 async function resendCode() {
   const email = localStorage.getItem('email');
-  const message = document.getElementById('success');
 
+      if (!email) {
+      window.location.replace('/register');
+      return;
+    }
+  
+  const message = document.getElementById('success')
+  const error = document.getElementById('message');
+  const cooldown = document.getElementById('cooldown');
   try {
     const res = await fetch('/auth/resend-code', {
       method: 'POST',
@@ -102,31 +120,55 @@ async function resendCode() {
     const data = await res.json();
 
     if(!res.ok) {
-     showMessage(message, data.msg, 3000) 
+     showMessage(error, data.msg, 5000) 
      return;
     }else {
-      startCooldown();
       showMessage(message,data.msg, 3000)
+      return true
     }
   } catch (error) {
     console.error(error)
   }
 }
+document.addEventListener('DOMContentLoaded', async () => {
 
-document.addEventListener('DOMContentLoaded', () => {
- 
-  const cooldown = Number(localStorage.getItem('resendCooldown'));
+  const email = localStorage.getItem("email");
+  const resendBtn = document.getElementById('resend-btn');
+  const verifyBtn = document.getElementById('verify-btn');
 
-  if(cooldown) {
-    const remaining = Math.floor((cooldown - Date.now()) / 1000);
-
-    if(remaining > 0) {
-      startCooldown(remaining);
-    }
-  } else {
-    startCooldown();
+  if (!email) {
+    return;
   }
-  
-document.getElementById('resend-btn').addEventListener('click', resendCode);
-document.getElementById('verify-btn').addEventListener('click', verifyEmail);
-}) 
+
+  const savedCooldown = Number(localStorage.getItem('resendCooldown'));
+
+  if (savedCooldown) {
+    const remaining = Math.floor((savedCooldown - Date.now()) / 1000);
+
+    if (remaining > 0) {
+      startCooldown(remaining);
+    } else {
+      localStorage.removeItem('resendCooldown');
+      resendBtn.disabled = false;
+    }
+
+  } else {
+    const success = await resendCode();
+
+    if (success) {
+      startCooldown();
+    }
+  }
+
+  resendBtn?.addEventListener('click', async () => {
+    const success = await resendCode();
+
+    if (success) {
+      startCooldown();
+    }
+  });
+
+
+  verifyBtn?.addEventListener('click', verifyEmail);
+
+});

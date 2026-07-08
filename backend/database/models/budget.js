@@ -35,102 +35,279 @@ export async function createUserBudget(userID) {
 }
 }
 
-export async function addBudget(userId, amount) {
+export async function addBudget(userId, amount, range) {
+
+  let condition = '';
+  let selectedColumns = ''
+
+  const rangeAllowed = ['daily', 'monthly'];
+
+  if(!rangeAllowed.includes(range)) {
+    throw new Error('Invalid budget range')
+  }
+
+  if(range === 'daily') {
+   condition = 
+   `
+    SET daily_remaining_budget = daily_remaining_budget + ?,
+    daily_original_budget = daily_original_budget + ?
+   `
+
+   selectedColumns = 
+   `
+   daily_remaining_budget, daily_original_budget
+   `
+  } 
+
+  if(range === 'monthly') {
+    condition = `
+    SET monthly_remaining_budget = monthly_remaining_budget + ?,
+    monthly_original_budget = monthly_original_budget + ?
+    `
+    
+   selectedColumns = 
+   `
+   monthly_remaining_budget, monthly_original_budget
+   `
+  }
+
+
+
   try {
-     const [result] = await pool.query(
+    const [result] = await pool.query(
       `
       UPDATE budget
-      SET amount = amount + ?, original_amount = original_amount + ?
+      ${condition}
       WHERE user_id = ?
-      `
-    ,[amount, amount, userId]);
-  
-   if(result.affectedRows === 0) {
-    return {
-      success: false
+      `,
+      [amount, amount, userId]
+    );
+
+    if (result.affectedRows === 0) {
+      return {
+        success: false
+      };
     }
-   }
 
-   const [rows] = await pool.query(
-    `
-    SELECT amount,original_amount from budget
-    WHERE user_id = ?
-    `
-   ,[userId]);
 
-   return {
-    userId,
-    amountAdded: amount,
-    updatedAmount: rows[0].amount,
-    originalAmount: rows[0].original_amount,
-    success: true
-   }
-  
+
+    const [rows] = await pool.query(
+      `
+      SELECT ${selectedColumns}
+      FROM budget
+      WHERE user_id = ?
+      `,
+      [userId]
+    );
+
+    return {
+      userId,
+      amountAdded: amount,
+      amounts: rows[0],
+      success: true
+    };
+
   } catch (error) {
     throw error;
   }
 }
 
 
-export async function editBudget(userId,amount) {
+export async function editBudget(userId, amount, range) {
+  const rangeAllowed = ['daily', 'monthly'];
+
+  if (!rangeAllowed.includes(range)) {
+    throw new Error('Invalid budget range');
+  }
+
+  let condition = '';
+  let selectedColumns = '';
+
+  if (range === 'daily') {
+    condition = `
+      SET daily_remaining_budget = ?,
+          daily_original_budget = ?
+    `;
+
+    selectedColumns = `
+      daily_remaining_budget,
+      daily_original_budget
+    `;
+  } else if (range === 'monthly') {
+    condition = `
+      SET monthly_remaining_budget = ?,
+          monthly_original_budget = ?
+    `;
+
+    selectedColumns = `
+      monthly_remaining_budget,
+      monthly_original_budget
+    `;
+  }
+
   try {
     const [result] = await pool.query(
-    `
-    UPDATE budget 
-    SET amount = ?, original_amount = ?
-    WHERE user_id = ?
-    `
-  ,[amount,amount,userId]);
+      `
+      UPDATE budget
+      ${condition}
+      WHERE user_id = ?
+      `,
+      [amount, amount, userId]
+    );
 
-     const [rows] = await pool.query(
-    `
-    SELECT amount,original_amount from budget
-    WHERE user_id = ?
-    `
-   ,[userId]);
+    const [rows] = await pool.query(
+      `
+      SELECT ${selectedColumns}
+      FROM budget
+      WHERE user_id = ?
+      `,
+      [userId]
+    );
 
-  return {
-    userId,
-    updatedAmount: rows[0].amount,
-    originalAmount: rows[0].original_amount,
-    success: result.affectedRows > 0
-  }
+    return {
+      userId,
+      updatedAmount: rows[0],
+      success: result.affectedRows > 0
+    };
   } catch (error) {
-    throw error
+    throw error;
   }
- 
 }
 
-export async function getUserBudgetSummaryToday(userId) {
-  try {
-    const [result] = await pool.query(`
-          SELECT
-          b.user_id,
-          b.original_amount,
-          COALESCE(e.total_expenses,0)AS total_expenses,
+export async function getUserBudgetSummary(userId, range) {
+  if (!['daily', 'monthly'].includes(range)) {
+    throw new Error('Invalid budget range');
+  }
 
-      
-          CASE
-          WHEN b.original_amount = 0 THEN 0
-          ELSE (b.original_amount - COALESCE(e.total_expenses,0))
-          END AS remaining_budget 
+  const budgetColumns =
+    range === 'daily'
+      ? `
+        b.daily_original_budget AS original_budget,
+        (b.daily_original_budget - COALESCE(e.total_expenses, 0)) AS remaining_budget
+      `
 
-          FROM budget b 
-          LEFT JOIN(
-          SELECT user_id, SUM(amount) AS total_expenses
-          FROM expenses
-        WHERE isDeleted = 0
+      : `
+        b.monthly_original_budget AS original_budget,
+        (b.monthly_remaining_budget - COALESCE(e.total_expenses, 0)) AS remaining_budget
+      `;
+
+  const expenseCondition =
+    range === 'daily'
+      ? `
         AND date_time >= CURDATE()
         AND date_time < CURDATE() + INTERVAL 1 DAY
-        GROUP BY user_id
-        ) e
-        ON b.user_id = e.user_id
-        WHERE b.user_id = ?
-      `, [userId])
+      `
+      : `
+        AND MONTH(date_time) = MONTH(CURDATE())
+        AND YEAR(date_time) = YEAR(CURDATE())
+      `;
 
-      return result[0];
+  try {
+    const [result] = await pool.query(
+      `
+      SELECT
+        b.user_id,
+        ${budgetColumns},
+        COALESCE(e.total_expenses, 0) AS total_expenses
+
+      FROM budget b
+
+      LEFT JOIN (
+        SELECT
+          user_id,
+          SUM(amount) AS total_expenses
+        FROM expenses
+        WHERE isDeleted = 0
+        ${expenseCondition}
+        GROUP BY user_id
+      ) e
+      ON b.user_id = e.user_id
+
+      WHERE b.user_id = ?
+      `,
+      [userId]
+    );
+
+    return result[0];
   } catch (error) {
-    throw error
+    throw error;
   }
 }
 
+export async function getBudgetComparison(userId) {
+  try {
+    const [result] = await pool.query(
+      `
+      SELECT
+        FLOOR((DAY(date_time)-1)/7)+1 AS week,
+        SUM(amount) AS total
+      FROM expenses
+      WHERE user_id = ?
+        AND MONTH(date_time) = MONTH(CURDATE())
+        AND YEAR(date_time) = YEAR(CURDATE())
+      GROUP BY week
+      ORDER BY week;
+      `,
+      [userId]
+    );
+
+    return result;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function resetBudgetWithRange(connection, userId, range) {
+  const rangeAllowed = ['daily', 'monthly'];
+
+  if (!rangeAllowed.includes(range)) {
+    throw new Error('Invalid budget range');
+  }
+
+  let condition = '';
+
+  if (range === 'daily') {
+    condition = `
+      SET daily_original_budget = 0,
+          daily_remaining_budget = 0
+    `;
+  } else if (range === 'monthly') {
+    condition = `
+      SET monthly_original_budget = 0,
+          monthly_remaining_budget = 0
+    `;
+  }
+
+  try {
+    const [result] = await connection.query(
+      `
+      UPDATE budget
+      ${condition}
+      WHERE user_id = ?
+      `,
+      [userId]
+    );
+
+    return result;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+export async function resetBudget(connection, userId) {
+  const [result] = await connection.query(
+    `
+    UPDATE budget
+    SET
+      daily_original_budget = 0,
+      daily_remaining_budget = 0,
+      monthly_original_budget = 0,
+      monthly_remaining_budget = 0
+    WHERE user_id = ?
+    `,
+    [userId]
+  );
+
+  return result;
+}

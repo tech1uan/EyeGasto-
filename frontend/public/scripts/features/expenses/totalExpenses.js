@@ -15,7 +15,6 @@ export async function fetchTotalExpenses(range) {
       console.log(data.msg);
       return null
     }
-
     return data.expenses;
   } catch (error) {
     console.error(error);

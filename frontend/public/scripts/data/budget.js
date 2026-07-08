@@ -2,16 +2,19 @@
 import { formatToPeso } from "../core/utils.js";
 import { authFetch } from "../main.js";
 import { showNotif } from "../notifs/notifications.js";
+import { showMessage } from "../withdrawals/addWithdraw.js";
 
-export async function getUserBudget() {
+  const success = document.getElementById('success-budget');
+  const error = document.getElementById('error-budget');
+
+export async function getUserBudget(range) {
   try {
-    const res = await authFetch('/budget/summary/today', {
+    const res = await authFetch(`/budget/summary?range=${range}`, {
      method: 'GET',
     })
      
     const data = await res.json();
     if(!res.ok) {
-      console.log(data.msg)
       return null;
     } 
       return data;
@@ -22,7 +25,28 @@ export async function getUserBudget() {
   }
 }
 
-export async function apiAddBudget(amount) {
+export async function getBudgetComparison() {
+  try {
+    const res = await authFetch('/budget/comparison', {
+      method:'GET',
+    })
+
+    const data = await res.json();
+
+    if(!res.ok) {
+      console.log(data.msg)
+      return null
+    }
+
+
+    return data;
+  
+  } catch (error) {
+    return null
+  }
+}
+
+export async function apiAddBudget(amount,range) {
   try {
     const res = await authFetch('/budget/add', {
       method:'POST',
@@ -30,15 +54,18 @@ export async function apiAddBudget(amount) {
         'Content-type':'application/json'
       },
 
-      body:JSON.stringify({amount})
+      body:JSON.stringify({amount,range})
     })
 
     const data = await res.json();
-    if(!res.ok) {
-     console.log(data.msg);
-     return null;
-    } 
-    console.log('Successfully added budget for today!');
+    if(!res.ok) { 
+       const message =
+      data.errors?.map(err => err.msg).join(", ") ||
+      data.message ||
+      "Something went wrong";
+      
+      showMessage(error,message)
+    }
     return data;
     
   } catch (error) {
@@ -47,38 +74,44 @@ export async function apiAddBudget(amount) {
   }
 }
 
-export async function apiEditBudget(amount) {
+export async function apiEditBudget(amount,range) {
+
  try {
   const res = await authFetch('/budget/edit', {
     method: 'PUT',
     headers: {
       'Content-type': 'application/json'
     },
-    body: JSON.stringify({amount})
+    body: JSON.stringify({amount,range})
   });
 
   const data = await res.json();
 
   if(!res.ok) {
-    console.log(data.msg);
-    return null
+    const message =
+    data.errors?.map(err => err.msg).join(", ") ||
+    data.message ||
+    "Something went wrong";
+    
+    showMessage(error,message)
+    return;
   }
-    console.log('Successfully edited budget for today!');
     return data;
 
  } catch (error) {
-  console.error(error);
   return null;
  }
 
 }
 
-export let budget = {
-  budget: 0,
-  originalBudget:0,
 
-  async addBudget(amount) {
-    const data = await apiAddBudget(amount);
+export let budget = {
+  remainingBudget: 0,
+  originalBudget:0,
+  totalSpent: 0,
+
+  async addBudget(amount, range) {
+    const data = await apiAddBudget(amount, range);
     if(!data) return;
     
     const newAmount = data.dbData?.updatedAmount ?? 0;
@@ -90,8 +123,8 @@ export let budget = {
     return data;
   },
 
-  async editBudget(amount) {
-    const data = await apiEditBudget(amount);
+  async editBudget(amount,range) {
+    const data = await apiEditBudget(amount,range);
     if(!data) return;
       const newAmount = data.update?.updatedAmount ?? 0;
     this.budget = newAmount;
@@ -99,62 +132,23 @@ export let budget = {
     return data
   },
 
-  async getBudget () {
-   const data = await getUserBudget();
+  async getBudget (range) {
+  
+   const data = await getUserBudget(range);
    if(!data) return;
+  
+    this.remainingBudget = Number(data.amounts.remaining_budget ?? data.amounts.remaining_budget ?? 0);
+    this.originalBudget = Number(data.amounts.original_budget ?? data.amounts.original_budget ?? 0);
+    this.totalSpent = Number(data.amounts.total_expenses?? data.amounts.total_expenses ?? 0)
 
-   this.budget = data.remainingBudget;
-   this.originalBudget = data.originalBudget;
-    
    return {
-    budget: this.budget,
-    originalBudget:this.originalBudget
+    budget:this.remainingBudget,
+    originalBudget:this.originalBudget,
+    totalSpent: this.totalSpent
   }
 },
-   _outShown: false,
-  _lowShown: false,
-  _exceedShow: false,
-
- 
-  checkBudgetStatus() {
-
-    const percentLeft =   this.originalBudget === 0 ? 0
-    : (this.budget / this.originalBudget) * 100;
-
-    if(this.originalBudget === 0 ) return;
- 
-    if(this.budget < 0) {
-      if(!this._exceedShow) {
-        this._exceedShow = true;
-        showNotif('budgetExceeded');
-      }
-      return;
-    }
-
-    if (this.budget === 0 ){
-      if(!this._outShown) {
-      this._outShown = true;
-      showNotif('budgetOut');
-     }  
-     return;
-}
-    if (percentLeft <= 50) {
-      if(!this._lowShown) {
-        this._lowShown = true;
-        showNotif('budgetLow');
-      }
-      return;
-    }
-
-  this._outShown = false;
-  this._lowShown = false;
-  this._exceedShow = false;
-  },
- 
-  get isbelowZero() {
-    return this.budget < 0;
-  },
-
-
 };
+
+
+
 

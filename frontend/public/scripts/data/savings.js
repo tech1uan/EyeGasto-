@@ -9,7 +9,6 @@ export async function getUserSavings() {
   
   let data = await res.json();
  if(!res.ok) {
-  console.log(data.msg);
   return null;
  }
   return data;
@@ -33,12 +32,11 @@ export async function addSavings(amount) {
 
     if(!res.ok) {
       return {success: false, error: data};
-    } else {
+    } 
       return {success: true, data};
-    }
-
+    
   } catch (error) {
-       return {success: false, error};
+       return null
   }
 }
 
@@ -61,6 +59,7 @@ export async function deductSavings(amount) {
     }
     
   } catch (error) {
+    console.error(error)
     return null;
   }
 }
@@ -73,15 +72,65 @@ export async function userSavings() {
   }
   return {
     money: data.balance,
+    goalDescription: data.goal_name,
+    targetAmount: data.target_amount,
     getCurrentMoney() {
-      return formatToPeso(this.money)
+      return formatToPeso(this.money);
+    },
+    goalCompleted: data.goal_completed_notified
+  }
+}
+
+  let isRefreshing = false
+  let refreshPromise = null;
+
+
+export async function updateSavingsGoal(description,amount) {
+  try {
+    const res = await authFetch('/savings/goal', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        description,
+        amount
+      })
+    });
+
+    const data = await res.json();
+    if(!res.ok) {
+      return {success:false, error: data}
+    } else {
+      return {success:true, data}
     }
+  } catch (error) {
+    console.error(error)
+    return null;
   }
 }
 
 
-  let isRefreshing = false
-  let refreshPromise = null;
+export async function markGoalCompletedNotified() {
+  try {
+    const res = await authFetch('/savings/set-goal-notified', {
+      method: 'PATCH',
+    });
+
+    const data = await res.json();
+
+    if(!res.ok) {
+      console.log('error')
+      return {success:false, error: data}
+    } else {
+      console.log('success')
+      return {success:true, data}
+    }
+  } catch (error) {
+    console.error(error)
+    return null;
+  }
+}
 
 
 
