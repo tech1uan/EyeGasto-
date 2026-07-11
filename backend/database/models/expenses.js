@@ -233,7 +233,7 @@ export async function getRecentExpenses(userId, filter = "all") {
       e.amount,e.date_time,c.name,c.color,
       c.logo
       FROM expenses e
-      INNER JOIN CATEGORY c
+      INNER JOIN category c
       ON e.category_id = c.id
       WHERE e.user_id = ? AND isDeleted = 0
       ${dateFilter}
