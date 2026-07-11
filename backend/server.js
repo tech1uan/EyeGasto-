@@ -31,7 +31,15 @@ const server = express();
 server.use(logger);
 server.use(latencyCheck);
 
-server.use(cors());
+server.use(cors({
+  origin: [
+    'https://gastoos.onrender.com',
+    'https://gastoo-the-expense-tracker.vercel.app',
+  ],
+  credentials: true
+}));
+
+
 server.use(cookieParser());
 server.use(express.json());
 
