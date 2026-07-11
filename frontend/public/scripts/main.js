@@ -2,6 +2,7 @@
 import { initLogoutBtn } from './auth/logout.js';
 import { initBudgetModal, initSaveBudget } from './budget/budgetActions.js';
 import { updateExpensesChart } from './charts/expensesChart.js';
+import { API_BASE } from './config.js';
 import { getUserExpenses } from './data/expenses.js';
 import { getUser, initChangePasswordEdit, initClearDataBtn, initEditProfileBtn, initGreetings, initSaveChangesOnProfileEdit, initSetNewPassword, loadUser } from './data/user.js';
 import {initAnalytics, initAnalyticsFilter } from './features/analytics/analytics.js';
@@ -41,7 +42,7 @@ export async function authFetch(url, options = {}) {
  
 if(res.status === 401) {
   console.log("🔄 Access token expired. Attempting refresh...");
-  let refresh = await fetch('/auth/token', {
+  let refresh = await fetch(`${API_BASE}/auth/token`, {
     method: 'POST',
     credentials:'include',
   });
@@ -66,7 +67,7 @@ return res;
 async function initApp() {
   console.log('App is initializing!')
 try {
-  let res = await authFetch('/app/auth', {
+  let res = await authFetch(`${API_BASE}/app/auth`, {
   method: 'GET',
 })
 

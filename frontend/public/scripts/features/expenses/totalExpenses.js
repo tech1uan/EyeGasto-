@@ -1,10 +1,11 @@
 
+import { API_BASE } from "../../config.js";
 import { formatToPeso } from "../../core/utils.js";
 import { currentView, getCurrentExpenses } from "./viewExpense.js";
 
 export async function fetchTotalExpenses(range) {
   try {
-    const res = await fetch(`expenses/summary/${range}`, {
+    const res = await fetch(`${API_BASE}/expenses/summary/${range}`, {
       method:'GET',
       credentials: 'include',
     })

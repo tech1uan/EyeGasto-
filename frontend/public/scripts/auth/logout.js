@@ -1,8 +1,9 @@
+import { API_BASE } from "../config.js";
 import { authFetch } from "../main.js";
 
 export async function logout() {
   try {
-    const res = await authFetch('/auth/logout', {
+    const res = await authFetch(`${API_BASE}/auth/logout`, {
       method: 'POST',
     });
 

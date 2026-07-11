@@ -1,3 +1,4 @@
+import { API_BASE } from "../config.js";
 import { confirmMessage } from "../core/confirmActions.js";
 import { getRelativeTime, isToday } from "../core/utils.js";
 import { loadUser } from "../data/user.js";
@@ -185,7 +186,7 @@ markAllBtn.addEventListener('click', () => {
 
 export async function renderNotifications() {
   try {
-    const res = await authFetch('/notifications/get', {
+    const res = await authFetch(`${API_BASE}/notifications/get`, {
       method: 'GET'
     })
 
@@ -331,7 +332,7 @@ export async function renderNotifications() {
 
 export async function pushNotification(mood,title,message) {
   try {
-    const res = await authFetch('/notifications/add', {
+    const res = await authFetch(`${API_BASE}/notifications/add`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
@@ -377,7 +378,7 @@ export async function pushNotification(mood,title,message) {
 
 export async function deleteNotification(notificationId) {
   try {
-    const res = await authFetch('/notifications/delete', {
+    const res = await authFetch(`${API_BASE}/notifications/delete`, {
       method: 'DELETE',
       headers: {
         'Content-type':'application/json'
@@ -415,7 +416,7 @@ export async function deleteNotification(notificationId) {
 
 export async function setIsRead(notificationId) {
   try {
-    const res = await authFetch('/notifications/set-read', {
+    const res = await authFetch(`${API_BASE}/notifications/set-read`, {
       method: 'PATCH',
       headers: {
         'Content-type': 'application/json'
@@ -482,7 +483,7 @@ export function initDeleteNotification() {
 
 export async function webPushNotifToUser(title,body) {
   try {
-    let res = await authFetch('/subscriptions/notify', {
+    let res = await authFetch(`${API_BASE}/subscriptions/notify`, {
       method: 'POST',
       headers: {
         'Content-type':'application/json'

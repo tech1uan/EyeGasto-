@@ -1,4 +1,5 @@
 import { updateExpensesChart } from "../charts/expensesChart.js";
+import { API_BASE } from "../config.js";
 import { confirmMessage } from "../core/confirmActions.js";
 import { initAnalytics } from "../features/analytics/analytics.js";
 import { updateExpenseHeatMap } from "../features/analytics/analyticsHeatMap.js";
@@ -294,7 +295,7 @@ export async function initSaveChangesOnProfileEdit() {
 
   if(isEmailChanging) {
     try {
-      const res = await authFetch('/users/request-email-change', {
+      const res = await authFetch(`${API_BASE}/users/request-email-change`, {
         method: 'PUT',
         headers: {
           'Content-type': 'application/json',
@@ -303,8 +304,6 @@ export async function initSaveChangesOnProfileEdit() {
       });
       
       const data = await res.json();
-
-      console.log(data);
 
       if(!res.ok) {
          const errors = data.errors 
@@ -325,7 +324,7 @@ export async function initSaveChangesOnProfileEdit() {
       saveBtn.disabled = true;
       showLoading(saveBtn);
       try {
-          const res = await authFetch('/users/update-profile', {
+          const res = await authFetch(`${API_BASE}/users/update-profile`, {
             method: 'PUT',
             headers: {
               'Content-type': 'application/json'
@@ -389,7 +388,7 @@ function showVerificationInput() {
   document.getElementById('submit-verification-btn').addEventListener('click', async () => {
     const code = document.getElementById('input-verification-code').value;
 
-    const res = await authFetch('/users/verify-email-change', {
+    const res = await authFetch(`${API_BASE}/users/verify-email-change`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ code })
@@ -470,7 +469,7 @@ export async function initSetNewPassword() {
     confirmMessage('green', 'Are you sure you want to set this new password?', async () => {
     showLoading(saveBtn);
       try {
-      const res = await authFetch('/users/set-new-password', {
+      const res = await authFetch(`${API_BASE}/users/set-new-password`, {
         method: 'PATCH',
         headers: {
           'Content-type': 'application/json'
@@ -502,7 +501,7 @@ export async function initSetNewPassword() {
 
 export async function getNotificationStatus() {
   try {
-    const res = await authFetch("/notifications/notif-status");
+    const res = await authFetch(`${API_BASE}/notifications/notif-status`);
 
     const data = await res.json();
 
@@ -523,7 +522,7 @@ export async function getNotificationStatus() {
 
 export async function markTipShown() {
      try {
-      const res = await authFetch('/notifications/tip', {
+      const res = await authFetch(`${API_BASE}/notifications/tip`, {
         method: 'PATCH'
     });
 
@@ -539,7 +538,7 @@ export async function markTipShown() {
 
 export async function markReminderShown() {
      try {
-      const res = await authFetch('/notifications/reminder', {
+      const res = await authFetch(`${API_BASE}/notifications/reminder`, {
         method: 'PATCH'
     });
 

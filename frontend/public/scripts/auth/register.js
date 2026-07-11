@@ -1,3 +1,4 @@
+import { API_BASE } from "../config.js";
 import { hideLoading, showLoading } from "../ui/loading.js";
 
 const button = document.getElementById('register-btn');
@@ -37,7 +38,7 @@ if(!firstName || !lastName || !username || !email || !password || !confirmPasswo
 showLoading(registerBtn);
 
 try {
-  const res = await fetch('/auth/register', {
+  const res = await fetch(`${API_BASE}/auth/register`, {
     method:'POST',
     headers:{
       'Content-type':'application/json'

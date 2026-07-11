@@ -1,3 +1,4 @@
+import { API_BASE } from "../config.js";
 import { authFetch } from "../main.js";
 import { initializePushNotifications, unsubscribePushNotifications } from "../services/notification.js";
 
@@ -9,7 +10,7 @@ export async function loadNotificationPreference() {
     try {
 
         const res = await authFetch(
-            "/settings/notifications"
+            `${API_BASE}/settings/notifications`
         );
 
         const data = await res.json();
@@ -70,7 +71,7 @@ notificationToggle.addEventListener(
 
             await authFetch(
 
-                "/settings/notifications",
+                `${API_BASE}/settings/notifications`,
 
                 {
 

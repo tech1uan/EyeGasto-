@@ -1,4 +1,5 @@
 
+import { API_BASE } from "../config.js";
 import { formatToPeso } from "../core/utils.js";
 import { authFetch } from "../main.js";
 import { showNotif } from "../notifs/notifications.js";
@@ -9,7 +10,7 @@ import { showMessage } from "../withdrawals/addWithdraw.js";
 
 export async function getUserBudget(range) {
   try {
-    const res = await authFetch(`/budget/summary?range=${range}`, {
+    const res = await authFetch(`${API_BASE}/budget/summary?range=${range}`, {
      method: 'GET',
     })
      
@@ -27,7 +28,7 @@ export async function getUserBudget(range) {
 
 export async function getBudgetComparison() {
   try {
-    const res = await authFetch('/budget/comparison', {
+    const res = await authFetch(`${API_BASE}/budget/comparison`, {
       method:'GET',
     })
 
@@ -48,7 +49,7 @@ export async function getBudgetComparison() {
 
 export async function apiAddBudget(amount,range) {
   try {
-    const res = await authFetch('/budget/add', {
+    const res = await authFetch(`${API_BASE}/budget/add`, {
       method:'POST',
       headers: {
         'Content-type':'application/json'
@@ -77,7 +78,7 @@ export async function apiAddBudget(amount,range) {
 export async function apiEditBudget(amount,range) {
 
  try {
-  const res = await authFetch('/budget/edit', {
+  const res = await authFetch(`${API_BASE}/budget/edit`, {
     method: 'PUT',
     headers: {
       'Content-type': 'application/json'

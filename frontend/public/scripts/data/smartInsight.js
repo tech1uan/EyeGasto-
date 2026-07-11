@@ -1,9 +1,10 @@
+import { API_BASE } from "../config.js";
 import { authFetch } from "../main.js";
 
 
 export async function getSmartInsightsByAI(totalSpent,monthlyBudget,categoryBreakdown,daysLogged,range) {
     try {
-        const res =  await authFetch('/smart/', {
+        const res =  await authFetch(`${API_BASE}/smart/`, {
             method: 'POST',
             headers: {
                 'Content-type' : 'application/json'

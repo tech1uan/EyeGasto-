@@ -1,3 +1,4 @@
+import { API_BASE } from "../config.js";
 import { hideLoading, showLoading } from "../ui/loading.js";
 
 
@@ -32,7 +33,7 @@ async function login() {
   showLoading(loginBtn);
 
   try {
-    const res = await fetch('/auth/login', {
+    const res = await fetch(`${API_BASE}/auth/login`, {
       method: 'POST',
       credentials: 'include',
       headers: {

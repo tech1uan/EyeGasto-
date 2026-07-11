@@ -1,3 +1,4 @@
+import { API_BASE } from "../config.js";
 import { hideLoading, showLoading } from "../ui/loading.js";
 
 let messageTimer = null;
@@ -29,7 +30,7 @@ export async function verifyEmail() {
 showLoading(verifyBtn);
 
   try {
-    let res = await fetch('/auth/verify-email', {
+    let res = await fetch(`${API_BASE}/auth/verify-email`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -112,7 +113,7 @@ async function resendCode() {
 
   showLoading(resendBtn);
   try {
-    const res = await fetch('/auth/resend-code', {
+    const res = await fetch(`${API_BASE}/auth/resend-code`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json'

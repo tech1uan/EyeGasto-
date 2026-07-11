@@ -1,9 +1,10 @@
+import { API_BASE } from "../config.js";
 import { authFetch } from "../main.js";
 
 
 export async function getUserExpenses() {
   try {
-    const res = await authFetch('/expenses/', {
+    const res = await authFetch(`${API_BASE}/expenses/`, {
      method: 'GET',
     })
     const data = await res.json();
@@ -21,7 +22,7 @@ export async function getUserExpenses() {
 
 export async function fetchGetUserExpenses(range) {
     try {
-      const res= await authFetch(`/expenses/${range}`, {
+      const res= await authFetch(`${API_BASE}/expenses/${range}`, {
         method: 'GET',
       })
 
@@ -39,7 +40,7 @@ export async function fetchGetUserExpenses(range) {
 
 export async function getUserRecentExpenses(filter) {
   try {
-    const res = await authFetch(`/expenses/recent?filter=${filter}`, {
+    const res = await authFetch(`${API_BASE}/expenses/recent?filter=${filter}`, {
       method: 'GET',
     })
 
@@ -59,7 +60,7 @@ export async function getUserRecentExpenses(filter) {
 export async function addExpense(description, amount, categoryId) {;
   
 try {
-  const res = await authFetch('/expenses/', {
+  const res = await authFetch(`${API_BASE}/expenses/`, {
     method:'POST',
     headers: {
       'Content-type':'application/json'
@@ -82,7 +83,7 @@ try {
 
 export async function deleteExpense(expenseId) {
 try {
-  const res = await authFetch('/expenses/', {
+  const res = await authFetch(`${API_BASE}/expenses/`, {
     method: 'DELETE',
     headers: {
       'Content-type': 'application/json'
@@ -108,7 +109,7 @@ try {
 
  export async function editExpense(expenseId, amount, categoryId, description) {
   try {
-    const res = await authFetch('/expenses/', {
+    const res = await authFetch(`${API_BASE}/expenses/`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json'
@@ -132,7 +133,7 @@ try {
 
  export async function getMonthlyStats(range) {
    try {
-    const res = await authFetch(`/expenses/month/stats/${range}`, {
+    const res = await authFetch(`${API_BASE}/expenses/month/stats/${range}`, {
       method:'GET',
     })
 
@@ -152,7 +153,7 @@ try {
 
   export async function getProfileStats() {
    try {
-    const res = await authFetch(`/expenses/profile/stats/`, {
+    const res = await authFetch(`${API_BASE}/expenses/profile/stats/`, {
       method:'GET',
     })
 
@@ -173,7 +174,7 @@ try {
 
   export async function getMonthStats() {
    try {
-    const res = await authFetch(`/expenses/month/stats`, {
+    const res = await authFetch(`${API_BASE}/expenses/month/stats`, {
       method:'GET',
     })
 
@@ -196,7 +197,7 @@ try {
 
  export async function getComparisonStats(range) {
    try {
-    const res = await authFetch(`/expenses/month/${range}`, {
+    const res = await authFetch(`${API_BASE}/expenses/month/${range}`, {
       method:'GET',
     })
 
@@ -217,7 +218,7 @@ try {
 
  export async function getExpensesByRange(range) {
   try {
-    const res = await authFetch(`/expenses/filter/${range}`, {
+    const res = await authFetch(`${API_BASE}/expenses/filter/${range}`, {
       method: 'GET',
     }) 
 
@@ -239,7 +240,7 @@ try {
 
   export async function getExpensesHeatMap() {
   try {
-    const res = await authFetch(`/expenses/heatmap`, {
+    const res = await authFetch(`${API_BASE}/expenses/heatmap`, {
       method: 'GET',
     }) 
 
@@ -262,7 +263,7 @@ try {
 
   export async function getTotalExpensesByRange(range) {
   try {
-    const res = await authFetch(`/expenses/summary/${range}`, {
+    const res = await authFetch(`${API_BASE}/expenses/summary/${range}`, {
       method: 'GET',
     }) 
 
@@ -285,7 +286,7 @@ try {
  
   export async function getExpensesDailyStats() {
   try {
-    const res = await authFetch(`/expenses/daily-stats`, {
+    const res = await authFetch(`${API_BASE}/expenses/daily-stats`, {
       method: 'GET',
     }) 
 

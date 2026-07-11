@@ -1,3 +1,4 @@
+import { API_BASE } from "../config.js";
 import { authFetch } from "../main.js";
 
 // Backend routes
@@ -47,7 +48,7 @@ export async function initializePushNotifications() {
         }
 
         // Get public key from Express
-        const res = await authFetch(VAPID_PUBLIC_KEY_URL, {
+        const res = await authFetch(`${API_BASE}VAPID_PUBLIC_KEY_URL`, {
         });
         const result = await res.json();
         // Create browser subscription
@@ -60,7 +61,7 @@ export async function initializePushNotifications() {
         });
 
     
-        await authFetch(SUBSCRIBE_URL, {
+        await authFetch(`${API_BASE}SUBSCRIBE_URL`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -168,7 +169,7 @@ export async function unsubscribePushNotifications() {
         return;
     }
 
-    const res = await authFetch("/subscriptions/unsubscribe", {
+    const res = await authFetch(`${API_BASE}/subscriptions/unsubscribe`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json"

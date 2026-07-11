@@ -1,8 +1,9 @@
+import { API_BASE } from "../config.js";
 import { authFetch } from "../main.js";
 
 export async function addTransaction(amount,description,type) {
  try {
-  const res = await authFetch('/transactions/add', {
+  const res = await authFetch(`${API_BASE}/transactions/add`, {
     method: 'POST',
     headers: {
       'Content-type': 'application/json'
@@ -25,7 +26,7 @@ export async function addTransaction(amount,description,type) {
 
 export async function getTransactions() {
   try {
-    const res = await authFetch('/transactions/get', {
+    const res = await authFetch(`${API_BASE}/transactions/get`, {
       method: 'GET',
     })
    

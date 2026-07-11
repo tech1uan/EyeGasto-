@@ -91,7 +91,7 @@ export async function initFeedbackModal() {
     submitBtn.disabled = true;
 
     try {
-      const res = await authFetch('/feedback/add', {
+      const res = await authFetch(`${API_BASE}/feedback/add`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ rating, type, message })

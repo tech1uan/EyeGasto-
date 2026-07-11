@@ -1,9 +1,10 @@
+import { API_BASE } from "../config.js";
 import { formatToPeso } from "../core/utils.js";
 import { authFetch } from "../main.js";
 
 export async function getUserSavings() {
  try {
-  let res = await authFetch('/savings', {
+  let res = await authFetch(`${API_BASE}/savings`, {
     method: 'GET',
   });
   
@@ -21,7 +22,7 @@ export async function getUserSavings() {
 
 export async function addSavings(amount) {
   try {
-    const res = await authFetch('/savings/add', {
+    const res = await authFetch(`${API_BASE}/savings/add`, {
       method: 'POST',
       headers: {
         'Content-type':'application/json'
@@ -42,7 +43,7 @@ export async function addSavings(amount) {
 
 export async function deductSavings(amount) {
   try {
-    const res = await authFetch('/savings/deduct', {
+    const res = await authFetch(`${API_BASE}/savings/deduct`, {
       method: 'POST',
       headers: {
         'Content-type':'application/json'
@@ -87,7 +88,7 @@ export async function userSavings() {
 
 export async function updateSavingsGoal(description,amount) {
   try {
-    const res = await authFetch('/savings/goal', {
+    const res = await authFetch(`${API_BASE}/savings/goal`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
@@ -113,7 +114,7 @@ export async function updateSavingsGoal(description,amount) {
 
 export async function markGoalCompletedNotified() {
   try {
-    const res = await authFetch('/savings/set-goal-notified', {
+    const res = await authFetch(`${API_BASE}/savings/set-goal-notified`, {
       method: 'PATCH',
     });
 
