@@ -22,7 +22,7 @@ export async function getUserByUsername(username) {
   try {
     const [result] = await pool.query(
       `
-      SELECT * FROM USERS
+      SELECT * FROM users
       WHERE username = ?
       `
     ,[username])
