@@ -117,6 +117,10 @@ server.get('/app/auth', authMiddleware, (req, res) => {
 
 server.use('/', router);
 
+server.get('/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
+
 server.use(notFound);
 server.use(errorHandler);
 
