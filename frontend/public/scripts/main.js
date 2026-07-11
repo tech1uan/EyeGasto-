@@ -49,7 +49,7 @@ if(res.status === 401) {
 
   if(!refresh.ok) {
     console.error("❌ Refresh token expired or invalid. Redirecting to login.");
-    window.location.replace('/login');
+    window.location.replace('/login.html');
     return res;
   }
 
@@ -73,7 +73,7 @@ try {
 
 if (!res.ok) {
        console.error('🛑 Authentication failed completely. Exiting initialization.');
-       window.location.replace('/login');
+       window.location.replace('/login.html');
        return; 
     }
 
@@ -129,7 +129,7 @@ loadNotificationPreference();
 initNotificationPermissionStatus();
 } catch (error) {
   console.error("Initialization crash:", error);
-  return window.location.replace('/login');
+  return window.location.replace('/login.html');
 }
 
 }
