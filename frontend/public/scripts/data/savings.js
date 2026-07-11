@@ -1,0 +1,136 @@
+import { formatToPeso } from "../core/utils.js";
+import { authFetch } from "../main.js";
+
+export async function getUserSavings() {
+ try {
+  let res = await authFetch('/savings', {
+    method: 'GET',
+  });
+  
+  let data = await res.json();
+ if(!res.ok) {
+  return null;
+ }
+  return data;
+
+ } catch (error) {
+  console.log(error);
+  return null;
+ }
+}
+
+export async function addSavings(amount) {
+  try {
+    const res = await authFetch('/savings/add', {
+      method: 'POST',
+      headers: {
+        'Content-type':'application/json'
+      }, 
+      body: JSON.stringify({amount})
+    })
+    const data = await res.json();
+
+    if(!res.ok) {
+      return {success: false, error: data};
+    } 
+      return {success: true, data};
+    
+  } catch (error) {
+       return null
+  }
+}
+
+export async function deductSavings(amount) {
+  try {
+    const res = await authFetch('/savings/deduct', {
+      method: 'POST',
+      headers: {
+        'Content-type':'application/json'
+      }, 
+      body: JSON.stringify({amount})
+    })
+  
+    const data = await res.json();
+
+    if(!res.ok) {
+       return {success: false, error: data};
+    } else {
+      return {success: true, data};
+    }
+    
+  } catch (error) {
+    console.error(error)
+    return null;
+  }
+}
+
+
+export async function userSavings() {
+  const data = await getUserSavings();
+  if(!data){
+    return null;
+  }
+  return {
+    money: data.balance,
+    goalDescription: data.goal_name,
+    targetAmount: data.target_amount,
+    getCurrentMoney() {
+      return formatToPeso(this.money);
+    },
+    goalCompleted: data.goal_completed_notified
+  }
+}
+
+  let isRefreshing = false
+  let refreshPromise = null;
+
+
+export async function updateSavingsGoal(description,amount) {
+  try {
+    const res = await authFetch('/savings/goal', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        description,
+        amount
+      })
+    });
+
+    const data = await res.json();
+    if(!res.ok) {
+      return {success:false, error: data}
+    } else {
+      return {success:true, data}
+    }
+  } catch (error) {
+    console.error(error)
+    return null;
+  }
+}
+
+
+export async function markGoalCompletedNotified() {
+  try {
+    const res = await authFetch('/savings/set-goal-notified', {
+      method: 'PATCH',
+    });
+
+    const data = await res.json();
+
+    if(!res.ok) {
+      console.log('error')
+      return {success:false, error: data}
+    } else {
+      console.log('success')
+      return {success:true, data}
+    }
+  } catch (error) {
+    console.error(error)
+    return null;
+  }
+}
+
+
+

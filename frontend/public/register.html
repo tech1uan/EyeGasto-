@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register to GASTOO!</title>
+  <link href="./src/output.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Lilita+One&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link rel="icon" type="image/png" href="./favicon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="./favicon/favicon.svg" />
+  <link rel="shortcut icon" href="./favicon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="GASTOO" />
+  <link rel="manifest" href="./favicon/site.webmanifest" />
+  <link rel="stylesheet" href="./animations/styles.css">
+
+</head>
+
+<body class="bg-[#0d1b3e] overflow-x-hidden p-3 flex items-center justify-center min-h-screen">
+
+  <div class="bubble bubble-1"></div>
+  <div class="bubble bubble-2"></div>
+  <div class="bubble bubble-3"></div>
+  <div class="bubble bubble-4"></div>
+  <div class="bubble bubble-5"></div>
+
+  <div class="star star-1"></div>
+  <div class="star star-2"></div>
+  <div class="star star-3"></div>
+  <div class="star star-4"></div>
+  <div class="star star-5"></div>
+  <div class="star star-6"></div>
+  <div class="star star-7"></div>
+
+
+      <div id="greeting-card"
+        class="absolute z-10 w-[90%] max-w-sm bg-[#1a2f6e] rounded-[2rem] border border-white/10 p-6 flex flex-col gap-2"
+        style="box-shadow: 0 0 60px rgba(0,212,200,.12), 0 24px 80px rgba(0,0,0,.5);">
+  
+      <div class="mt-2 space-y-2 font-['Poppins']">
+        <p id="message" class=" font-['DM_Sans'] text-center text-sm text-red-400 bg-red-400/30 border border-red-400/30 rounded-lg py-2 px-1 hidden"></p>
+        <p id="success" class=" font-['DM_Sans'] text-center text-sm text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 rounded-lg py-2 px-1 hidden"></p>
+      </div>
+
+
+        <div class="glow-tr absolute -top-5 -right-5 w-16 h-16 rounded-full bg-[#00d4c8] blur-xl pointer-events-none">
+        </div>
+        <div class="glow-bl absolute -bottom-5 -left-5 w-12 h-12 rounded-full bg-[#00d4c8] blur-xl pointer-events-none">
+        </div>
+
+
+        <div class="reveal-1 flex items-center justify-center gap-2 mb-1">
+          <div class="w-15 h-5 flex items-center justify-center text-2xl relative eye-bubble rounded-4xl">
+            <img
+              class=" absolute w-full rounded-lg " src = "images/gastoo-logo.png" alt="Gastoo logo"></div>
+            <div class="flex flex-col">
+                 <p
+              class="reveal-2 text-start pl-1 text-[10px] tracking-[.30em] text-white font-bold font-['DM_Sans']">
+              Register to 
+            </p>
+          <span class="font-['Montserrat'] text-4xl tracking-wide text-white font-black"
+            style="text-shadow: 0 0 24px rgba(0,212,200,.45);">GASTOO!</span>
+  
+            </div>
+        </div>
+
+        <div    
+          class="reveal-3 relative bg-gradient-to-br from-[#00d4c8] via-[#009e94] to-[#007a74] rounded-2xl px-1 py-0.5 text-center overflow-hidden flex">
+          <div class="absolute -top-6 -right-6 w-20 h-20 rounded-full bg-white/10 pointer-events-none"></div>
+          <div class="absolute -bottom-4 -left-4 w-14 h-14 rounded-full bg-white/[.07] pointer-events-none"></div>
+           
+          <div class = "gastoo-container-auth w-[110px] h-[110px] flex-none shrink-0 ">
+            
+          </div>
+
+          <div class="flex flex-col items-center justify-center">
+          <h2 class="relative z-10 font-['Lilita_One'] text-xl tracking-wide text-white"
+            style="text-shadow: 0 2px 8px rgba(0,0,0,.2);">Welcome, New Tracker!</h2>
+          <p class=" font-['DM_Sans'] relative z-10 text-[11px] text-white/80 font-bold mt-0.5">
+            Let's take control of your finances together!
+          </p>
+          </div>
+
+        </div>
+
+
+<div class="user-fullname-container grid grid-cols-2 gap-3 w-full">
+  <div>
+    <label for="firstname-input" class="reveal-4 block text-[11px] font-black tracking-widest uppercase text-[#00d4c8] mb-1.5 font-['DM_Sans']">
+      First Name
+    </label>
+    <div class="reveal-5 relative">
+      <span class="absolute left-4 top-1/2 -translate-y-1/2 text-base pointer-events-none select-none">
+        <i class="fa fa-user text-[#00d4c8]"></i>
+      </span>
+      <input id="firstname-input" type="text" maxlength="50" placeholder="First name.."
+        class="w-full pl-11 pr-4 py-2.5 bg-white/5 border-2 border-[#00d4c8]/30 rounded-xl text-white font-bold text-sm placeholder-white/25 transition-all duration-300 font-['DM_Sans'] focus:border-[#00d4c8] focus:bg-[#00d4c8]/10 focus:ring-4 focus:ring-[#00d4c8]/15 focus:outline-none" />
+    </div>
+  </div>
+
+  <div>
+    <label for="lastname-input" class="reveal-4 block text-[11px] font-black tracking-widest uppercase text-[#00d4c8] mb-1.5 font-['DM_Sans']">
+      Last Name
+    </label>
+    <div class="reveal-5 relative">
+      <span class="absolute left-4 top-1/2 -translate-y-1/2 text-base pointer-events-none select-none">
+        <i class="fa fa-user text-[#00d4c8]"></i>
+      </span>
+      <input id="lastname-input" type="text" maxlength="50" placeholder="Last name.."
+        class="w-full pl-11 pr-4 py-2.5 bg-white/5 border-2 border-[#00d4c8]/30 rounded-xl text-white font-bold text-sm placeholder-white/25 transition-all duration-300 font-['DM_Sans'] focus:border-[#00d4c8] focus:bg-[#00d4c8]/10 focus:ring-4 focus:ring-[#00d4c8]/15 focus:outline-none" />
+    </div>
+  </div>
+</div>
+
+<!-- USERNAME FIELD -->
+<div>
+  <label for="username-input" class="reveal-4 block text-[11px] font-black tracking-widest uppercase text-[#00d4c8] mb-1.5 font-['DM_Sans']">
+    Create a username
+  </label>
+  <div class="reveal-5 relative">
+    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-base pointer-events-none select-none">
+      <i class="fa fa-at text-[#00d4c8]"></i>
+    </span>
+    <input id="username-input" type="text" maxlength="30" placeholder="Choose a unique name.."
+      class="w-full pl-11 pr-4 py-2.5 bg-white/5 border-2 border-[#00d4c8]/30 rounded-xl text-white font-bold text-sm placeholder-white/25 transition-all duration-300 font-['DM_Sans'] focus:border-[#00d4c8] focus:bg-[#00d4c8]/10 focus:ring-4 focus:ring-[#00d4c8]/15 focus:outline-none" />
+  </div>
+</div>
+
+<!-- EMAIL ADDRESS FIELD -->
+<div>
+  <label for="email-input" class="reveal-4 block text-[11px] font-black tracking-widest uppercase text-[#00d4c8] mb-1.5 font-['DM_Sans']">
+    Your Email Address
+  </label>
+  <div class="reveal-5 relative">
+    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-base pointer-events-none select-none">
+      <i class="fa fa-envelope text-[#00d4c8]"></i>
+    </span>
+    <input id="email-input" type="email" maxlength="100" placeholder="ex. juan@gmail.com"
+      class="w-full pl-11 pr-4 py-2.5 bg-white/5 border-2 border-[#00d4c8]/30 rounded-xl text-white font-bold text-sm placeholder-white/25 transition-all duration-300 font-['DM_Sans'] focus:border-[#00d4c8] focus:bg-[#00d4c8]/10 focus:ring-4 focus:ring-[#00d4c8]/15 focus:outline-none" />
+  </div>
+</div>
+
+<!-- PASSWORD FIELD -->
+<div>
+  <label for="password-input" class="reveal-4 block text-[11px] font-black tracking-widest uppercase text-[#00d4c8] mb-1.5 font-['DM_Sans']">
+    Choose a secure password
+  </label>
+  <div class="reveal-5 relative">
+    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-base pointer-events-none select-none">
+      <i class="fa fa-lock text-[#00d4c8]"></i>
+    </span>
+    <div class="relative password-wrapper w-full">
+      <input id="password-input" type="password" maxlength="30" placeholder="At least 8 characters.."
+        class="password-input w-full pl-11 pr-11 py-2.5 bg-white/5 border-2 border-[#00d4c8]/30 rounded-xl text-white font-bold text-sm placeholder-white/25 transition-all duration-300 font-['DM_Sans'] focus:border-[#00d4c8] focus:bg-[#00d4c8]/10 focus:ring-4 focus:ring-[#00d4c8]/15 focus:outline-none"/>
+      <i class="toggle-hide fa-solid fa-eye-slash absolute right-4 top-1/2 -translate-y-1/2 text-[#00d4c8] cursor-pointer text-sm hidden"></i>
+      <i class="toggle-show fa-solid fa-eye absolute right-4 top-1/2 -translate-y-1/2 text-[#00d4c8] cursor-pointer text-sm"></i>
+    </div>
+  </div>
+</div>
+ 
+<!-- CONFIRM PASSWORD FIELD -->
+<div>
+  <label for="confirm-password-input" class="reveal-4 block text-[11px] font-black tracking-widest uppercase text-[#00d4c8] mb-1.5 font-['DM_Sans']">
+    Confirm your password
+  </label>
+  <div class="reveal-5 relative">
+    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-base pointer-events-none select-none">
+      <i class="fa fa-lock text-[#00d4c8]"></i>
+    </span>
+    <div class="relative password-wrapper w-full">
+      <input id="confirm-password-input" type="password" maxlength="30" placeholder="Retype password.."
+        class="password-input w-full pl-11 pr-11 py-2.5 bg-white/5 border-2 border-[#00d4c8]/30 rounded-xl text-white font-bold text-sm placeholder-white/25 transition-all duration-300 font-['DM_Sans'] focus:border-[#00d4c8] focus:bg-[#00d4c8]/10 focus:ring-4 focus:ring-[#00d4c8]/15 focus:outline-none" />
+      <i class="toggle-hide fa-solid fa-eye-slash absolute right-4 top-1/2 -translate-y-1/2 text-[#00d4c8] cursor-pointer text-sm hidden"></i>
+      <i class="toggle-show fa-solid fa-eye absolute right-4 top-1/2 -translate-y-1/2 text-[#00d4c8] cursor-pointer text-sm"></i>
+    </div>
+  </div>
+</div>
+
+<!-- REGISTER BUTTON -->
+<button id="register-btn" type="submit"
+  class="reveal-6 group w-full flex items-center justify-center gap-3 bg-transparent border-2 border-[#00d4c8] rounded-xl py-3 text-white cursor-pointer mt-4 hover:bg-[#00d4c8] hover:text-[#0d1b3e] active:scale-[0.98] transition-all ease-in-out duration-300 shadow-lg shadow-[#00d4c8]/10">
+  <span class="font-['Montserrat'] font-black text-lg tracking-wider">REGISTER NOW</span>
+  <i class="fa-solid fa-rocket text-lg text-[#00d4c8] group-hover:text-[#0d1b3e] transition-colors duration-300 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+</button>
+
+<!-- LOGIN LINK -->
+<p class="reveal-6 text-center text-[12px] text-white/70 mt-3 font-['DM_Sans']">
+  Already have an account? 
+  <a href="login.html" class="text-[#00d4c8] font-bold hover:underline transition-all ml-1">Login now!</a>
+</p>
+
+     
+      <script src="scripts/auth/register.js" type="module"></script>
+</body>
+
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gastoo Admin</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" type="image/x-icon" href="images/gastoo-logo.png">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..900;1,9..40,300..900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ["'DM Sans'", 'sans-serif'] },
+        colors: {
+          bg: '#0d2b2b',
+          panel: '#0f3733',
+          teal: { DEFAULT: '#1dc49a', deep: '#0f6e56', bright: '#45E7EE' },
+          mint: '#6ab3a6',
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+
+  @keyframes floatSlow {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(14px, -18px); }
+  }
+  @keyframes floatSlower {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-10px, 16px); }
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes growBar {
+    from { width: 0%; }
+  }
+  .amb-blob-1 { animation: floatSlow 9s ease-in-out infinite; }
+  .amb-blob-2 { animation: floatSlower 11s ease-in-out infinite; }
+  .amb-blob-3 { animation: floatSlow 7s ease-in-out infinite; }
+  .fade-in { animation: fadeInUp .4s ease both; }
+  .bar-animate { animation: growBar 1s ease-out both; }
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 10px; }
+</style>
+</head>
+
+<body class="bg-bg text-[#e8f5f0] font-sans overflow-x-hidden m-0 relative min-h-screen">
+
+<div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+  <span class="amb-blob-1 absolute rounded-full w-[340px] h-[340px] -top-24 -left-20"
+        style="background:radial-gradient(circle at 30% 30%, rgba(69,231,238,0.16), rgba(29,196,154,0.02) 70%)"></span>
+  <span class="amb-blob-2 absolute rounded-full w-[260px] h-[260px] -bottom-20 -right-16"
+        style="background:radial-gradient(circle at 30% 30%, rgba(69,231,238,0.16), rgba(29,196,154,0.02) 70%)"></span>
+  <span class="amb-blob-3 absolute rounded-full w-[180px] h-[180px] top-[40%] right-[10%] opacity-60"
+        style="background:radial-gradient(circle at 30% 30%, rgba(69,231,238,0.16), rgba(29,196,154,0.02) 70%)"></span>
+</div>
+
+<div class="relative z-10 flex min-h-screen">
+
+  <!-- Sidebar -->
+  <aside id="sidebar"
+    class="w-[250px] shrink-0 bg-gradient-to-b from-[#143c37]/90 to-[#0d2b2b]/90 border-r border-white/10
+           p-5 flex flex-col gap-1.5 fixed top-0 bottom-0 left-0 z-40 overflow-y-auto
+           -translate-x-full md:translate-x-0 transition-transform duration-300">
+
+    <div class="flex items-center gap-2.5 px-2 pb-5 border-b border-white/10 mb-3.5">
+      <div class="w-9 h-9 rounded-xl"><img src="images/gastoo-logo.png" alt=""></div>
+      <div>
+        <h1 class="text-[15px] font-extrabold m-0 tracking-tight">Gastoo</h1>
+        <p class="text-[10px] m-0 text-mint/80 uppercase tracking-[2px]">Admin Console</p>
+      </div>
+    </div>
+
+    <a href="#overview-section">
+    <div data-section="overview" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13.5px] font-semibold cursor-pointer border border-teal/35 bg-teal/15 text-teal-bright">
+      <i class="fa-solid fa-gauge-high w-[18px] text-center text-[14px]"></i> Overview
+    </div>
+    </a>
+
+    <a href="#users-section">
+    <div data-section="users" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13.5px] font-semibold cursor-pointer border border-transparent text-mint hover:bg-white/5 hover:text-white transition">
+      <i class="fa-solid fa-users w-[18px] text-center text-[14px]"></i> Users
+    </div>
+    </a>
+
+    <a href="#feedback-section">
+    <div data-section="feedback" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13.5px] font-semibold cursor-pointer border border-transparent text-mint hover:bg-white/5 hover:text-white transition">
+      <i class="fa-solid fa-comment-dots w-[18px] text-center text-[14px]"></i> Feedback
+    </div>
+    </a>
+    
+    <div class="text-[10px] uppercase tracking-[2px] text-mint/60 mt-4 mb-1 mx-2">Management</div>
+   
+    <div id = "logout-btn" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13.5px] font-semibold cursor-pointer border border-transparent text-mint hover:bg-white/5 hover:text-white transition">
+      <i class="fa-solid fa-arrow-right-from-bracket w-[18px] text-center text-[14px]"></i> Logout
+    </div>
+
+    <div class="mt-auto pt-3.5 border-t border-white/10">
+      <div class="flex items-center gap-2.5 p-2 rounded-xl bg-white/[0.04]">
+        <div id="admin-profile" class="w-[34px] h-[34px]">
+        
+        </div>
+
+        <div class="flex flex-col leading-tight">
+          <span id="admin-name" class="text-[12.5px] font-bold">Admin</span>
+          <span id="admin-email" class="text-[10.5px] text-mint/80">admin@gastoo.app</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main id="overview-section" class="md:ml-[250px] flex-1 min-w-0 px-4 md:px-8 pt-6 pb-16">
+
+    <div class="flex items-center justify-between gap-3 flex-wrap mb-6">
+      <div class="flex items-center gap-3">
+        <button id="sidebar-btn"
+          class="md:hidden flex items-center justify-center w-[38px] h-[38px] rounded-[10px] bg-white/[0.06] border border-white/10 text-[15px]">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div>
+          <h2 class="text-[22px] font-extrabold m-0">Dashboard Overview</h2>
+          <p class="text-[12.5px] text-mint/80 mt-0.5 m-0">A snapshot of how people are using Gastoo</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2.5">
+        <div class="flex gap-0.5 bg-white/5 p-[3px] rounded-[10px] border border-white/10">
+          <button data-range="last7" class="range-btn active bg-teal text-[#04211b] text-[11.5px] font-bold px-3 py-1.5 rounded-lg">7D</button>
+          <button data-range="last30" class="range-btn text-mint/80 text-[11.5px] font-bold px-3 py-1.5 rounded-lg">30D</button>
+          <button data-range="last90" class="range-btn text-mint/80 text-[11.5px] font-bold px-3 py-1.5 rounded-lg">90D</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stat cards -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
+
+      <div class="fade-in bg-gradient-to-br from-white/[0.045] to-white/[0.015] border border-white/10 rounded-2xl p-4 md:p-[18px]">
+  
+        <div class="w-9 h-9 rounded-[10px] bg-teal/15 flex items-center justify-center text-[14px] mb-3.5"><i class="fa-solid fa-users text-teal"></i></div>
+        <div class="text-[11px] text-mint/80 uppercase tracking-wide font-bold">Total Users</div>
+        <div id="total-users" class="text-[20px] md:text-[26px] font-extrabold my-1 tracking-tight"></div>
+        <div id="total-users-tip" class="text-[11.5px] font-bold flex items-center gap-1.5 text-teal-300"><i class="fa-solid fa-arrow-up"></i></div>
+      </div>
+
+      <div class="fade-in bg-gradient-to-br from-white/[0.045] to-white/[0.015] border border-white/10 rounded-2xl p-4 md:p-[18px]" style="animation-delay:.05s">
+        <div class="w-9 h-9 rounded-[10px] bg-teal-bright/15 flex items-center justify-center text-[14px] mb-3.5"><i class="fa-solid fa-bolt text-teal-bright"></i></div>
+        <div class="text-[11px] text-mint/80 uppercase tracking-wide font-bold">Active Today</div>
+        <div id="active-today" class="text-[20px] md:text-[26px] font-extrabold my-1 tracking-tight"></div>
+        <p class="text-[11.5px] font-bold flex items-center gap-1.5 text-teal-300">
+          Users currently active today.
+        </p>
+      </div>
+
+      <div class="fade-in bg-gradient-to-br from-white/[0.045] to-white/[0.015] border border-white/10 rounded-2xl p-4 md:p-[18px]" style="animation-delay:.1s">
+        <div class="w-9 h-9 rounded-[10px] bg-amber-400/15 flex items-center justify-center text-[14px] mb-3.5"><i class="fa-solid fa-user-plus text-amber-400"></i></div>
+        <div class="text-[11px] text-mint/80 uppercase tracking-wide font-bold">New Signups</div>
+        <div id="new-signups" class="text-[20px] md:text-[26px] font-extrabold my-1 tracking-tight">312</div>
+        <div id="new-signups-tip" class="text-[11.5px] font-bold flex items-center gap-1.5 text-teal-300"><i class="fa-solid fa-arrow-up"></i> 14% this week</div>
+      </div>
+
+      <div class="fade-in bg-gradient-to-br from-white/[0.045] to-white/[0.015] border border-white/10 rounded-2xl p-4 md:p-[18px]" style="animation-delay:.15s">
+        <div class="w-9 h-9 rounded-[10px] bg-red-400/15 flex items-center justify-center text-[14px] mb-3.5"><i class="fa-solid fa-comment-dots text-red-400"></i></div>
+        <div class="text-[11px] text-mint/80 uppercase tracking-wide font-bold">Open Feedback</div>
+        <div id = "feedback-count" class="text-[20px] md:text-[26px] font-extrabold my-1 tracking-tight pb-2">18</div>
+        <div id="feedback-count-tip" class="flex flex-col gap-1"></div>
+      </div>
+
+    </div>
+
+    <!-- Charts row -->
+    <div class="grid grid-cols-1 gap-4 mb-5 items-stretch">
+
+      <div class="bg-gradient-to-br from-white/[0.04] to-white/[0.015] border border-white/10 rounded-[20px] p-5">
+        <div class="flex justify-between items-start gap-2.5 flex-wrap mb-3.5">
+          <div>
+            <h3 class="text-[15px] font-extrabold m-0">User Growth &amp; Activity</h3>
+            <p class="text-[11.5px] text-mint/80 mt-0.5 m-0">New signups vs. daily active users</p>
+          </div>
+          <div class="flex gap-3.5 text-[11px] text-mint/80">
+            <span><span class="inline-block w-2 h-2 rounded-full mr-1.5 bg-teal"></span>Active Users</span>
+            <span><span class="inline-block w-2 h-2 rounded-full mr-1.5 bg-teal-bright"></span>New Signups</span>
+          </div>
+        </div>
+        <div class="h-[230px]">
+          <canvas id="growthChart"></canvas>
+        </div>
+      </div>
+
+
+    </div>
+
+    <!-- Recent users -->
+    <div id="users-section" class="bg-gradient-to-br from-white/[0.04] to-white/[0.015] border border-white/10 rounded-[20px] p-5 mb-5">
+      <div class="mb-3.5">
+        <h3 class="text-[15px] font-extrabold m-0">Recent Users</h3>
+        <p class="text-[11.5px] text-mint/80 mt-0.5 m-0">Latest accounts created on Gastoo</p>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse text-[12.8px] min-w-[520px]">
+          <thead>
+            <tr>
+              <th class="text-left text-mint/80 font-bold text-[10.5px] uppercase tracking-wide pb-2.5 px-2.5 border-b border-white/10">User</th>
+              <th class="text-left text-mint/80 font-bold text-[10.5px] uppercase tracking-wide pb-2.5 px-2.5 border-b border-white/10">Joined</th>
+              <th class="text-left text-mint/80 font-bold text-[10.5px] uppercase tracking-wide pb-2.5 px-2.5 border-b border-white/10">Expenses Logged</th>
+              <th class="text-left text-mint/80 font-bold text-[10.5px] uppercase tracking-wide pb-2.5 px-2.5 border-b border-white/10">Status</th>
+            </tr>
+          </thead>
+          <tbody id="users-table-body">
+            <!-- rows injected by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Feedback -->
+    <div id = "feedback-section" class="bg-gradient-to-br from-white/[0.04] to-white/[0.015] border border-white/10 rounded-[20px] p-5">
+      <div class="mb-4">
+        <h3 class="text-[15px] font-extrabold m-0">User Feedback</h3>
+        <p class="text-[11.5px] text-mint/80 mt-0.5 m-0">Messages sent from the app's "Send Feedback" form</p>
+      </div>
+
+      <div class="flex gap-2.5 mb-4 flex-wrap items-center justify-between">
+        <div class="flex gap-2 flex-wrap">
+          <button data-filter="all" class="fb-filter-btn active bg-teal border-teal text-[#04211b] text-[11.5px] font-bold px-3.5 py-1.5 rounded-full border">
+            All
+          </button>
+
+          <button data-filter="new" class="fb-filter-btn bg-white/[0.04] border-white/10 text-mint/80 text-[11.5px] font-bold px-3.5 py-1.5 rounded-full border">
+            New
+          </button>
+
+          <button data-filter="reviewing" class="fb-filter-btn bg-white/[0.04] border-white/10 text-mint/80 text-[11.5px] font-bold px-3.5 py-1.5 rounded-full border">
+            Reviewing
+          </button>
+
+          <button data-filter="resolved" class="fb-filter-btn bg-white/[0.04] border-white/10 text-mint/80 text-[11.5px] font-bold px-3.5 py-1.5 rounded-full border">
+            Resolved
+          </button>
+
+          <button data-filter="bug" class="fb-filter-btn bg-white/[0.04] border-white/10 text-mint/80 text-[11.5px] font-bold px-3.5 py-1.5 rounded-full border">
+            Bugs
+          </button>
+
+          <button data-filter="idea" class="fb-filter-btn bg-white/[0.04] border-white/10 text-mint/80 text-[11.5px] font-bold px-3.5 py-1.5 rounded-full border">
+            Ideas
+          </button>
+
+          <button data-filter="praise" class="fb-filter-btn bg-white/[0.04] border-white/10 text-mint/80 text-[11.5px] font-bold px-3.5 py-1.5 rounded-full border">
+            Praise
+          </button>
+
+            <button data-filter="archived" class="fb-filter-btn bg-white/[0.04] border-white/10 text-mint/80 text-[11.5px] font-bold px-3.5 py-1.5 rounded-full border">
+            Archived
+          </button>
+
+          <button data-filter="other" class="fb-filter-btn bg-white/[0.04] border-white/10 text-mint/80 text-[11.5px] font-bold px-3.5 py-1.5 rounded-full border">
+            Other
+          </button>
+        </div>
+    
+        
+        <div class="relative flex-1 min-w-[180px] max-w-[260px]">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-mint/70 text-[12px]"></i>
+          <input type="text" id="fb-search" placeholder="Search feedback..."
+            class="w-full bg-white/5 border border-white/10 rounded-full py-2 pl-8 pr-3 text-[12.5px] text-white outline-none placeholder:text-mint/60">
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-3" id="fb-list">
+        <!-- feedback cards injected by JS -->
+      </div>
+    </div>
+
+  </main>
+</div>
+
+
+<script src="/protected/script/main.js" type="module"></script>
+</body>
+</html>

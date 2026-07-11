@@ -1,20 +1,12 @@
 {
-  "name": "eyegasto!",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx @tailwindcss/cli -i ./src/input.css -o ./src/output.css --watch"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
   "devDependencies": {
-    "tailwindcss": "^4.1.18"
+    "concurrently": "^9.2.1"
+  },
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix frontend\" \"npm run server --prefix backend\""
   },
   "dependencies": {
-    "@tailwindcss/cli": "^4.1.18"
+    "@google/genai": "^2.10.0",
+    "@google/generative-ai": "^0.24.1"
   }
 }

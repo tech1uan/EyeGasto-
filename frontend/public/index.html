@@ -1,0 +1,1841 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GASTOO</title>
+  <link href="./src/output.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Lacquer&family=Lilita+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+      <link rel="icon" type="image/png" href="./favicon/favicon-96x96.png" sizes="96x96" />
+      <link rel="icon" type="image/svg+xml" href="./favicon/favicon.svg" />
+      <link rel="shortcut icon" href="./favicon/favicon.ico" />
+      <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png" />
+      <meta name="apple-mobile-web-app-title" content="GASTOO" />
+      <link rel="manifest" href="./favicon/site.webmanifest" />
+  <link rel="stylesheet" href="./animations/styles.css">
+
+</head>
+
+<body class="bg-[#0d2b2b] flex items-center overflow-x-hidden flex min-h-screen pb-32 flex-col relative">
+
+  <div class="bubble bubble-1"></div>
+  <div class="bubble bubble-2"></div>
+  <div class="bubble bubble-3"></div>
+  <div class="bubble bubble-4"></div>
+  <div class="bubble bubble-5"></div>
+
+  <div class="star star-1"></div>
+  <div class="star star-2"></div>
+  <div class="star star-3"></div>
+  <div class="star star-4"></div>
+  <div class="star star-5"></div>
+  <div class="star star-6"></div>
+  <div class="star star-7"></div>
+
+   <!--Floating Navbar-->
+
+ <div class="fixed mx-auto bottom-5 right-4 left-4 w-[90%] px-1 py-3 bg-white rounded-[10px] z-10 flex justify-evenly items-center
+            xl:top-1/2 xl:-translate-y-1/2 xl:bottom-auto xl:right-auto xl:left-5
+            xl:w-auto xl:h-[450px] xl:flex-col xl:justify-evenly xl:gap-6 xl:py-6 xl:px-2">
+
+  <button class="active nav-btn cursor-pointer home-nav flex flex-col text-gray-400 items-center gap-1" data-section="home" data-title="Home">
+    <i class="fa-solid fa-house text-lg"></i>
+    <span class="text-[10px] sm:text-[11px] font-['DM_Sans'] font-bold">Home</span>
+  </button>
+
+  <button class="nav-btn expenses-nav cursor-pointer flex flex-col items-center gap-1 text-gray-400" data-section="expenses" data-title="Expenses">
+    <i class="fa-solid fa-wallet text-lg"></i>
+    <span class="text-[10px] sm:text-[11px] font-['DM_Sans'] font-bold">Expenses</span>
+  </button>
+
+  <div class="flex flex-col -mt-8 lg:mt-0">
+    <div class="bg-white rounded-full p-1.5">
+      <button id="expenses-nav-btn" class="cursor-pointer w-14 h-14 rounded-full bg-[#23736F] items-center flex-col relative shadow-lg">
+        <img
+          src="images/gastoo-assets/gastoo_head_nav.png"
+          alt="Gastoo's head navigation"
+          class="-mt-2"
+        >
+        <i class="absolute bottom-1.5 left-1/2 -translate-x-1/2 fa-solid fa-plus text-white text-[10px]"></i>
+      </button>
+    </div>
+  </div>
+
+  <button class="nav-btn cursor-pointer flex flex-col items-center gap-1 text-gray-400" data-section="analytics" data-title="Analytics">
+    <i class="fa-solid fa-chart-pie text-lg"></i>
+    <span class="text-[10px] sm:text-[11px] font-['DM_Sans'] font-bold">Analytics</span>
+  </button>
+
+  <button class="profile-navbar cursor-pointer nav-btn flex flex-col items-center gap-1 text-gray-400" data-section="profile" data-title="Profile">
+    <i class="fa-solid fa-user text-lg"></i>
+    <span class="text-[10px] sm:text-[11px] font-['DM_Sans'] font-bold">Profile</span>
+  </button>
+</div>
+
+    <div class="home-navbar cursor-pointer flex justify-between w-full p-3">
+      <div class="flex items-center gap-3">
+        <p class="nav-title text-white font-['DM_Sans']"></p>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="notif-bell-btn" class="relative p-1 cursor-pointer ">
+          <i class="fa-solid fa-bell text-white"></i>
+    
+          <span id="notif-badge"
+            class="absolute -top-0 -right-1 min-w-[14px] h-[14px]  rounded-full
+                  bg-red-500 text-white text-[10px] font-bold
+                  flex items-center justify-center">
+            3
+          </span>
+        </button>
+        <div id="user-profile-container">
+       </div>
+        </div>
+      </div>
+
+      <main class="w-full -sm:max-w-[480px] mx-auto sm:max-w-[768px] md:w-[90%] md:max-w-[1000px] ">
+       
+    <div class="gastoo-mascot-main-container reveal-1 w-full mt-5">
+      <div class="greeting text-white text-m font-['DM_Sans'] flex gap-1 justify-end w-full px-2"></div>
+      <div class="gastoo-bg-container w-full h-30 flex items-center justify-between px-2 md:rounded-xl">
+      <div class="gastoo-container  w-[110px] h-[110px] flex-none shrink-0 ">
+      </div>
+
+      <div class="relative w-full">
+         <div class="bg-white absolute bottom-4 -left-0.5 h-5 w-5 rotate-45 z-0"> </div>
+       <div class="font-['DM_Sans'] bg-white flex-1 w-full h-full rounded-lg relative z-10 shadow-2xl p-2">
+        <div class="font-bold font-['DM_Sans'] text-[#23736F] text-[13px] sm:text-[14px] md:text-[15px]">I'm Gastoo!</div>
+        <div class="gastoo-greet font-['DM_Sans'] text-black text-[13px] sm:text-sm md:text-[15px]" data-type="home"></div>
+      </div>
+      <div>
+        
+      </div>
+    </div>
+    </div>
+   
+    <div class="hidden section home-section pb-22 ">
+
+
+    <div class="xl:col-span-4 flex  gap-8 flex-wrap">
+      
+      <div class=" reveal-3 mt-20 w-full -sm:max-w-[480px] sm:max-w-[768px] md:w-full md:max-w-[1000px]  relative flex items-center justify-center bg-gradient-to-b from-white from-0% to-[#45E7EE] to-100% pt-22 sm:pt-24 md:pt-26 pb-5 rounded-xl px-4">
+
+        <div class="grid grid-cols-2 w-[98%]  gap-2">
+
+          <div class="budget-card-container col-span-2 sm:col-span-1 sm:row-span-2  bg-white shadow-md rounded-2xl p-3 w-full">
+ 
+            <div class="flex items-center justify-between mb-2">
+              <h1 class="font-['DM_Sans'] text-black font-bold text-[13px] sm:text-[14px] md:text-[15px]">Budget</h1>
+              <div class="budget-toggle flex bg-[#EBF8F7] rounded-full p-[3px] gap-[2px] relative">
+                 <div id="tab-slider" class="absolute top-0 left-0 h-[32px] w-[51px] bg-[#079F9F] rounded-full transition-all duration-300"></div>
+                <button id="budget-tab-daily" class="budget-tab-btn font-['DM_Sans'] cursor-pointer text-[11px] sm:text-[12px] font-bold px-3 py-1 rounded-full transition-all duration-200 relative z-10">Daily</button>
+                <button id="budget-tab-monthly" class="budget-tab-btn font-['DM_Sans'] cursor-pointer text-[11px] sm:text-[12px] font-bold px-3 py-1 rounded-full transition-all duration-200 text-black/50 relative z-10">Monthly</button>
+              </div>
+            </div>
+
+            <!-- DAILY BUDGET PANEL (new — mirrors the exact same pattern as your monthly budget below, so you can reuse the same JS logic) -->
+            <div id="daily-budget-panel" class="budget-panel">
+              <div class="w-full">
+
+                <div class="flex items-center justify-between">
+                <h1 class="font-['DM_Sans'] text-black font-bold text-[11px] sm:text-[12px] tracking-widest opacity-[50%]">PER DAY</h1>
+                <button id="edit-daily-budget-btn" class="flex items-center justify-center cursor-pointer bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder:text-white/40 rounded-xl text-sm font-['Poppins'] outline-none focus:bg-white/20 focus:border-white/50 focus:ring-2 focus:ring-white/10 transition-all duration-200">
+                <i class="fa-solid fa-pencil text-black text-[10px]"></i>
+                </button>
+                </div>
+
+                <div class="dailyBudgetAmounts font-bold flex flex-col items-start flex-nowrap font-['DM_Sans']">
+                
+                </div>
+                <div class="bar-track bg-[#e5e7eb] rounded-lg h-[8px] w-full">
+                  <div class="bar-fill h-full rounded-lg bg-[#22c55e] w-[0%] transition-all duration-700 ease-in" id="dailyBudgetBar"></div>
+                </div>
+              </div>
+
+              <!-- weekly pulse strip: at-a-glance view of daily-budget adherence across the week -->
+              <div class="weekly-pulse-strip mt-4 pt-3 border-t border-dashed border-gray-200">
+                <h2 class="font-['DM_Sans'] text-black font-bold text-[10px] sm:text-[11px] tracking-widest opacity-[50%] mb-2">THIS WEEK</h2>
+                <div id="weeklyPulseStrip" class="flex justify-between px-1">
+                  <div class="pulse-day flex flex-col items-center gap-1" data-day = "Monday">
+                    <span class="pulse-dot w-[16px] h-[16px] rounded-full bg-[#EBF8F7] border-2 border-[#d7eeec] block"></span>
+                    <span class="text-[10px] text-black/40 font-['DM_Sans'] font-semibold">M</span>
+                  </div>
+                  <div class="pulse-day flex flex-col items-center gap-1" data-day = "Tuesday">
+                    <span class="pulse-dot w-[16px] h-[16px] rounded-full bg-[#EBF8F7] border-2 border-[#d7eeec] block"></span>
+                    <span class="text-[10px] text-black/40 font-['DM_Sans'] font-semibold">T</span>
+                  </div>
+                  <div class="pulse-day flex flex-col items-center gap-1" data-day = "Wednesday">
+                    <span class="pulse-dot w-[16px] h-[16px] rounded-full bg-[#EBF8F7] border-2 border-[#d7eeec] block"></span>
+                    <span class="text-[10px] text-black/40 font-['DM_Sans'] font-semibold">W</span>
+                  </div>
+                  <div class="pulse-day flex flex-col items-center gap-1" data-day = "Thursday">
+                    <span class="pulse-dot w-[16px] h-[16px] rounded-full bg-[#EBF8F7] border-2 border-[#d7eeec] block"></span>
+                    <span class="text-[10px] text-black/40 font-['DM_Sans'] font-bold">T</span>
+                  </div>
+                  <div class="pulse-day flex flex-col items-center gap-1" data-day = "Friday">
+                    <span class="pulse-dot w-[16px] h-[16px] rounded-full bg-[#EBF8F7] border-2 border-[#d7eeec] block"></span>
+                    <span class="text-[10px] text-black/40 font-['DM_Sans'] font-semibold">F</span>
+                  </div>
+                  <div class="pulse-day flex flex-col items-center gap-1" data-day = "Saturday">
+                    <span class="pulse-dot w-[16px] h-[16px] rounded-full bg-[#EBF8F7] border-2 border-[#d7eeec] block"></span>
+                    <span class="text-[10px] text-black/40 font-['DM_Sans'] font-semibold">S</span>
+                  </div>
+                  <div class="pulse-day flex flex-col items-center gap-1" data-day = "Sunday">
+                    <span class="pulse-dot w-[16px] h-[16px] rounded-full bg-[#EBF8F7] border-2 border-[#d7eeec] block"></span>
+                    <span class="text-[10px] text-black/40 font-['DM_Sans'] font-semibold">S</span>
+                  </div>
+                </div>
+              </div>
+
+              <p class=" text-[10px] sm:text-[12px] text-black/40 font-['DM_Sans'] pt-2 mt-1 border-t border-gray-100">
+              Track today, save tomorrow.
+            </p>
+            </div>
+
+            <!-- MONTHLY BUDGET PANEL — your existing budget-container, untouched, just relocated here and toggled -->
+            <div id="monthly-budget-panel" class="budget-panel flex flex-col pb-2 hidden">
+        
+                <div class="w-full">
+                
+                <div class="flex items-center justify-between">
+                <h1 class="font-['DM_Sans'] text-black font-bold text-[11px] sm:text-[12px] tracking-widest opacity-[50%]">MONTHLY BUDGET</h1>
+                <button id = "edit-monthly-budget-btn" class="flex items-center justify-center cursor-pointer bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder:text-white/40 rounded-xl text-sm font-['Poppins'] outline-none focus:bg-white/20 focus:border-white/50 focus:ring-2 focus:ring-white/10 transition-all duration-200">
+                <i class="fa-solid fa-pencil text-black text-[10px]"></i>
+                </button>
+                </div>
+
+                <div class="monthlyBudgetAmounts font-bold flex flex-col items-start flex-nowrap font-['DM_Sans']">
+                
+
+                </div>
+                <div class="bar-track bg-[#e5e7eb] rounded-lg h-[8px] w-full">
+                  <div class="bar-fill h-full rounded-lg bg-[#22c55e] w-[0%] transition-all duration-700 ease-in" id="budgetBar"></div>
+                </div>
+              </div>
+              
+                   <div class="weekly-pulse-strip mt-4 pt-3 border-t border-dashed border-gray-200">
+                <h2 class="font-['DM_Sans'] text-black font-bold text-[10px] sm:text-[11px] tracking-widest opacity-[50%] mb-2">THIS WEEK</h2>
+                <div id="weeklyPulseStrip" class="flex justify-between px-1">
+                  <div class="pulse-day flex flex-col items-center gap-1" data-day = "Monday">
+                    <span class="pulse-dot w-[16px] h-[16px] rounded-full bg-[#EBF8F7] border-2 border-[#d7eeec] block"></span>
+                    <span class="text-[10px] text-black/40 font-['DM_Sans'] font-semibold">M</span>
+                  </div>
+                  <div class="pulse-day flex flex-col items-center gap-1" data-day = "Tuesday">
+                    <span class="pulse-dot w-[16px] h-[16px] rounded-full bg-[#EBF8F7] border-2 border-[#d7eeec] block"></span>
+                    <span class="text-[10px] text-black/40 font-['DM_Sans'] font-semibold">T</span>
+                  </div>
+                  <div class="pulse-day flex flex-col items-center gap-1" data-day = "Wednesday">
+                    <span class="pulse-dot w-[16px] h-[16px] rounded-full bg-[#EBF8F7] border-2 border-[#d7eeec] block"></span>
+                    <span class="text-[10px] text-black/40 font-['DM_Sans'] font-semibold">W</span>
+                  </div>
+                  <div class="pulse-day flex flex-col items-center gap-1" data-day = "Thursday">
+                    <span class="pulse-dot w-[16px] h-[16px] rounded-full bg-[#EBF8F7] border-2 border-[#d7eeec] block"></span>
+                    <span class="text-[10px] text-black/40 font-['DM_Sans'] font-bold">T</span>
+                  </div>
+                  <div class="pulse-day flex flex-col items-center gap-1" data-day = "Friday">
+                    <span class="pulse-dot w-[16px] h-[16px] rounded-full bg-[#EBF8F7] border-2 border-[#d7eeec] block"></span>
+                    <span class="text-[10px] text-black/40 font-['DM_Sans'] font-semibold">F</span>
+                  </div>
+                  <div class="pulse-day flex flex-col items-center gap-1" data-day = "Saturday">
+                    <span class="pulse-dot w-[16px] h-[16px] rounded-full bg-[#EBF8F7] border-2 border-[#d7eeec] block"></span>
+                    <span class="text-[10px] text-black/40 font-['DM_Sans'] font-semibold">S</span>
+                  </div>
+                  <div class="pulse-day flex flex-col items-center gap-1" data-day = "Sunday">
+                    <span class="pulse-dot w-[16px] h-[16px] rounded-full bg-[#EBF8F7] border-2 border-[#d7eeec] block"></span>
+                    <span class="text-[10px] text-black/40 font-['DM_Sans'] font-semibold">S</span>
+                  </div>
+                </div>
+              </div>
+
+              <p class=" text-[10px] sm:text-[12px] text-black/40 font-['DM_Sans'] pt-2 mt-1 border-t border-gray-100">
+              Track today, save tomorrow.
+            </p>
+
+             </div>
+            </div>
+          <!-- ===== END Budget Card ===== -->
+
+          <!-- EXPENSES BY CATEGORY + TOTAL EXPENSES — pushed below the budget card -->
+          <div class="expenses-category-container bg-white shadow-md rounded-2xl p-3">
+            <h1 class="text-black font-['DM_Sans'] font-bold text-[11px] sm:text-[12px] opacity-[50%] mb-2 tracking-widest text-start">CATEGORIES</h1>
+           
+          <div class="flex flex-col items-center sm:flex-row sm:justify-center gap-5 ">
+  
+          <div class="no-data-overlay flex flex-col items-center justify-center bg-white/10 hidden">
+            <div class="text-2xl mb-4">📊</div>
+            <p class="text-gray-600 text-sm sm:text-base font-semibold">No data yet</p>
+            <p class="text-gray-500 text-sm sm:text-base mt-2 text-center">Add expenses to see your chart</p>
+          </div>
+          
+            <div class="chart-card-container relative w-[140px] h-[120px]">
+           
+              <canvas id="expensesChart"></canvas>
+
+            </div>
+            
+            <div id="expensesLegend" class="hidden lg-visible sm:flex sm:flex-col gap-1.5 mt-3"></div>
+            </div>
+            <p class="text-[10px] sm:text-[12px] text-black/40 font-['DM_Sans'] pt-2 mt-1 border-t border-gray-100 text-center">
+            See where it all goes.
+          </p>
+
+          </div>
+
+          <div class="amounts-container flex flex-col items-center justify-evenly gap-2">
+            <div class="total-expenses-container bg-white shadow-md rounded-2xl p-4 w-full h-full flex flex-col">
+              <h1 class="font-['DM_Sans'] text-black font-bold text-[11px] sm:text-[12px] tracking-widest opacity-[50%]">TOTAL EXPENSES</h1>
+
+              <div class="flex-1 flex flex-col justify-center ">
+          <p class="total-expenses font-bold text-2xl sm:text-[26px] md:text-[28px] lg:text-[30px] text-[#079F9F] font-['DM_Sans'] truncate"></p>
+              </div>
+
+              <p class="text-[10px] sm:text-[12px] text-black/40 font-['DM_Sans'] pt-2 border-t border-gray-100">
+                  Keep spending wisely.
+              </p>
+            </div>
+          </div>
+
+         <div class="expenses-super-container col-span-2 w-full">
+
+  <!-- Header -->
+  <div class="expenses-header flex items-center justify-between mb-3">
+    <div>
+      <h2 class="font-['DM_Sans'] text-[13px] sm:text-[14px] md:text-[15px] font-bold text-[#374151] tracking-wide">
+        Recent Expenses
+      </h2>
+      <p class="text-[10px] sm:text-[11px] text-gray-400 font-['DM_Sans']">
+        Your latest transactions
+      </p>
+    </div>
+
+    <button class="see-all-nav cursor-pointer text-[#1C8A96] text-[13px] sm:text-[14px] font-semibold font-['DM_Sans']  hover:text-[#1598A8] transition-colors">
+      View All
+    </button>
+  </div>
+
+  <div class="expenses-main-container bg-[#F3FEFD] border border-[#D7F4F2] rounded-2xl shadow-sm p-3 h-[300px] overflow-y-auto">
+    <div class="flex items-center justify-between pb-2 border-b border-[#DCEFEF]">
+
+      <div class="date-today text-[11px] sm:text-[13px] md:text-[14px] text-gray-500 font-medium font-['DM_Sans']">
+      </div>
+
+      <select
+        name="filter-expenses"
+        class="filter-expenses text-[11px] font-medium cursor-pointer bg-white border border-[#D7F4F2] rounded-lg px-2 py-1 
+               sm:text-[13px] lg:text-sm
+                w-22 sm:w-24 md:w-26 lg:w-28 outline-none focus:border-[#2DBCC7] transition">
+        <option value="today">Today</option>
+        <option value="last7">Last 7 Days</option>
+        <option value="alltime">All Time</option>
+      </select>
+
+
+      
+    </div>
+
+    <!-- Expenses -->
+    <div class="expenses-container flex flex-col gap-2 mt-2 items-center">
+    </div>
+
+  </div>
+
+</div>
+    
+
+        <!-- Savings Vault Card -->
+     <div class="reveal-2 outer-card w-[90%] max-w-[550px] sm:max-w-[1100px]  p-2 absolute -top-15 shadow-lg mx-auto left-0 right-0">
+
+          <div class="js-receipt-btn absolute top-2 right-2 w-9 h-9 rounded-full flex items-center justify-center cursor-pointer
+                    backdrop-blur-xl border border-white/25
+                    shadow-[inset_0_1px_1px_rgba(255,255,255,.25),0_4px_12px_rgba(0,0,0,.08)]"
+            style="background: rgba(255,255,255,0.18);">
+            <i class="fa-solid fa-receipt  text-white text-lg"></i>
+        </div>
+          <div class="flex items-start p-2 w-full text-white">
+           
+          <div class="flex flex-col w-full">
+            <h1 class="font-['DM_Sans'] font-bold w-full text-white text-sm sm:text-base md:text-[17px]">Total Saved Money</h1>
+            <p
+              class="savings-balance font-['DM_Sans'] font-bold text-[25px] sm:text-[28px] md:text-[32px] w-[100%] truncate"> 
+            </p>
+            
+            <div class="savings-goal-container w-full flex gap-2 items-center">
+              <div class="savings-goal flex font-['DM_Sans'] gap-2 text-[11px] sm:text-[12px]">
+              </div>
+
+              <button id = "edit-goal-btn" class="flex items-center justify-center cursor-pointer gap-1 px-2 py-1 bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder:text-white/40 rounded-xl text-sm font-['Poppins'] outline-none focus:bg-white/20 focus:border-white/50 focus:ring-2 focus:ring-white/10 transition-all duration-200">
+              <i class="fa-solid fa-pencil text-white text-[10px]"></i>
+              </button>
+            </div>
+
+              <div class="flex gap-1 items-center justify-center">
+           <div class="goal-bar-outer backdrop-blur-sm border border-white/25 shadow-[inset_0_1px_3px_rgba(255,255,255,0.25)] rounded-full h-[12px] w-full mt-1.5 overflow-hidden flex"
+              id="goal-bar-outer"
+              style="
+                  background: rgba(255, 255, 255, 0.18);
+                  box-shadow:
+                      inset 0 1px 1px rgba(255,255,255,.25),
+                      inset 0 -1px 2px rgba(0,0,0,.08),
+                      0 4px 12px rgba(0,0,0,.08);
+              ">
+        
+                <div
+                    class="goal-bar-inner h-full rounded-xl bg-gradient-to-r from-[#00FFCC] from-0% to-[#00FFF5] to-100% w-[0%] transition-all duration-700 ease-in flex items-center justify-center text-[10px] text-white"
+                    id="goalBudgetBar">
+              </div>
+              </div>
+                <div class="goal-bar-percent
+                        rounded-xl
+                        border border-white/20
+                        backdrop-blur-xl
+                        shadow-[0_8px_32px_rgba(0,0,0,0.12)]
+                        py-1 px-2.5
+                        text-[10px] sm:text-[11px]
+                        font-bold
+                        text-white
+                        font-['DM_Sans']
+                        tracking-wider"
+                  style="background: rgba(255, 255, 255, 0.18);">
+                </div>
+              </div>
+
+          </div>
+    
+        </div>
+      </div>
+
+      </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    
+    
+    <!-- Transactions Modal -->
+  <div class="transactions-container w-full fixed inset-0 z-50 flex flex-col items-center justify-center hidden px-4 sm:px-6"
+      style="background: rgba(0,0,0,0.6);">
+      
+    <div class="js-close-transactions cursor-pointer w-9 h-9 absolute top-2 right-2 flex items-center justify-center rounded-full transition-all duration-200 hover:bg-white/10 active:scale-95 text-[#7FA39B] hover:text-white"
+          style="background: rgba(255,255,255,0.08); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 8px 40px rgba(0,0,0,0.3);"
+          aria-label="Close"> 
+    <i class="fa-solid fa-xmark text-lg"></i>
+    </div>
+
+  <div class="w-full sm:max-w-md md:max-w-lg"
+       style="background:rgba(255,255,255,0.08);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.18);border-radius:20px;padding:6px;box-shadow:0 8px 32px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.2);">
+
+    <div class="flex flex-col font-['DM_Sans']"
+         style="background:rgba(255,255,255,0.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.15);">
+
+      <h1 class="text-center font-bold pb-3 text-sm sm:text-base"
+          style="color:rgba(255,255,255,0.95);letter-spacing:0.5px;">Transactions</h1>
+
+      <div class="flex flex-row justify-between items-center mb-2 gap-2">
+        <h1 class="date-today text-[11px]  sm:text-[13px] md:text-[14px] truncate" style="color:rgba(255,255,255,0.6);"></h1>
+        <select name="filter-transactions" id="filter-transactions"
+                class="shrink-0
+                cursor-pointer
+                rounded-lg
+                border border-white/20
+                bg-white/10
+                text-white/85
+                backdrop-blur-md
+                outline-none
+
+                text-[11px] sm:text-[13px] lg:text-sm
+                px-2 py-1
+
+                w-22 sm:w-24 md:w-26 lg:w-28
+                style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:8px;color:rgba(255,255,255,0.85);font-size:12px;padding:4px 8px;outline:none;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);">
+          <option value="today"   style="background:#1a1a2e;">Today</option>
+          <option value="last7"   style="background:#1a1a2e;">Last 7 Days</option>
+          <option value="alltime" style="background:#1a1a2e;">All Time</option>
+        </select>
+      </div>
+
+      <div style="height:1px;background:rgba(255,255,255,0.1);margin:8px 0 12px;"></div>
+
+      <div class="t-date-container pb-2 px-1 text-xs sm:text-sm" style="color:rgba(255,255,255,0.6);font-family:'DM Sans',sans-serif;"></div>
+
+      <div class="w-full grid grid-cols-4 mb-2 px-1">
+        <h1 class="text-center font-bold text-[10px] sm:text-xs" style="color:rgba(255,255,255,0.5);letter-spacing:0.5px;text-transform:uppercase;">Amount</h1>
+        <h1 class="text-center font-bold text-[10px] sm:text-xs" style="color:rgba(255,255,255,0.5);letter-spacing:0.5px;text-transform:uppercase;">Desc</h1>
+        <h1 class="text-center font-bold text-[10px] sm:text-xs" style="color:rgba(255,255,255,0.5);letter-spacing:0.5px;text-transform:uppercase;">Type</h1>
+        <h1 class="text-center font-bold text-[10px] sm:text-xs" style="color:rgba(255,255,255,0.5);letter-spacing:0.5px;text-transform:uppercase;">Date</h1>
+      </div>
+
+      <div class="receipts-container w-full grid gap-1.5 text-xs sm:text-sm overflow-y-auto max-h-[45vh] sm:max-h-[50vh]">
+
+      </div>
+
+    </div>
+  </div>
+</div>
+      
+        </div>
+      </div>
+
+    <div class="hidden section expenses-section ">
+
+        <div class="flex flex-col gap-2  ">
+          <div class="category-selection-header pl-2 pt-3">
+          <h1 class="text-white font-['DM_Sans'] sm:hidden">Category</h1>
+          </div>
+
+          <div class="category-container flex w-full mx-auto justify-evenly sm:justify-center items-center gap-2 overflow-x-auto whitespace-nowrap px-2 scroll-smooths">
+           
+            <div class="flex flex-col items-center shrink-0">
+            <button class="js-category-btn cursor-pointer  bg-white rounded-xl p-2 shrink-0" id = "foods" value="1">
+            <img class= "h-7 w-7" src="images/category/foods-drinks.png" alt="Foods and drinks category logo">
+            </button>
+            <p class="font-['DM_Sans'] text-white text-[11px]">Foods</p>
+            </div>
+
+           <div class="flex flex-col items-center shrink-0">
+          <button class="js-category-btn cursor-pointer  bg-white rounded-xl p-2 shrink-0" id = "transport" value="2">
+            <img class="h-7 w-7" src="images/category/transport.png" alt="Transport category logo">
+          </button>
+            <p class="font-['DM_Sans'] text-white text-[11px]">Transport</p>
+          </div>
+
+          <div class="flex flex-col items-center shrink-0">
+          <button class="js-category-btn cursor-pointer  bg-white rounded-xl p-2 shrink-0"id = "shopping" value="3">
+            <img class="h-7 w-7" src="images/category/shopping.png" alt="Shopping category logo">
+          </button>
+            <p class="font-['DM_Sans'] text-white text-[11px]">Shopping</p>
+          </div>
+
+            <div class="flex flex-col items-center shrink-0">
+                <button class="js-category-btn cursor-pointer  bg-white rounded-xl p-2 shrink-0" id = "bills" value="4">
+                  <img  class="h-7 w-7" src="images/category/bills-utilities.png" alt="Bills category logo">
+              </button>
+             <p class="font-['DM_Sans'] text-white text-[11px]">Bills</p>
+            </div>
+          
+          <div class="flex flex-col items-center shrink-0">
+            <button class="js-category-btn cursor-pointer  bg-white rounded-xl p-2 shrink-0"  id = "health" value="5">
+            <img  class="h-7 w-7" src="images/category/health.png" alt="Health category logo">
+            </button>
+             <p class="font-['DM_Sans'] text-white text-[11px]">Health</p>
+          </div>
+
+          <div class="flex flex-col items-center shrink-0">
+            <button class="js-category-btn cursor-pointer  bg-white rounded-xl p-2 shrink-0" id="education" value="7">
+            <img  class="h-7 w-7" src="images/category/education.png" alt="Education category logo">
+            </button> 
+              <p class="font-['DM_Sans'] text-white text-[11px]">Education </p>
+          </div>
+          
+          <div class="flex flex-col items-center shrink-0">
+            <button class="js-category-btn cursor-pointer  bg-white rounded-xl p-2 shrink-0" id="savings" value="8">
+            <img  class="h-7 w-7" src="images/category/savings.png" alt="Savings category logo">
+            </button>
+            <p class="font-['DM_Sans'] text-white text-[11px]">Savings </p>
+          </div>
+
+          <div class="flex flex-col items-center shrink-0">
+          <button class="js-category-btn cursor-pointer  bg-white rounded-xl p-2 shrink-0" id = "debt" value="9">
+           <img  class="h-7 w-7" src="images/category/debt.png" alt="Debt category logo">
+          </button>
+           <p class="font-['DM_Sans'] text-white text-[11px]">Debt</p>
+          </div>
+
+          <div class="flex flex-col items-center shrink-0">
+          <button class="js-category-btn cursor-pointer  bg-white rounded-xl p-2 shrink-0" id = "others" value="10">
+            <img  class="h-7 w-7" src="images/category/belongings.png" alt="Others category logo">
+          </button>
+           <p class="font-['DM_Sans'] text-white text-[11px]">Others</p>
+          </button>
+          </div>
+
+        <div class="flex flex-col items-center shrink-0">
+          <button class="js-category-btn cursor-pointer  bg-white rounded-xl p-2 shrink-0" id = "entertainment" value="6">
+           <img  class="h-7 w-7" src="images/category/entertainment.png" alt="Entertainment category logo">
+          </button>
+           <p class="font-['DM_Sans'] text-white text-[11px]">Ent </p>
+        </div>
+          
+        </div>
+
+                
+        </div>
+      
+   
+     <div class="relative flex flex-col items-center justify-center mt-5  ">
+         
+      <div class=" reveal-2 w-full pb-2 flex flex-col pt-45 mt-25 px-3 bg-gradient-to-b from-white from-0% to-[#45E7EE] to-100% rounded-xl">
+      
+      <div class="reveal-3 flex absolute w-[90%] max-w-[550px] sm:max-w-[600px] -top-24 left-3 right-3 m-auto flex-col gap-1 bg-custom rounded-2xl p-3 ">
+             
+         <p class="tracking-wide text-[12px] font-['DM_Sans'] text-white/50 font-bold text-center">
+                EXPENSE TRACKER
+              </p>
+              <h1 class="font-bold font-['DM_Sans'] text-white text-lg text-center">
+                Record New Expense
+              </h1>
+                 <div class="mt-2 space-y-2 font-['Poppins']">
+                  <p id="error-expense" class=" font-['DM_Sans'] text-center text-sm text-red-400 bg-red-400/30 border border-red-400/30 rounded-lg py-2 px-1 hidden"></p>
+                  <p id="success-expense" class=" font-['DM_Sans'] text-center text-sm text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 rounded-lg py-2 px-1 hidden"></p>
+                </div>
+
+                <div class="w-full grid grid-cols-2 gap-2 w-full ">
+                   <label for="expense-description" class="label-normal text-[11px] font-semibold uppercase tracking-widest font-['DM_Sans'] ">Description</label>
+                  <div class="relative w-[100%] col-span-2">
+                        <i class="fa-solid fa-pen-to-square absolute z-1000 left-2 top-3 text-white"></i>
+                      <input type="text" id="expense-description" class="bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder:text-white/40 rounded-xl py-2.5 w-full text-sm font-['Poppins'] outline-none focus:bg-white/20 focus:border-white/50 focus:ring-2 focus:ring-white/10 p-8 transition-all duration-200" min="0" placeholder="Describe what you had spent..">
+                  </div>
+                  
+                  <div class = "col-span-1">
+                   <label for="expense-amount" class="label-normal  text-[11px] font-semibold uppercase tracking-widest font-['DM_Sans']">Amount</label>
+                  <div class="relative w-[100%]">
+                      <i class="fa-solid fa-peso-sign absolute z-1000 left-3 top-3 text-white"></i>
+                     <input type="number" id="expense-amount" placeholder="Amount" class="input-cozy bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder:text-white/40 rounded-xl py-2.5 pl-9 pr-3 text-sm font-['Poppins'] outline-none focus:bg-white/20 focus:border-white/50 focus:ring-2 focus:ring-white/10 transition-all duration-200" min="0">
+                  </div>
+                  </div>
+
+                  <div class="flex items-end">
+                  <select name="category" id="category" aria-placeholder="Category"
+                    class="w-full qp-2 text-sm border-1 rounded-xl cursor-pointer text-black border-black focus:outline-none bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder:text-white/40 rounded-xl py-2.5 w-full pr-3 text-sm font-['Poppins'] outline-none focus:bg-white/20 focus:border-white/50 focus:ring-2 focus:ring-white/10 pl-4 transition-all duration-200" min="0" >
+                    <option class="cursor-pointer" value="" selected disabled hidden>Category</option>
+                    <option  value="1">Foods</option>
+                    <option value="2">Transport</option>
+                    <option value="3">Shopping</option>
+                    <option value="4">Bills</option>
+                    <option value="5">Health</option>
+                    <option value="6">Entertainment</option>
+                    <option value="7">Education</option>
+                    <option value="8">Savings</option>
+                    <option value="9">Debt</option>
+                    <option value="10">Others</option>
+                  </select>
+                  </div>
+                </div>
+
+              <div class="flex items-center justify-center w-full mt-2">
+                <button
+                  id="js-add-expense"
+                  class="bg-white  w-full flex items-center justify-center gap-2 font-['DM_Sans'] text-[#0d9f9f] font-bold py-3 px-7 rounded-2xl text-sm cursor-pointer transition-all duration-200 active:scale-95 hover:brightness-110"
+                  data-type="add"
+                  >
+                  <i class="fa-solid fa-receipt"></i>
+                  Add Expense
+                </button>
+              </div>
+
+          </div>
+     <div class="reveal-2 expenses-super-container w-full p-1">
+
+      <div class="expenses-header flex items-center justify-between py-2">
+        <div>
+          <h2 class="font-['DM_Sans'] text-[13px] sm:text-[14px] md:text-[15px] font-bold text-[#374151] tracking-wide">
+            Recent Expenses
+          </h2>
+          <p class="text-[10px] sm:text-[11px] text-gray-400 font-['DM_Sans']">
+            Your latest transactions
+          </p>
+        </div>
+      </div>
+
+      <div class="expenses-main-container bg-[#F3FEFD] border border-[#D7F4F2] rounded-2xl shadow-sm p-3 h-[300px] overflow-y-auto">
+
+        <div class="flex items-center justify-between pb-2 border-b border-[#DCEFEF]">
+
+          <div class="date-today  sm:text-[13px] md:text-[14px] text-gray-500 font-medium font-['DM_Sans']">
+          </div>
+
+         
+          <select
+            name="filter-expenses"
+            class="filter-expenses text-[11px] font-medium cursor-pointer bg-white border border-[#D7F4F2] rounded-lg px-2 py-1 
+                  sm:text-[13px] lg:text-sm
+                    w-22 sm:w-24 md:w-26 lg:w-28 outline-none focus:border-[#2DBCC7] transition">
+            <option value="today">Today</option>
+            <option value="last7">Last 7 Days</option>
+            <option value="alltime">All Time</option>
+          </select>
+        </div>
+
+        <div class="expenses-container-b flex flex-col gap-2 mt-2 items-center">
+        </div>
+
+      </div>
+
+    </div>
+
+        </div>
+        </div>
+    </div>
+    </div>
+  
+
+    <div class=" expenses-nav-container w-full h-full fixed z-50 flex items-center justify-center hidden" style=" background: rgba(0,0,0,0.6);">
+            <button
+            id="js-close-modal"
+            class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 text-white hover:text-gray-700 transition absolute top-0 right-1"
+          >
+            <i class="fa-solid fa-xmark"></i>
+    </button>
+  
+    
+    <div class="finances-container fixed inset-0 flex items-center justify-center z-50 p-4" style="background: rgba(0,0,0,0.4); backdrop-filter: blur(4px);">
+ 
+      <div class="relative inset-0"></div>
+      
+       <button
+        id="close-expenses-nav-btn"
+        class="w-9 h-9 absolute top-2 right-2 flex cursor-pointer items-center justify-center rounded-full transition-all duration-200 hover:bg-white/10 active:scale-95 text-[#7FA39B] hover:text-white"
+        style="background: rgba(255,255,255,0.08); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 8px 40px rgba(0,0,0,0.3);"
+        aria-label="Close">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="relative w-full max-w-[500px] max-h-[90vh] overflow-y-auto rounded-2xl flex flex-col"
+        style="background: rgba(20,50,48,0.75); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 8px 40px rgba(0,0,0,0.4);">
+      
+        <div class="sticky top-0 z-10 w-full p-6 pb-5 flex-shrink-0"
+          style="background: linear-gradient(135deg, rgba(35,115,111,0.9), rgba(29,196,154,0.25)); border-bottom: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(24px);">
+          <h1 class="tracking-widest font-['DM_Sans'] text-[10px] sm:text-[12px] lg:text-[13px] font-semibold text-white/40 uppercase mb-1">Finance Manager</h1>
+          <h1 class="font-['DM_Sans'] text-white font-bold text-xl sm:text-2xl tracking-tight">Manage your Finances</h1>
+        </div>
+
+        <div class="w-full flex flex-col gap-5 p-4 sm:p-5">
+
+          <div>
+            <p class="text-[10px] sm:text-[12px] lg:text-[14px] font-semibold font-['DM_Sans'] text-[#6ab3a6] uppercase tracking-widest mb-3 pl-1">Savings</p>
+            <div class="grid grid-cols-2 gap-3">
+
+              <button id="add-savings-navigator" data-type="add-savings"
+                class="finance-nav flex flex-col items-center gap-2 p-3 sm:p-4 rounded-2xl cursor-pointer font-['DM_Sans'] transition-all duration-200 active:scale-95"
+                style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);"
+                onmouseover="this.style.background='rgba(255,255,255,0.09)'; this.style.borderColor='rgba(29,196,154,0.3)'"
+                onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.borderColor='rgba(255,255,255,0.08)'">
+                <div class="p-2 sm:p-3 rounded-xl" style="background: rgba(29,196,154,0.15);">
+                  <i class="fa-solid fa-piggy-bank text-lg sm:text-xl text-[#1dc49a]"></i>
+                </div>
+                <span class="text-xs sm:text-sm font-bold text-[#e0f5f0]">Add Savings</span>
+                <p class="text-[10px] sm:text-[12px] leading-relaxed  font-normal text-[#7FA39B] text-center leading-relaxed sm:block">Deposit money in your account</p>
+              </button>
+
+              <button id="withdraw-savings-navigator" data-type="withdraw-savings"
+                class="finance-nav flex flex-col items-center gap-2 p-3 sm:p-4 rounded-2xl cursor-pointer font-['DM_Sans'] transition-all duration-200 active:scale-95"
+                style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);"
+                onmouseover="this.style.background='rgba(255,255,255,0.09)'; this.style.borderColor='rgba(29,196,154,0.3)'"
+                onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.borderColor='rgba(255,255,255,0.08)'">
+                <div class="p-2 sm:p-3 rounded-xl" style="background: rgba(29,196,154,0.15);">
+                  <i class="fa-solid fa-money-bill-wave text-lg sm:text-xl text-[#1dc49a]"></i>
+                </div>
+                <span class="text-xs sm:text-sm font-bold text-[#e0f5f0]">Withdraw Savings</span>
+                <p class="text-[10px] sm:text-[12px]  font-normal text-[#7FA39B] text-center leading-relaxed sm:block">Withdraw money from your account</p>
+              </button>
+            </div>
+          </div>
+
+          <!-- Expenses -->
+          <div>
+            <p class="text-[10px] sm:text-[12px] lg:text-[14px]font-semibold font-['DM_Sans'] text-[#6ab3a6] uppercase tracking-widest mb-3 pl-1">Expenses</p>
+            <button id="add-expense-navigator" data-type="add-expense"
+              class="finance-nav w-full flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-2xl cursor-pointer font-['DM_Sans'] transition-all duration-200 active:scale-95"
+              style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);"
+              onmouseover="this.style.background='rgba(255,255,255,0.09)'; this.style.borderColor='rgba(29,196,154,0.3)'"
+              onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.borderColor='rgba(255,255,255,0.08)'">
+              <div class="p-2 sm:p-3 rounded-xl flex-shrink-0" style="background: rgba(29,196,154,0.15);">
+                <i class="fa-solid fa-receipt text-lg sm:text-xl text-[#1dc49a]"></i>
+              </div>
+              <div class="flex flex-col items-start text-left min-w-0">
+                <span class="text-xs sm:text-sm font-bold text-[#e0f5f0]">Add Expense</span>
+                <p class="text-[10px] sm:text-[12px]  font-normal text-[#7FA39B] truncate w-full">Record a new expense transaction</p>
+              </div>
+              <i class="fa-solid fa-chevron-right text-[#7FA39B] text-xs ml-auto flex-shrink-0"></i>
+            </button>
+          </div>
+
+          <!-- Budget -->
+          <div class="pb-1 flex flex-col gap-2.5">
+            <p class="text-[10px] sm:text-[12px] lg:text-[14px] font-semibold font-['DM_Sans'] text-[#6ab3a6] uppercase tracking-widest mb-3 pl-1">Budget</p>
+            <button id="add-daily-budget-navigator" data-type="add-budget"
+              class="finance-nav w-full flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-2xl cursor-pointer font-['DM_Sans'] transition-all duration-200 active:scale-95"
+              style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);"
+              onmouseover="this.style.background='rgba(255,255,255,0.09)'; this.style.borderColor='rgba(29,196,154,0.3)'"
+              onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.borderColor='rgba(255,255,255,0.08)'">
+              <div class="p-2 sm:p-3 rounded-xl flex-shrink-0" style="background: rgba(29,196,154,0.15);">
+                <i class="fa-solid fa-wallet text-lg sm:text-xl text-[#1dc49a]"></i>
+              </div>
+              <div class="flex flex-col items-start text-left min-w-0">
+                <span class="text-xs sm:text-sm font-bold text-[#e0f5f0]">Add Daily Budget</span>
+                <p class="text-[10px] sm:text-[12px]  font-normal text-[#7FA39B] truncate w-full">Add budget for this day's expenses</p>
+              </div>
+              <i class="fa-solid fa-chevron-right text-[#7FA39B] text-xs ml-auto flex-shrink-0"></i>
+            </button>
+
+               <button id="add-monthly-budget-navigator" data-type="add-budget"
+              class="finance-nav w-full flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-2xl cursor-pointer font-['DM_Sans'] transition-all duration-200 active:scale-95"
+              style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);"
+              onmouseover="this.style.background='rgba(255,255,255,0.09)'; this.style.borderColor='rgba(29,196,154,0.3)'"
+              onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.borderColor='rgba(255,255,255,0.08)'">
+              <div class="p-2 sm:p-3 rounded-xl flex-shrink-0" style="background: rgba(29,196,154,0.15);">
+                <i class="fa-solid fa-wallet text-lg sm:text-xl text-[#1dc49a]"></i>
+              </div>
+              <div class="flex flex-col items-start text-left min-w-0">
+                <span class="text-xs sm:text-sm font-bold text-[#e0f5f0]">Add Monthly Budget</span>
+                <p class="text-[10px] sm:text-[12px]  font-normal text-[#7FA39B] truncate w-full">Add budget for this month's expenses</p>
+              </div>
+              <i class="fa-solid fa-chevron-right text-[#7FA39B] text-xs ml-auto flex-shrink-0"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    </div>
+
+    </div>
+
+
+    
+  <!-- Edit Expense Option (Initially Hidden) -->
+<div class="edit-expense-option-container w-full fixed inset-0 z-[100] hidden items-center justify-center" style="background: rgba(0,0,0,0.6);">
+
+  <div class="relative edit-expense-inner-container w-full mx-4 max-w-[460px] rounded-[22px] overflow-hidden"
+       style="background: rgba(255,255,255,0.055); border: 1px solid rgba(29,158,117,0.22); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 8px 48px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.07);">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between px-6 py-5" style="border-bottom: 1px solid rgba(29,158,117,0.15);">
+      <div class="flex items-center gap-[10px]">
+        <div class="flex items-center justify-center w-9 h-9 rounded-[10px]"
+             style="background: linear-gradient(135deg,#1a6b52,#0f4d3c); border: 1px solid rgba(29,158,117,0.4); box-shadow: 0 3px 12px rgba(29,158,117,0.2);">
+          <i class="fa-solid fa-pen text-[14px]" style="color:#5DCAA5;"></i>
+        </div>
+        <h1 class="font-['DM_Sans'] font-bold text-[18px] m-0" style="color:#e8f5f0;">Edit Expense</h1>
+      </div>
+      <button class="js-close-edit-expense flex items-center justify-center w-[30px] h-[30px] rounded-full cursor-pointer transition-all hover:bg-white/15"
+              style="background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);">
+        <i class="fa-solid fa-x text-[11px]" style="color: rgba(200,230,220,0.7);"></i>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="flex flex-col gap-[14px] p-6">
+      <div class="grid grid-cols-2 gap-3">
+
+        <!-- Description -->
+        <div class="flex flex-col gap-[6px]">
+          <label for="edit-expense-description"
+                 class="text-[11px] font-semibold uppercase tracking-widest font-['DM_Sans']"
+                 style="color: rgba(160,210,195,0.7);">
+            Description
+          </label>
+          <input type="text" id="edit-expense-description" placeholder="e.g. Groceries"
+                 class="rounded-[12px] px-[14px] py-[10px] text-[14px] outline-none transition-all w-full font-['DM_Sans'] placeholder:text-white/20"
+                 style="background: rgba(255,255,255,0.07); border: 1px solid rgba(29,158,117,0.2); color: #e8f5f0;">
+        </div>
+
+        <!-- Amount -->
+        <div class="flex flex-col gap-[6px]">
+          <label for="edit-expense-amount"
+                 class="text-[11px] font-semibold uppercase tracking-widest font-['DM_Sans']"
+                 style="color: rgba(160,210,195,0.7);">
+            Amount (₱)
+          </label>
+          <input type="number" id="edit-expense-amount" placeholder="0.00" min="0"
+                 class="rounded-[12px] px-[14px] py-[10px] text-[14px] outline-none transition-all w-full font-['DM_Sans'] placeholder:text-white/20"
+                 style="background: rgba(255,255,255,0.07); border: 1px solid rgba(29,158,117,0.2); color: #e8f5f0;">
+        </div>
+
+        <!-- Category -->
+        <div class="flex flex-col gap-[6px] col-span-2">
+          <label for="edit-category"
+                 class="text-[11px] font-semibold uppercase tracking-widest font-['DM_Sans']"
+                 style="color: rgba(160,210,195,0.7);">
+            Category
+          </label>
+          <select id="edit-category" name="category"
+                  class="rounded-[12px] px-[14px] py-[10px] text-[14px] outline-none cursor-pointer transition-all w-full font-['DM_Sans'] appearance-none"
+                  style="background: rgba(255,255,255,0.07); border: 1px solid rgba(29,158,117,0.2); color: #e8f5f0;">
+            <option value="" selected disabled hidden style="background:#0f3d32;">Select a category</option>
+            <option value="1"  style="background:#0f3d32;">Foods</option>
+            <option value="2"  style="background:#0f3d32;">Transport</option>
+            <option value="3"  style="background:#0f3d32;">Shopping</option>
+            <option value="4"  style="background:#0f3d32;">Bills</option>
+            <option value="5"  style="background:#0f3d32;">Health</option>
+            <option value="6"  style="background:#0f3d32;">Entertainment</option>
+            <option value="7"  style="background:#0f3d32;">Education</option>
+            <option value="8"  style="background:#0f3d32;">Savings</option>
+            <option value="9"  style="background:#0f3d32;">Debt</option>
+            <option value="10" style="background:#0f3d32;">Others</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- Save Button -->
+      <button id="js-save-edit"
+              class="w-full flex items-center justify-center gap-2 py-[13px] rounded-[13px] text-white text-[15px] font-semibold font-['DM_Sans'] cursor-pointer transition-all hover:opacity-90 active:scale-[0.98] mt-1"
+              style="background: linear-gradient(135deg,#1d9e75,#0f6e56); box-shadow: 0 4px 20px rgba(29,158,117,0.35);">
+        <i class="fa-solid fa-floppy-disk text-[15px]"></i>
+        Save Changes
+      </button>
+    </div>
+
+  
+
+  </div>
+</div>
+
+<div class="edit-goal-option-container w-full fixed inset-0 z-[100] hidden items-center justify-center" style="background: rgba(0,0,0,0.6);">
+
+  <div class="relative edit-goal-inner-container w-full mx-4 max-w-[460px] rounded-[22px] overflow-hidden"
+       style="background: rgba(255,255,255,0.055); border: 1px solid rgba(29,158,117,0.22); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 8px 48px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.07);">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between px-6 py-5" style="border-bottom: 1px solid rgba(29,158,117,0.15);">
+      <div class="flex items-center gap-[10px]">
+        <div class="flex items-center justify-center w-9 h-9 rounded-[10px]"
+             style="background: linear-gradient(135deg,#1a6b52,#0f4d3c); border: 1px solid rgba(29,158,117,0.4); box-shadow: 0 3px 12px rgba(29,158,117,0.2);">
+          <i class="fa-solid fa-pen text-[14px]" style="color:#5DCAA5;"></i>
+        </div>
+        <div class="flex flex-col">
+        <h1 class="font-['DM_Sans'] font-bold text-[18px] m-0" style="color:#e8f5f0;">Set Savings Goal</h1>
+        <p class="current-savings-goal font-['DM_Sans'] text-white text-[11px]"></p>
+        </div>
+      </div>
+      <button id = "js-close-goal" class="flex items-center justify-center w-[30px] h-[30px] rounded-full cursor-pointer transition-all hover:bg-white/15"
+              style="background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);">
+        <i class="fa-solid fa-x text-[11px]" style="color: rgba(200,230,220,0.7);"></i>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="flex flex-col gap-[14px] p-6">
+      <div class="grid grid-cols-2 gap-3">
+
+        <!-- Description -->
+        <div class="flex flex-col gap-[6px]">
+          <label for="edit-goal-description"
+                 class="text-[11px] font-semibold uppercase tracking-widest font-['DM_Sans']"
+                 style="color: rgba(160,210,195,0.7);">
+            Description
+          </label>
+          <input type="text" id="edit-goal-description" placeholder="e.g. Groceries"
+                 class="rounded-[12px] px-[14px] py-[10px] text-[14px] outline-none transition-all w-full font-['DM_Sans'] placeholder:text-white/20"
+                 style="background: rgba(255,255,255,0.07); border: 1px solid rgba(29,158,117,0.2); color: #e8f5f0;">
+        </div>
+
+        <!-- Amount -->
+        <div class="flex flex-col gap-[6px]">
+          <label for="edit-goal-amount"
+                 class="text-[11px] font-semibold uppercase tracking-widest font-['DM_Sans']"
+                 style="color: rgba(160,210,195,0.7);">
+            New Goal (₱)
+          </label>
+          <input type="number" id="edit-goal-amount" placeholder="0.00" min="0"
+                 class="rounded-[12px] px-[14px] py-[10px] text-[14px] outline-none transition-all w-full font-['DM_Sans'] placeholder:text-white/20"
+                 style="background: rgba(255,255,255,0.07); border: 1px solid rgba(29,158,117,0.2); color: #e8f5f0;">
+        </div>
+      </div> 
+
+      <!-- Save Button -->
+      <button id="js-save-goal"
+              class="w-full flex items-center justify-center gap-2 py-[13px] rounded-[13px] text-white text-[15px] font-semibold font-['DM_Sans'] cursor-pointer transition-all hover:opacity-90 active:scale-[0.98] mt-1"
+              style="background: linear-gradient(135deg,#1d9e75,#0f6e56); box-shadow: 0 4px 20px rgba(29,158,117,0.35);">
+        <i class="fa-solid fa-floppy-disk text-[15px]"></i>
+        Save Changes
+      </button>
+    </div>
+   </div>
+</div>
+
+
+<div class="edit-budget-container w-full fixed inset-0 z-[100] hidden flex items-center justify-center" style="background: rgba(0,0,0,0.6);">
+
+  <div class="relative edit-budget-inner-container w-full mx-4 max-w-[460px] rounded-[22px] overflow-hidden"
+       style="background: rgba(255,255,255,0.055); border: 1px solid rgba(29,158,117,0.22); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 8px 48px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.07);">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between px-6 py-5" style="border-bottom: 1px solid rgba(29,158,117,0.15);">
+      <div class="flex items-center gap-[10px]">
+        <div class="flex items-center justify-center w-9 h-9 rounded-[10px] p-3"
+             style="background: linear-gradient(135deg,#1a6b52,#0f4d3c); border: 1px solid rgba(29,158,117,0.4); box-shadow: 0 3px 12px rgba(29,158,117,0.2);">
+          <i class="fa-solid fa-pen text-[14px]" style="color:#5DCAA5;"></i>
+        </div>
+        <div class="flex flex-col">
+        <h1 class="budget-mode-title font-['DM_Sans'] font-bold text-[18px] m-0" style="color:#e8f5f0;"></h1>
+        <p class="budget-mode-description font-['DM_Sans'] text-white text-[10px] sm:text-[12px] "></p>
+        </div>
+      </div>
+      <button id = "js-close-budget" class="flex items-center justify-center w-[30px] h-[30px] rounded-full cursor-pointer transition-all hover:bg-white/15 p-3"
+              style="background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);">
+        <i class="fa-solid fa-x text-[11px]" style="color: rgba(200,230,220,0.7);"></i>
+      </button>
+    </div>
+
+     
+   <div class="m-2 space-y-2 font-['Poppins']">
+                  <p id="error-budget" class=" font-['DM_Sans'] text-center text-sm text-red-400 bg-red-400/30 border border-red-400/30 rounded-lg py-2 px-1 hidden"></p>
+                  <p id="success-budget" class=" font-['DM_Sans'] text-center text-sm text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 rounded-lg py-2 px-1 hidden"></p>
+    </div>
+
+
+    <!-- Body -->
+    <div class="flex flex-col gap-[14px] pt-3 px-5 pb-6">
+      <div class="grid grid-cols-1 gap-3">
+
+        <!-- Amount -->
+        <div class="flex flex-col gap-[6px]">
+          <label for="budget-amount"
+                 class="text-[11px] sm:text-[12px]     font-semibold uppercase tracking-widest font-['DM_Sans']"
+                 style="color: rgba(160,210,195,0.7);">
+            Amount
+          </label>
+          <input type="number" id="budget-amount" placeholder="0.00" min="0"
+                 class="rounded-[12px] px-[14px] py-[10px] text-[14px] outline-none transition-all w-full font-['DM_Sans'] placeholder:text-white/20"
+                 style="background: rgba(255,255,255,0.07); border: 1px solid rgba(29,158,117,0.2); color: #e8f5f0;">
+        </div>
+      </div>
+
+      <!-- Save Button -->
+      <button id="js-save-budget"
+              class="w-full flex items-center justify-center gap-2 py-[13px] rounded-[13px] text-white text-[15px] font-semibold font-['DM_Sans'] cursor-pointer transition-all hover:opacity-90 active:scale-[0.98] mt-1"
+              style="background: linear-gradient(135deg,#1d9e75,#0f6e56); box-shadow: 0 4px 20px rgba(29,158,117,0.35);">
+        <i class="fa-solid fa-floppy-disk text-[15px]"></i>
+        Save Changes
+      </button>
+    </div>
+
+  </div>
+</div>
+
+   <div class="add-withdraw-option-container w-full fixed inset-0 z-[100] hidden flex flex-col items-center justify-center" style="background: rgba(0,0,0,0.6);">
+    
+    <div  class="p-3 max-w-[460px] rounded-[22px] overflow-hidden w-[90%]" style="background: rgba(255,255,255,0.055); border: 1px solid rgba(29,158,117,0.22); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 8px 48px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.07);">
+      <div class="flex gap-2 pt-2 items-center">
+     
+     <div class="flex items-center justify-center w-9 h-9 rounded-[10px] p-3"
+     style="background: linear-gradient(135deg,#1a6b52,#0f4d3c); border: 1px solid rgba(29,158,117,0.4); box-shadow: 0 3px 12px rgba(29,158,117,0.2);">
+      <i id="savings-icon" class="fa-solid fa-plus text-[14px]" style="color:#5DCAA5;"></i>
+    </div>
+     
+     <div class="flex flex-col">
+      <p class="tracking-wide text-[12px] font-['DM_Sans'] text-white/50 font-bold text-start">SAVINGS GOAL</p>
+     <h1 class="add-withdraw-title font-bold font-['DM_Sans'] text-white text-start text-lg"></h1>
+     <p id="add-withdraw-description" class="font-['DM_Sans'] text-white text-[10px] sm:text-[12px] "></p>
+     </div>
+    </div>
+
+     <div class="mt-2 space-y-2 font-['Poppins']">
+        <p id="error" class=" font-['DM_Sans'] text-center text-sm text-red-400 bg-red-400/30 border border-red-400/30 rounded-lg py-2 px-1 hidden"></p>
+        <p id="success" class=" font-['DM_Sans'] text-center text-sm text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 rounded-lg py-2 px-1 hidden"></p>
+      </div>
+
+      <div class="flex flex-col gap-2 items-center mt-2">
+      <div class="description-container flex flex-col  w-[90%]">
+      <label for="Description" class="text-white font-['DM_Sans'] text-sm mb-0.5 font-semibold tracking-tight">Description</label>
+
+      <div class=" relative flex items-center">
+        <i class="fa-solid fa-pen-to-square absolute z-1000 left-3 text-white"></i>
+      <input
+        type="text"
+        id="description"
+        placeholder="What are you saving for?"
+        class="description w-full bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder:text-white/40 rounded-xl py-2.5 pl-9 pr-3 text-sm font-['Poppins'] outline-none focus:bg-white/20 focus:border-white/50 focus:ring-2 focus:ring-white/10 transition-all duration-200"
+      >
+      </div>
+      </div>
+
+      <div class="amount-container flex flex-col w-[90%]">
+      <label for="Amount" class="text-white font-['DM_Sans'] text-sm mb-0.5 font-semibold tracking-tight">Amount</label>
+
+      <div class="flex relative items-center">
+        <i class="fa-solid fa-peso-sign absolute z-1000 left-3 text-white"></i>
+      <input
+          type="number"
+          id="amount"
+          placeholder="Enter amount"
+          class="amount w-full bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder:text-white/40 rounded-xl py-2.5 pl-9 pr-3 text-sm font-['Poppins'] outline-none focus:bg-white/20 focus:border-white/50 focus:ring-2 focus:ring-white/10 transition-all duration-200"
+        >
+      </div>
+      </div>
+
+      <div class=" expenses-nav-inner-container w-[90%] flex flex-col gap-2 mt-2">
+
+      <div class="flex items-center justify-evenly ">
+        <button
+      id="js-budget-button" data-ty[e = 'add'
+      class="flex items-center cursor-pointer justify-center gap-2 hover:bg-white/90 text-white font-bold font-['DM_Sans'] rounded-xl py-3 w-[100%] text-sm transition-all duration-200 active:scale-95" style="background: linear-gradient(135deg,#1d9e75,#0f6e56); box-shadow: 0 4px 20px rgba(29,158,117,0.35)">
+      <i class="fa-solid fa-plus"></i>
+      Add
+    </button>
+
+      </div>
+      <button
+        class="w-full cursor-pointer bg-transparent hover:bg-white/10 border border-white/20 text-white hover:text-white font-medium font-['DM_Sans'] rounded-xl py-3 text-sm transition-all duration-200"
+      id="js-cancel-btn">
+        Cancel 
+      </button>
+      </div>
+
+      </div>
+
+    </div>
+   </div>
+    </div>
+
+   <!--Analytics Section-->
+
+   <div class="hidden section analytics-section flex flex-col w-[90%] mx-auto gap-2">
+    
+    <div class="analytics-nav-container relative flex w-fit gap-1 rounded-xl bg-white/5 p-1 mb-3">
+
+      <div class="analytics-nav-indicator absolute top-1 bottom-1 rounded-lg bg-white/10 transition-all duration-300 ease-in-out"></div>
+
+      <button
+        class="analytics-btn relative cursor-pointer z-10 rounded-lg px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs md:text-sm font-medium font-['DM_Sans'] text-[#7FA39B] transition-colors duration-300 hover:text-[#e0f5f0]"
+        value="last7">
+        7D
+      </button>
+
+      <button
+        class="analytics-btn relative cursor-pointer z-10 rounded-lg px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs md:text-sm font-medium font-['DM_Sans'] text-[#7FA39B] transition-colors duration-300 hover:text-[#e0f5f0]"
+        value="1month">
+        1M
+      </button>
+
+      <button
+        class="analytics-btn relative cursor-pointer z-10 rounded-lg px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs md:text-sm font-medium font-['DM_Sans'] text-[#7FA39B] transition-colors duration-300 hover:text-[#e0f5f0]"
+        value="6months">
+        6M
+      </button>
+
+      <button
+        class="analytics-btn relative cursor-pointer z-10 rounded-lg px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs md:text-sm font-medium font-['DM_Sans'] text-[#7FA39B] transition-colors duration-300 hover:text-[#e0f5f0]"
+        value="alltime">
+        ALL
+      </button>
+
+    </div>
+
+     <h1 class="font-['DM_Sans'] text-[#6ab3a6] font-medium text-[13px]">OVERVIEW</h1>
+    <div class="overview-container grid grid-cols-1 lg:grid-cols-2 gap-2">
+
+  
+      <div class="analytics-card total-spent-container">
+        <p class="analytics-card-title">Total Spent</p>
+        <p class="analytics-amount total-spent"></p>
+        <p class="analytics-tip total-tip-message"></p>
+      </div>
+      
+      <div class="analytics-card budget-left-container">
+            <p class="analytics-card-title">Monthly Budget Left</p>
+            <p class="analytics-amount budget-left"></p>
+            <p class="analytics-tip budget-tip-message"></p>
+      </div>
+      
+      <div class="analytics-card avg-day-container">
+            <p class="analytics-card-title">Avg / Day </p>
+            <p class="analytics-amount average"></p>
+            <p class="analytics-tip avg-tip-message"></p>
+      </div>
+      
+      <div class="analytics-card saved-this-month-container">
+            <p class="analytics-card-title">Saved This Month</p>
+            <p class="analytics-amount saved-this-month"></p>
+            <p class="analytics-tip saved-tip-message"></p>
+      </div>
+     
+      <div class="analytics-card col-span-2 order-1 sm:col-span-1 sm:pb-0">
+
+      <div class="mb-4">
+        <h3 class="text-[#E6F4F1] text-lg font-semibold font-['DM_Sans']">
+          Spending vs Budget
+        </h3>
+
+        <p class="text-[#7FA39B] text-[11px] sm:text-[13px] leading-relaxed font-['DM_Sans']">
+          Compare your spending against your budget.
+        </p>
+      </div>
+
+      <div class="budget-comparison-chart-container w-full h-[140px] sm:h-[180px] lg:h-[200px]">
+        <canvas id="budgetComparisonChart" class="w-full"></canvas>
+      </div>
+
+      <div class="spending-budget-no-data h-[140px] max-w-[310px] mx-auto flex flex-col items-center justify-center gap-2 hidden">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7FA39B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2"/>
+          <path d="M8 21h8M12 17v4"/>
+          <path d="M7 10h2M11 10h6M7 13h4M15 13h2"/>
+        </svg>
+        <p class="text-[#7FA39B] text-[11px] sm:text-[13px] leading-relaxed font-['DM_Sans']">
+          No budget data yet.<br/>Set a budget to start tracking.
+        </p>
+      </div>
+
+      </div>
+
+      <div class="analytics-card col-span-2 order-2 sm:order-3">
+
+      <h1 class="text-[#E6F4F1] text-lg font-semibold font-['DM_Sans']">Expenses By Category</h1>
+      <p class="text-[#7FA39B] text-[11px] sm:text-[13px] leading-relaxed font-['DM_Sans']">Track where your money goes across different categories</p>
+
+   
+      <div class="analytics-no-data hidden h-[140px] flex flex-col items-center justify-center gap-2">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7FA39B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 3a9 9 0 0 1 6.364 15.364"/>
+          <path d="M12 7v5l3 3"/>
+        </svg>
+        <p class="text-[#7FA39B] text-xs font-['DM_Sans'] text-center leading-relaxed">
+          No expenses yet.<br/>Add a transaction to see your breakdown.
+        </p>
+      </div>
+
+      <div class="analytics-donut-container flex items-center gap-4 pt-2">
+
+       <div class="relative w-24 h-24 sm:w-26 sm:h-26 md:w-34 md:h-34 lg:w-36 lg:h-36 flex-shrink-0">
+        <canvas id="analyticsDonutChart" class="w-full h-full"></canvas>
+
+        <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+          <p class="text-xs sm:text-sm md:text-base font-medium text-[#e0f5f0] font-['DM_Sans']">
+            100%
+          </p>
+          <p class="text-[8px] sm:text-[10px] md:text-xs text-[#6ab3a6] font-['DM_Sans']">
+            total
+          </p>
+        </div>
+      </div>
+        <div class="flex-1 flex flex-col gap-1" id="analyticsLegend"></div>
+
+      </div>
+
+    </div>
+
+     <div class="analytics-card col-span-2 order-3 sm:order-2 sm:col-span-1">
+
+      <div class="flex items-center justify-between">
+        <h3 class="text-[#E6F4F1] text-base font-semibold font-['DM_Sans'] mb-1">
+          Spending Heatmap
+        </h3>
+        <p id="heatmap-year" class="text-[#E6F4F1] text-base font-semibold font-['DM_Sans'] mb-1"></p>
+      </div>
+
+      <p class="text-[#7FA39B] text-[11px] sm:text-[13px] leading-relaxed font-['DM_Sans']">
+        Visualize your monthly spending patterns at a glance.
+      </p>
+      <p class="text-[#6ab3a6] text-xs font-['DM_Sans'] mb-4"></p>
+
+  
+       <div class="heatmap-no-data hidden h-20 sm:h-24 flex flex-col items-center justify-center gap-1.5 sm:gap-2">
+        <svg
+          class="w-6 h-6 sm:w-8 sm:h-8"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#7FA39B"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <rect x="3" y="3" width="4" height="4" rx="0.5"/>
+          <rect x="10" y="3" width="4" height="4" rx="0.5"/>
+          <rect x="17" y="3" width="4" height="4" rx="0.5"/>
+          <rect x="3" y="10" width="4" height="4" rx="0.5"/>
+          <rect x="10" y="10" width="4" height="4" rx="0.5"/>
+          <rect x="17" y="10" width="4" height="4" rx="0.5"/>
+          <rect x="3" y="17" width="4" height="4" rx="0.5"/>
+          <rect x="10" y="17" width="4" height="4" rx="0.5"/>
+          <rect x="17" y="17" width="4" height="4" rx="0.5"/>
+        </svg>
+        <p class="text-[10px] sm:text-xs text-[#7FA39B] font-['DM_Sans'] text-center leading-tight">
+          No spending data yet.<br/>Transactions will appear here once added.
+        </p>
+      </div>
+
+      <div class="heatmap-content">
+        <div class="heatmap-grid grid grid-cols-6 gap-2 mb-2"></div>
+
+        <div class="flex items-center justify-end gap-2 mt-3">
+          <span class="text-[10px] text-[#6ab3a6] font-['DM_Sans']">Less</span>
+          <div class="w-3 h-3 rounded-sm" style="background:#1a3a35"></div>
+          <div class="w-3 h-3 rounded-sm" style="background:#1a6b52"></div>
+          <div class="w-3 h-3 rounded-sm" style="background:#1d9e75"></div>
+          <div class="w-3 h-3 rounded-sm" style="background:#22D3B6"></div>
+          <div class="w-3 h-3 rounded-sm" style="background:#5effd8"></div>
+          <span class="text-[10px] text-[#6ab3a6] font-['DM_Sans']">More</span>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="smart-insight-container flex flex-col col-span-2 w-full order-4">
+      <h1 class="font-['DM_Sans'] text-sm text-white/50 font-bold">SMART INSIGHT</h1>
+      
+    <div class="smart-insight bg-[#114436] rounded-md w-full border-1 border-[#1c5d4b] p-3 mt-1 flex gap-2">
+        <i class="fa-solid fa-lightbulb smart-insight-icon text-[#f1c40f] text-[20px]"></i>
+      <div class="smart-details-container flex flex-col">
+        <p id="smart-title" class="text-[#2ecc71] text-sm font-bold"></p>
+        <p id="smart-message" class="text-[#a8d3c5] text-sm"></p>
+      </div>
+  
+    </div>
+
+    </div>
+
+    </div>
+   </div>
+
+   <div class="section profile-section hidden">
+    <div class="w-full flex flex-col items-center justify-center px-4 py-2   ">
+      <div id="profile-avatar" class=" relative mb-1.5">
+  
+      </div>
+      
+      <h2 id="profile-name" class="font-['DM_Sans'] text-white text-base sm:text-lg font-semibold text-center"></h2>
+      <p id="profile-email" class="font-['DM_Sans'] text-[#6AB3A6] text-xs sm:text-sm text-center break-all"></p>
+
+      <div class="py-2 space-y-2">
+      <p id="error-upload-profile" class="font-['DM_Sans'] text-center text-sm text-red-400 bg-red-400/30 border border-red-400/30 rounded-lg py-2 px-1 hidden"></p>
+      <p id="success-upload-profile" class="font-['DM_Sans'] text-center text-sm text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 rounded-lg py-2 px-1 hidden"></p>
+    </div>
+    </div>
+
+    <div class="profile-info-container flex flex-col justify-evenly gap-2 flex-nowrap mx-5 mt-2">
+      
+      <div class="grid grid-cols-3 gap-3 w-full mx-auto max-w-[500px]">
+      <div class="profile-card expenses-logged flex flex-col items-center rounded-xl p-3">
+        <h1 id="expenses-logged-num" class="font-['DM_Sans'] text-xl text-white"></h1>
+        <p class="text-[#6AB3A6] font-['DM_Sans'] text-[11px] text-center">Expenses logged</p>
+      </div>
+
+      <div class="profile-card months-active flex flex-col items-center rounded-xl p-3">
+        <h1 id="months-active-num" class="font-['DM_Sans'] text-xl text-white"></h1>
+        <p class="text-[#6AB3A6] font-['DM_Sans'] text-[11px]">Months active</p>
+      </div>
+
+  
+      <div class="profile-card goal-reached flex flex-col items-center rounded-xl p-3">
+        <h1 id="goal-reached-percent" class="font-['DM_Sans'] text-xl text-white"></h1>
+        <p class="text-[#6AB3A6] font-['DM_Sans'] text-[11px]">Goal reached</p>
+      </div>
+      </div>
+
+        <div class=" account-settings-container pl-2 ">
+        <h1 class="font-['DM_Sans'] text-xs sm:text-sm font-semibold tracking-wider text-[#6AB3A6]">ACCOUNT</h1>
+          
+        <div class = "profile-card-account flex flex-col gap-3 py-3 rounded-xl">
+          <div id = "edit-profile-btn" class="flex gap-2 border-b cursor-pointer border-[#1a3d3d] px-3 py-1 pb-2.5">
+             <div class="bg-[#0f3d2e] rounded-xl w-10 h-10 flex items-center justify-center"><i class="fa-regular fa-user text-[#18b498]"></i></div>
+            <div class="profile-card-feature">
+              <h1 class="font-['DM_Sans'] text-white text-[13px]">Edit Profile</h1>
+              <p class="font-['DM_Sans'] text-[#6AB3A6] text-[12px]">Name, email, photo</p>
+            </div>
+          </div>
+
+            <div id="change-password-btn" class="flex gap-2 px-3 py-1 pb-3 cursor-pointer border-b border-[#1a3d3d]">
+            <div class="bg-[#0f3d2e] rounded-xl w-10 h-10 flex items-center justify-center">
+              <i class="fa fa-lock text-[#18b498] text-sm"></i>
+          </div>
+            <div class="profile-card-feature cursor-pointer">
+              <h1 class="font-['DM_Sans'] text-white text-[13px]">Change Password</h1>
+              <p class="font-['DM_Sans'] text-[#6AB3A6] text-[12px]">Update your password</p>
+            </div>
+          </div>
+
+          <div id="send-feedback-btn" class="flex gap-2 px-3 py-1 cursor-pointer">
+          <div class="bg-[#0f3d2e] rounded-xl w-10 h-10 flex items-center  justify-center">
+            <i class="fa-regular fa-comment-dots text-[#18b498] text-sm"></i>
+          </div>
+          <div class="profile-card-feature cursor-pointer">
+            <h1 class="font-['DM_Sans'] text-white text-[13px]">Send Feedback</h1>
+            <p class="font-['DM_Sans'] text-[#6AB3A6] text-[12px]">Report a bug, share an idea, or say hi</p>
+          </div>
+        </div>
+
+        </div>
+        </div>
+
+     
+         <div class="data-settings-container pl-2">
+        <h1 class="font-['DM_Sans'] text-xs sm:text-sm font-semibold tracking-wider text-[#6AB3A6]">DATA</h1>
+          
+        <div class = "profile-card-data flex flex-col gap-3 py-3 rounded-xl">
+          <div  id = "export-data-btn" class="flex gap-2 border-b border-[#1a3d3d] px-3 py-1 pb-2.5 cursor-pointer">
+             <div class="bg-[#2e2a0f] rounded-xl w-10 h-10 flex items-center justify-center"><i class="fa-solid fa-download text-[#c9b740]"></i></div>
+            <div class="profile-card-feature ">
+              <h1 class="font-['DM_Sans'] text-white text-[13px]">Export Data</h1>
+              <p class="font-['DM_Sans'] text-[#6AB3A6] text-[12px]">Download as PDF</p>
+            </div>
+          </div>
+
+            <div id="clear-data-btn" class="flex items-center gap-2 px-3 py-1 cursor-pointer">
+            <div class="bg-[#2e2a0f] rounded-xl w-10 h-10 flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-trash text-[#E06A6A] text-sm"></i>
+          </div>
+            <div class="profile-card-feature">
+              <h1 class="font-['DM_Sans'] text-white text-[13px]">Clear all data</h1>
+              <p class="font-['DM_Sans'] text-[#6AB3A6] text-[12px]">Wipes expenses & savings</p>
+            </div>
+            <div class="rounded-full bg-[#3D1A1A] px-3 py-1 ml-auto">
+              <p class = "font-['DM_Sans'] text-[#E06A6A] text-[10px] text-center">Danger</p>
+            </div>
+          </div>
+
+        </div>
+        </div>
+
+
+           <div class="notification-settings-container pl-2 mt-2 w-full">
+
+        <h1 class="font-['DM_Sans'] text-xs sm:text-sm font-semibold tracking-wider text-[#6AB3A6]">
+          NOTIFICATIONS
+        </h1>
+
+        <div class=" w-full py-1">
+
+          <div
+            class="flex items-center justify-between py-2">
+
+            <div class="bg-[#102A38] border border-[#1A4257] rounded-2xl p-4 w-full">
+
+  
+            <div class="flex items-center justify-between">
+
+                <div class="flex gap-3">
+
+                    <div class="bg-[#0f2c3d] rounded-xl w-11 h-11 flex items-center justify-center">
+
+                        <i class="fa-regular fa-bell text-[#5CC8FF] text-lg"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2 class="font-['DM_Sans'] font-semibold text-white text-[15px]">
+                            Push Notifications
+                        </h2>
+
+                        <p class="font-['DM_Sans'] text-[#8EB8C3] text-[13px]">
+                            Daily reminders and budget alerts
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <label class="relative inline-flex items-center cursor-pointer">
+
+                    <input
+                        id="notification-toggle"
+                        type="checkbox"
+                        class="sr-only peer">
+
+                    <div
+                        class="w-11 h-6 bg-[#203B4B] rounded-full
+                        peer peer-checked:bg-[#18C29C]
+                        after:content-['']
+                        after:absolute
+                        after:top-[2px]
+                        after:left-[2px]
+                        after:bg-white
+                        after:rounded-full
+                        after:h-5
+                        after:w-5
+                        after:transition-all
+                        peer-checked:after:translate-x-full">
+                    </div>
+
+                </label>
+
+            </div>
+
+        
+            <div class="border-t border-white/10 my-4"></div>
+
+            <div class="flex justify-between items-center">
+
+                <span class="text-[13px] text-[#A7C5CD]">
+                    Browser Permission
+                </span>
+
+                <span
+                    id="notification-status"
+                    class="text-xs px-2 py-1 rounded-full bg-green-500/15 text-green-400">
+
+                    Allowed
+
+                </span>
+
+            </div>
+            <p
+                id="notification-helper"
+                class="hidden mt-3 text-[12px] text-[#E6C85B] leading-5 font-['DM_Sans']">
+
+                Notifications are blocked in your browser.
+                Click the lock icon beside the address bar,
+                open <b>Site settings</b>, change
+                <b>Notifications</b> to <b>Allow</b>,
+                then refresh the page.
+
+            </p>
+
+    </div>
+
+        
+          </div>
+
+        </div>
+
+      </div>
+
+ 
+      <div class="pb-6 mt-4 pl-1">
+      <button id="logoutBtn" 
+        class="w-full flex items-center gap-3 
+        bg-[#1f1010] border border-[#3d1a1a] 
+        rounded-2xl px-4 py-4 cursor-pointer
+        hover:bg-[#2e1515] transition-all duration-200
+        group">
+
+        <div class="w-9 h-9 rounded-xl bg-[#2e1010] 
+          flex items-center justify-center flex-shrink-0">
+          <i class="fa-solid fa-right-from-bracket text-[#e06a6a] text-lg"></i>
+        </div>
+        <span class="text-sm font-medium font-['DM_Sans'] text-[#e06a6a]">
+          Log out
+        </span>
+
+      </button>
+      </div>
+      </div>
+      </div>
+      </div>
+     
+  <div class="edit-profile-container w-full fixed hidden inset-0 z-[100] flex items-center justify-center" style="background: rgba(0,0,0,0.6);">
+
+    <div class="w-[90%] max-w-[400px] bg-[#08343a]/82 border border-[#18b498]/15 text-slate-100 rounded-[20px] p-7 flex flex-col font-['DM_Sans']">
+
+      <!-- Avatar + header -->
+      <div class="flex flex-col items-center gap-2.5 mb-6">
+        <div id="edit-profile-pic-container" class="relative flex items-center justify-center text-xl font-bold text-[#18b498] cursor-pointer select-none">
+        </div>
+        <div class="text-center">
+          <p class="text-sm sm:text-md font-bold text-white m-0">Edit profile</p>
+          <p id="edit-profile-name" class="text-[11px] sm:text-[13px] text-[#18b498]/55 m-0 mt-1"></p>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="h-px mb-5" style="background: rgba(24,180,152,0.08)"></div>
+
+      <div class="mb-2 space-y-2 font-['Poppins']">
+        <p id="error-edit-profile" class="font-['DM_Sans'] text-center text-sm text-red-400 bg-red-400/30 border border-red-400/30 rounded-lg py-2 px-1 hidden"></p>
+        <p id="success-edit-profile" class="font-['DM_Sans'] text-center text-sm text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 rounded-lg py-2 px-1 hidden"></p>
+      </div>
+
+      <!-- Fields -->
+      <div class="flex justify-evenly items-center gap-2">
+        <div class="mb-3.5">
+          <label class="block text-[10px] sm:text-[11px] font-semibold text-slate-400/50 mb-1.5 tracking-[0.07em] uppercase">First name</label>
+          <input type="text" id="input-first-name"
+            class="w-full bg-[#054d57]/35 text-slate-100 text-[13px] rounded-xl px-3.5 py-2.5 border border-[#054d57]/80 focus:outline-none focus:border-[#18b498]/40 font-['DM_Sans']">
+        </div>
+        <div class="mb-3.5">
+          <label class="block text-[10px] sm:text-[11px]  font-semibold text-slate-400/50 mb-1.5 tracking-[0.07em] uppercase">Last name</label>
+          <input type="text" id="input-last-name"
+            class="w-full bg-[#054d57]/35 text-slate-100 text-[13px] rounded-xl px-3.5 py-2.5 border border-[#054d57]/80 focus:outline-none focus:border-[#18b498]/40 font-['DM_Sans']">
+        </div>
+      </div>
+
+      <div class="mb-3.5">
+        <label class="block text-[10px] sm:text-[11px]  font-semibold text-slate-400/50 mb-1.5 tracking-[0.07em] uppercase">Username</label>
+        <input type="text" id="input-username"
+          class="w-full bg-[#054d57]/35 text-slate-100 text-[13px] rounded-xl px-3.5 py-2.5 border border-[#054d57]/80 focus:outline-none focus:border-[#18b498]/40 font-['DM_Sans']">
+      </div>
+
+      <div class="mb-3.5">
+        <label class="block text-[10px] sm:text-[11px]  font-semibold text-slate-400/50 mb-1.5 tracking-[0.07em] uppercase">Email address</label>
+        <input type="email" id="input-email"
+          class="w-full bg-[#054d57]/35 text-slate-100 text-[13px] rounded-xl px-3.5 py-2.5 border border-[#054d57]/80 focus:outline-none focus:border-[#18b498]/40 font-['DM_Sans']">
+      </div>
+
+      <!-- Actions -->
+      <div class="flex flex-col mt-2">
+        <button type="submit" id="save-profile-btn"
+          class="w-full hover:opacity-90 text-white cursor-pointer font-bold text-[13px] py-2.5 rounded-xl border-none transition-colors font-['DM_Sans']"
+          style="background: #18b498;">
+          Save changes
+        </button>
+        <button type="button" id="cancel-profile-btn"
+          class="w-full bg-transparent cursor-pointer text-slate-400/45 hover:text-slate-100 text-[13px] py-2.5 rounded-xl border-none transition-colors mt-1.5 font-['DM_Sans']">
+          Cancel
+        </button>
+      </div>
+    </div>
+
+    <div id="verification-section" class="fixed hidden inset-0 z-[200] flex items-center justify-center" style="background: rgba(0,0,0,0.6);">
+      <div class="w-[90%] max-w-[380px] bg-[#08343a] border border-[#18b498]/15 text-slate-100 rounded-[20px] p-7 flex flex-col font-['DM_Sans']">
+
+        <div class="flex flex-col items-center gap-1 mb-5">
+          <div class="w-10 h-10 rounded-full border flex items-center justify-center mb-1"
+            style="background: rgba(24,180,152,0.1); border-color: rgba(24,180,152,0.2);">
+            <i class="fa-solid fa-envelope text-sm" style="color: #18b498;"></i>
+          </div>
+          <p class="text-sm font-bold text-white">Verify your new email</p>
+          <p class="text-[11px] text-center" style="color: rgba(24,180,152,0.55);">A 6-digit code was sent to your new email address</p>
+        </div>
+
+        <div class="h-px mb-5" style="background: rgba(24,180,152,0.08);"></div>
+
+        <p id="verify-error" class="font-['DM_Sans'] text-center text-sm text-red-400 bg-red-400/30 border border-red-400/30 rounded-lg py-2 px-1 hidden mb-3"></p>
+
+        <label class="block text-[10px] font-semibold text-slate-400/50 mb-1.5 tracking-[0.07em] uppercase">Verification Code</label>
+        <input type="text" id="input-verification-code" maxlength="6" placeholder="000000"
+          class="w-full bg-[#054d57]/35 text-slate-100 text-[13px] rounded-xl px-3.5 py-2.5 border border-[#054d57]/80 focus:outline-none focus:border-[#18b498]/40 font-['DM_Sans'] mb-3">
+
+        <button id="submit-verification-btn"
+          class="w-full hover:opacity-90 text-white font-bold text-[13px] py-2.5 rounded-xl border-none transition-colors font-['DM_Sans']"
+          style="background: #18b498;">
+          Verify Email
+        </button>
+        <button id="cancel-verification-btn"
+          class="w-full bg-transparent text-slate-400/45 hover:text-slate-100 text-[13px] py-2.5 rounded-xl border-none transition-colors mt-1.5 font-['DM_Sans']">
+          Cancel
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="change-password-container w-full fixed hidden inset-0 z-[100] flex items-center justify-center" style="background: rgba(0,0,0,0.6);">
+
+  <div class="w-[90%] max-w-[400px] bg-[#08343a]/82 border border-[#18b498]/15 text-slate-100 rounded-[20px] p-7 flex flex-col font-['DM_Sans']">
+
+    <!-- Header -->
+    <div class="flex flex-col items-center gap-2.5 mb-6">
+      <div class="relative w-[60px] h-[60px] rounded-full bg-[#054d57]/80 border-2 border-[#18b498]/25 flex items-center justify-center">
+        <i class="fa fa-lock text-[#18b498] text-xl"></i>
+      </div>
+      <div class="text-center">
+        <p class="text-sm font-bold text-white m-0">Change Password</p>
+        <p class="text-[11px] sm:text-[13px] m-0 mt-1" style="color: rgba(24,180,152,0.55);">Update your account password</p>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="h-px mb-5" style="background: rgba(24,180,152,0.08)"></div>
+
+    <!-- Error/Success -->
+    <div class="mb-2 space-y-2">
+      <p id="error-change-password" class="font-['DM_Sans'] text-center text-sm text-red-400 bg-red-400/30 border border-red-400/30 rounded-lg py-2 px-1 hidden"></p>
+      <p id="success-change-password" class="font-['DM_Sans'] text-center text-sm text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 rounded-lg py-2 px-1 hidden"></p>
+    </div>
+
+    <!-- Fields -->
+    <div class="mb-3.5">
+      <label class="block text-[10px] sm:text-[11px] font-semibold text-slate-400/50 mb-1.5 tracking-[0.07em] uppercase">Current Password</label>
+      <div class="relative">
+        <input type="password" id="input-current-password"
+          class="w-full bg-[#054d57]/35 text-slate-100 text-[13px] rounded-xl px-3.5 py-2.5 border border-[#054d57]/80 focus:outline-none focus:border-[#18b498]/40 font-['DM_Sans'] pr-10">
+        <i class="fa-solid fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-slate-400/50 cursor-pointer hover:text-[#18b498] transition-colors js-toggle-current-pw" style="font-size:13px;"></i>
+      </div>
+    </div>
+
+    <div class="mb-3.5">
+      <label class="block text-[10px] sm:text-[11px] font-semibold text-slate-400/50 mb-1.5 tracking-[0.07em] uppercase">New Password</label>
+      <div class="relative">
+        <input type="password" id="input-new-password"
+          class="w-full bg-[#054d57]/35 text-slate-100 text-[13px] rounded-xl px-3.5 py-2.5 border border-[#054d57]/80 focus:outline-none focus:border-[#18b498]/40 font-['DM_Sans'] pr-10">
+        <i class="fa-solid fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-slate-400/50 cursor-pointer hover:text-[#18b498] transition-colors js-toggle-new-pw" style="font-size:13px;"></i>
+      </div>
+    </div>
+
+    <div class="mb-3.5">
+      <label class="block text-[10px] sm:text-[11px] font-semibold text-slate-400/50 mb-1.5 tracking-[0.07em] uppercase">Confirm New Password</label>
+      <div class="relative">
+        <input type="password" id="input-confirm-password"
+          class="w-full bg-[#054d57]/35 text-slate-100 text-[13px] rounded-xl px-3.5 py-2.5 border border-[#054d57]/80 focus:outline-none focus:border-[#18b498]/40 font-['DM_Sans'] pr-10">
+        <i class="fa-solid fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-slate-400/50 cursor-pointer hover:text-[#18b498] transition-colors js-toggle-confirm-pw" style="font-size:13px;"></i>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex flex-col mt-2">
+      <button type="submit" id="save-password-btn"
+        class="w-full hover:opacity-90 text-white cursor-pointer font-bold text-[13px] py-2.5 rounded-xl border-none transition-colors font-['DM_Sans']"
+        style="background: #18b498;">
+        Save Password
+      </button>
+      <button type="button" id="cancel-password-btn"
+        class="w-full bg-transparent text-slate-400/45 cursor-pointer hover:text-slate-100 text-[13px] py-2.5 rounded-xl border-none transition-colors mt-1.5 font-['DM_Sans']">
+        Cancel
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<div class="send-feedback-container w-full fixed hidden inset-0 z-[100] flex items-center justify-center" style="background: rgba(0,0,0,0.6);">
+
+  <div class="relative send-feedback-inner-container w-full mx-4 max-w-[460px] rounded-[22px] overflow-hidden"
+       style="background: rgba(255,255,255,0.055); border: 1px solid rgba(29,158,117,0.22); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 8px 48px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.07);">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between px-6 py-5" style="border-bottom: 1px solid rgba(29,158,117,0.15);">
+      <div class="flex items-center gap-[10px]">
+        <div class="flex items-center justify-center w-9 h-9 rounded-[10px]"
+             style="background: linear-gradient(135deg,#1a6b52,#0f4d3c); border: 1px solid rgba(29,158,117,0.4); box-shadow: 0 3px 12px rgba(29,158,117,0.2);">
+          <i class="fa-regular fa-comment-dots text-[14px]" style="color:#5DCAA5;"></i>
+        </div>
+        <div class="flex flex-col">
+          <h1 class="font-['DM_Sans'] font-bold text-[18px] m-0" style="color:#e8f5f0;">Send Feedback</h1>
+          <p class="font-['DM_Sans'] text-[10px] sm:text-[12px] m-0 mt-0.5" style="color: rgba(160,210,195,0.7);">We'd love to hear from you</p>
+        </div>
+      </div>
+      <button class="js-close-feedback flex items-center justify-center w-[30px] h-[30px] rounded-full cursor-pointer transition-all hover:bg-white/15"
+              style="background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);">
+        <i class="fa-solid fa-x text-[11px]" style="color: rgba(200,230,220,0.7);"></i>
+      </button>
+    </div>
+
+    <div class="mx-6 mt-4 space-y-2 font-['Poppins']">
+      <p id="error-feedback" class="font-['DM_Sans'] text-center text-sm text-red-400 bg-red-400/30 border border-red-400/30 rounded-lg py-2 px-1 hidden"></p>
+      <p id="success-feedback" class="font-['DM_Sans'] text-center text-sm text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 rounded-lg py-2 px-1 hidden"></p>
+    </div>
+
+  
+    <div class="flex flex-col gap-[16px] p-6">
+
+      <div class="flex flex-col gap-[8px]">
+        <label class="text-[11px] font-semibold uppercase tracking-widest font-['DM_Sans']"
+               style="color: rgba(160,210,195,0.7);">
+    
+        </label>
+        <div id="feedback-star-rating" class="flex items-center gap-2" data-value="0">
+          <i class="fa-regular fa-star feedback-star cursor-pointer text-[22px] transition-all duration-150" data-star="1" style="color:#5DCAA5;"></i>
+          <i class="fa-regular fa-star feedback-star cursor-pointer text-[22px] transition-all duration-150" data-star="2" style="color:#5DCAA5;"></i>
+          <i class="fa-regular fa-star feedback-star cursor-pointer text-[22px] transition-all duration-150" data-star="3" style="color:#5DCAA5;"></i>
+          <i class="fa-regular fa-star feedback-star cursor-pointer text-[22px] transition-all duration-150" data-star="4" style="color:#5DCAA5;"></i>
+          <i class="fa-regular fa-star feedback-star cursor-pointer text-[22px] transition-all duration-150" data-star="5" style="color:#5DCAA5;"></i>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-[6px]">
+        <label for="feedback-type"
+               class="text-[11px] font-semibold uppercase tracking-widest font-['DM_Sans']"
+               style="color: rgba(160,210,195,0.7);">
+          Type
+        </label>
+        <div id="feedback-type-selector" class="grid grid-cols-2 gap-2">
+          <button type="button" class="feedback-type-btn flex items-center gap-2 rounded-[12px] px-3 py-2.5 text-[13px] font-['DM_Sans'] transition-all"
+                  data-type="bug" style="background: rgba(255,255,255,0.07); border: 1px solid rgba(29,158,117,0.2); color: #e8f5f0;">
+            <i class="fa-solid fa-bug text-[12px]" style="color:#E06A6A;"></i> Bug Report
+          </button>
+          <button type="button" class="feedback-type-btn flex items-center gap-2 rounded-[12px] px-3 py-2.5 text-[13px] font-['DM_Sans'] transition-all"
+                  data-type="idea" style="background: rgba(255,255,255,0.07); border: 1px solid rgba(29,158,117,0.2); color: #e8f5f0;">
+            <i class="fa-solid fa-lightbulb text-[12px]" style="color:#f1c40f;"></i> Idea
+          </button>
+          <button type="button" class="feedback-type-btn flex items-center gap-2 rounded-[12px] px-3 py-2.5 text-[13px] font-['DM_Sans'] transition-all"
+                  data-type="praise" style="background: rgba(255,255,255,0.07); border: 1px solid rgba(29,158,117,0.2); color: #e8f5f0;">
+            <i class="fa-solid fa-heart text-[12px]" style="color:#e0699a;"></i> Praise
+          </button>
+          <button type="button" class="feedback-type-btn flex items-center gap-2 rounded-[12px] px-3 py-2.5 text-[13px] font-['DM_Sans'] transition-all"
+                  data-type="other" style="background: rgba(255,255,255,0.07); border: 1px solid rgba(29,158,117,0.2); color: #e8f5f0;">
+            <i class="fa-solid fa-ellipsis text-[12px]" style="color:#5DCAA5;"></i> Other
+          </button>
+        </div>
+        <input type="hidden" id="feedback-type" value="">
+      </div>
+
+
+      <div class="flex flex-col gap-[6px]">
+        <label for="feedback-message"
+               class="text-[11px] font-semibold uppercase tracking-widest font-['DM_Sans']"
+               style="color: rgba(160,210,195,0.7);">
+          Message
+        </label>
+        <textarea id="feedback-message" rows="4" placeholder="Tell us what's on your mind..."
+                  class="rounded-[12px] px-[14px] py-[10px] text-[14px] outline-none transition-all w-full font-['DM_Sans'] placeholder:text-white/20 resize-none"
+                  style="background: rgba(255,255,255,0.07); border: 1px solid rgba(29,158,117,0.2); color: #e8f5f0;"></textarea>
+      </div>
+
+      <button id="js-submit-feedback"
+              class="w-full flex items-center justify-center gap-2 py-[13px] rounded-[13px] text-white text-[15px] font-semibold font-['DM_Sans'] cursor-pointer transition-all hover:opacity-90 active:scale-[0.98] mt-1"
+              style="background: linear-gradient(135deg,#1d9e75,#0f6e56); box-shadow: 0 4px 20px rgba(29,158,117,0.35);">
+        <i class="fa-solid fa-paper-plane text-[14px]"></i>
+        Submit Feedback
+      </button>
+
+    </div>
+  </div>
+</div>
+
+        <!-- Overlay -->
+    <div id="notif-overlay"
+      class="fixed inset-0 bg-black/35 z-40 transition-opacity duration-300 opacity-0 pointer-events-none">
+    </div>
+
+    <!-- Panel — slides in from left -->
+    <div id="notif-panel"
+      class="fixed top-0 left-0 h-full w-[88%] max-w-[360px] bg-white z-50
+            flex flex-col rounded-r-3xl shadow-xl
+            -translate-x-full transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]">
+
+      <!-- Header -->
+      <div class="flex items-center gap-3 px-4 py-[18px] border-b border-[#EBF8F7] flex-shrink-0">
+        <button id="notif-close-btn"
+          class="w-9 h-9 rounded-full bg-[#EBF8F7] flex items-center justify-center
+                text-[#079F9F] text-sm cursor-pointer border-none">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <h2 class="font-['DM_Sans'] font-bold text-[15px] text-black flex-1">Notifications</h2>
+        <button id="notif-mark-all-btn"
+          class="font-['DM_Sans'] font-bold text-[12px] text-[#079F9F] bg-transparent border-none cursor-pointer">
+          Mark all read
+        </button> 
+      </div>
+
+
+      <div id="notif-panel-body" class="flex-1 overflow-y-auto px-3 pb-6">
+        
+       <p class="notif-range font-['DM_Sans'] font-bold text-[10px] tracking-widest text-black/40 mt-1 mb-2 mx-2">Today</p>
+        <div class = "notif-today flex flex-col gap-1"  id="notif-panel-today"></div>
+        
+  
+        <p class="notif-range font-['DM_Sans'] font-bold text-[10px] tracking-widest text-black/40 mt-4 mb-2 mx-2">Earlier</p>
+        <div class="notif-monthly flex flex-col gap-2" id="notif-panel-earlier"> 
+ 
+        </div>
+
+        <div id="notif-empty" 
+          class="hidden flex flex-col items-center gap-1 text-center px-5 pt-10">
+    
+          <p class="font-['DM_Sans'] font-bold text-[14px] text-black/50 mt-3">You're all caught up</p>
+          <p class="font-['DM_Sans'] text-[12px] text-black/35 mt-1">
+            Gastoo will let you know when there's something new.
+          </p>
+        </div>
+
+      </div>
+    </div>
+    </div>
+      </main>
+
+      <div  id ="notif-container"></div>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+      <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+      <script src="scripts/main.js" type="module"></script>
+</body>
+
+</html>

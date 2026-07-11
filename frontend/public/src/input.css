@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@layer components {
+
+  .outer-card{
+    @apply 
+     bg-gradient-to-br from-[#00d4c8] via-[#009e94] to-[#007a74] rounded-2xl;
+  }
+
+  .inner-card {
+    @apply bg-[linear-gradient(0deg,#45E7EE_0%,#FFFFFF_50%)] flex justify-evenly rounded-[20px];
+  }
+
+ 
+ .input-cozy {
+  @apply w-full p-2 text-sm border-1 rounded-xl bg-white focus:outline-none;
+ }
+
+ .label-cozy {
+  @apply absolute left-1.5 -top-3 text-sm text-gray-500 bg-white px-1 transition-all duration-200 ease-out peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-focus:-top-3 peer-focus:text-sm peer-focus:text-blue-600 peer-placeholder-shown:sm:text-base;
+ }
+ 
+ .label-normal{ 
+  @apply text-sm text-white font-['DM_Sans']
+ }
+
+ .eye-gasto-button {
+  @apply text-white bg-gradient-to-r from-[#00d4c8] to-[#009e94] transition-all duration-300 ease-in-out hover:-translate-y-1 hover:brightness-110 active:translate-y-0 cursor-pointer
+ }  
+
+  .bg-custom {
+   background-image: linear-gradient(180deg, #007A74 0%, #009E94 20%, #23736F 100%);
+  }
+
+  .analytics-card {
+    @apply border-1 border-[#1a3d3d] bg-[#122e2e] rounded-lg p-4
+  }
+
+  .profile-card {
+    @apply border-1 border-[#1a3d3d] bg-[#122e2e] rounded-md p-2.5
+  }
+
+  .profile-card-account, .profile-card-data {
+    @apply border-1 border-[#1a3d3d] bg-[#122e2e] rounded-md 
+  }
+  
+  
+  .analytics-card-title {
+    @apply text-[#6ab3a6] font-['DM_Sans'] text-[13px]
+  }
+
+  .analytics-amount {
+    @apply text-[#e0f5f0] font-['DM_Sans'] text-xl
+  }
+
+  .analytics-tip {
+    @apply text-[#e06a6a] font-['DM_Sans'] text-[12px]
+  }
+
+}
+
+@layer utilities {
+  .text-outline-black {
+    text-shadow: 
+      1px 1px 0 #000,
+      -1px 1px 0 #000,
+      1px -1px 0 #000,
+      -1px -1px 0 #000;
+  }
+  .text-outline-black-38 {
+    text-shadow:
+      1px 1px 0 rgba(0,0,0,0.30),
+      -1px 1px 0 rgba(0,0,0,0.30),
+      1px -1px 0 rgba(0,0,0,0.30),
+      -1px -1px 0 rgba(0,0,0,0.30);
+  }
+}
+
+@layer base {
+  html {
+     overflow-y: auto;
+     overflow-x: hidden;
+     touch-action: manipulation;
+  }
+}
