@@ -84,6 +84,7 @@ async function openEditForm(id) {
   updateTotalExpenses(),
   updateRecentExpenses(),
   updateExpensesChart(),
+  renderBudget()
   ])
   
   await checkBudgetData()

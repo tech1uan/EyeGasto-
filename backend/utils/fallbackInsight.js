@@ -3,8 +3,21 @@ export async function getFallbackInsight(
     monthlyBudget,
     categoryBreakdown,
     daysLogged
-) {
-    const percent = monthlyBudget > 0 ? (totalSpent / monthlyBudget) * 100 : 0;
+) { 
+
+    let percentStatus;
+    
+
+   const percent = monthlyBudget > 0
+        ? (totalSpent / monthlyBudget) * 100
+        : "Not set";
+
+        if (percent === "Not set") {
+        return {
+            title: "Set a Monthly Budget",
+            body: `You've already spent ₱${totalSpent.toLocaleString()}, but you haven't set a monthly budget yet. Set one to let Gastoo track your spending and give you smarter insights.`
+        };
+    }
 
 
     const topCategory = Object.entries(categoryBreakdown).sort((a,b) => b[1] - a[1])[0];

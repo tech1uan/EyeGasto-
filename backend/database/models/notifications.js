@@ -65,3 +65,18 @@ export async function insertNotificationForUser(userId, mood, title, message) {
 
 }
 
+export async function deleteNotification(id) {
+    try {
+        const [result] = await pool.query(
+            `
+            DELETE FROM notifications
+            WHERE notification_id = ?
+            `, [id]
+        )
+
+        return result.affectedRows
+    } catch (error) {
+        throw error
+    }
+}
+

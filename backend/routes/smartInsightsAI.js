@@ -30,8 +30,7 @@ smartInsightsRouter.post('/', authMiddleware, async(req,res,next) => {
     const budgetPercent =
       budget > 0
         ? ((spent / budget) * 100).toFixed(1)
-        : "0.0";
-
+        : "Not set";
 
   const categoryText = Object.entries(categoryBreakdown)
   .sort((a,b) => b[1] - a[1])

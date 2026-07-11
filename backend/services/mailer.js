@@ -12,7 +12,7 @@ transporter.verify((error, success) => {
     if (error) {
         console.error(error);
     } else {
-        console.log("Gmail is ready to send emails!");
+        console.log("Gmail is ready to senld emails!");
     }
 });
 

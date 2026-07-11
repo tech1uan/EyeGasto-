@@ -7,6 +7,22 @@ input:-webkit-autofill:focus{
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 10px; }
 
+.expenses-main-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.expenses-main-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.expenses-main-container::-webkit-scrollbar-thumb {
+  background: rgba(30, 173, 142, 0.12);
+  border-radius: 10px;
+}
+
+.expenses-main-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(30, 173, 142, 0.25);
+}
 
  @keyframes bounceIn {
     0%   {
@@ -51,6 +67,7 @@ input:-webkit-autofill:focus{
     overflow: hidden; 
     cursor: pointer; 
   }
+  
   .notif.hide { 
     animation: slideOut 0.35s ease forwards;
    }
@@ -397,4 +414,14 @@ input:-webkit-autofill:focus{
     #22B7AD 20%,
     #3C9D97 100%
   );;
+}
+
+.lg-visible {
+  display: hidden;
+}
+
+select option {
+    background: #0f3d32;
+    color: #e8f5f0;
+
 }

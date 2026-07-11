@@ -14,6 +14,7 @@ import { authorizeMiddleware } from './middleware/authorizeMiddleware.js';
 import notFound from './middleware/notFound.js';
 import errorHandler from './middleware/errorHandler.js';
 import { optionalAuth } from './middleware/optionalAuth.js';
+import webpush from 'web-push';
 
 dotenv.config();
 
@@ -34,6 +35,11 @@ server.use(cors());
 server.use(cookieParser());
 server.use(express.json());
 
+webpush.setVapidDetails(
+    process.env.VAPID_SUBJECT,
+    process.env.VAPID_PUBLIC_KEY,
+    process.env.VAPID_PRIVATE_KEY
+)
 
 server.get('/', optionalAuth, (req, res) => {
     if (req.user?.role === 'admin') {

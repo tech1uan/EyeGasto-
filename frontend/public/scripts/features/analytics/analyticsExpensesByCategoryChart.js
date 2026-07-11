@@ -33,7 +33,7 @@ export async function updateAnalyticsDonut(range) {
 }       
 
 function renderAnalyticsChart(labels,data,colors) {
-
+    const isMobile = window.innerWidth < 640;
     const canvas = document.getElementById('analyticsDonutChart');
     if(!canvas) return;
 
@@ -53,28 +53,44 @@ function renderAnalyticsChart(labels,data,colors) {
         spacing: 2
       }]
     },
-options: {
-  responsive: true,
-  maintainAspectRatio: false,
-  cutout: '60%',
-  animation: { duration: 800 },
-  plugins: {
-    legend: { display: false },
-    datalabels: {
-      display: false
-    },
-    tooltip: {
-      callbacks: {
-        label: function(context) {
-          const value = Number(context.raw);
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '60%',
+      animation: { duration: 800 },
+      plugins: {
+        legend: { display: false },
+        datalabels: {
+          display: false
+        },
+          tooltip: {
+        backgroundColor: 'rgba(0,0,0,0.85)',
+        padding: isMobile ? 8 : 12,
+        cornerRadius: 8,
+        displayColors: true,
 
-          return `${context.label}: ₱${value.toLocaleString('en-PH', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          })}`;
-        }
-      }
+        titleFont: {
+          size: isMobile ? 10 : 13,
+          family: "'DM Sans', sans-serif",
+          weight: 'bold'
+        },
+
+        bodyFont: {
+          size: isMobile ? 9 : 12,
+          family: "'DM Sans', sans-serif"
+        },
+
+  callbacks: {
+    label(context) {
+      const value = Number(context.raw);
+
+      return `${context.label}: ₱${value.toLocaleString('en-PH', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })}`;
     }
+  }
+}
   }
 }
 
@@ -94,36 +110,40 @@ function renderAnalyticsLegend(grouped) {
       const amount = parseFloat(item.total).toFixed(2);
       const percent = ((amount / safeTotal) * 100).toFixed(1);
       return `
-       <div class="flex flex-col gap-1 py-1">
+     <div class="flex flex-col gap-2 py-1">
 
-          <div class="flex items-center justify-between">
+  <div class="flex items-center justify-between gap-2">
 
-            <div class="flex items-center gap-2 font-['DM_Sans']">
-            
-              <span class="text-sm"><img src ="${item.logo ?? '💰'}"
-              class = "w-3 h-3"</img></span>
-              <span class="text-xs font-medium text-[#c5e8e2]">
-                ${category}
-              </span>
-            </div>
+    <div class="flex items-center gap-2 min-w-0 font-['DM_Sans']">
 
-            <span class="text-xs font-semibold font-['DM_Sans'] text-[#e0f5f0] ">
-              ₱${amount.toLocaleString('en-PH', {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-              })}
-            </span>
+      <img
+        src="${item.logo ?? '💰'}"
+        class="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0"
+      />
 
-          </div>
+      <span class="text-[10px] sm:text-xs md:text-sm font-medium text-[#c5e8e2] truncate">
+        ${category}
+      </span>
 
-          <div class="h-[3px] bg-[#1f4040] rounded-full ">
-            <div
-              class="h-[3px] rounded-full transition-all duration-500"
-              style="width:${percent}%; background:${item.color}">
-            </div>
-          </div>
+    </div>
 
-        </div>
+    <span class="flex-shrink-0 text-[10px] sm:text-xs md:text-sm font-semibold font-['DM_Sans'] text-[#e0f5f0]">
+      ₱${amount.toLocaleString('en-PH', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      })}
+    </span>
+
+  </div>
+
+  <div class="h-[3px] sm:h-1 bg-[#1f4040] rounded-full">
+    <div
+      class="h-full rounded-full transition-all duration-500"
+      style="width:${percent}%; background:${item.color}"
+    ></div>
+  </div>
+
+</div>
       `;
     }).join('');
 }

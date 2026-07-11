@@ -19,16 +19,14 @@ export async function renderExpensesHTML(expenses, variant = "home") {
     return;
   }
   
-
-  console.log(container);
   removeJustifyCenter(container);
 
   container.innerHTML = expenses.map(expense => {
 
     const categoryBadge = `
-      <div class="rounded-full flex py-1 px-4 gap-2 items-center flex-shrink-0" style="background-color: ${expense.color}">
+      <div class="rounded-full flex py-1 px-4 gap-2 items-center flex-shrink-0"  style="background-color: ${expense.color}">
         <img class="w-5" src="${expense.logo}" alt="${expense.category}">
-        <p class="text-white font-bold text-xs whitespace-nowrap">${expense.category}</p>
+        <p class="text-white font-bold text-[11px] sm:text-[12px] md:text-[14px] whitespace-nowrap">${expense.category}</p>
       </div>
     `;
 
@@ -56,11 +54,19 @@ export async function renderExpensesHTML(expenses, variant = "home") {
 
     if (variant === "home") {
       return `
-        <div class="group expense-card relative flex w-full items-center rounded-xl p-2 py-3 bg-white gap-2.5 shadow-[0_4px_4px_rgba(0,0,0,0.25)] hover:shadow-[0_6px_6px_rgba(0,0,0,0.3)] transition-all">
-          <h1 class="font-bold flex-1 min-w-0 truncate">${expense.description}</h1>
+          <div class="font-['DM_Sans']  group expense-card relative
+          flex items-center gap-2
+          w-full
+          rounded-xl
+          p-3 sm:p-4
+          bg-white
+          shadow-[0_4px_4px_rgba(0,0,0,0.25)]
+          hover:shadow-[0_6px_6px_rgba(0,0,0,0.3)]
+          transition-all">
+          <h1 class=" flex-1 min-w-0 truncate font-bold text-sm sm:text-base lg:text-lg">${expense.description}</h1>
           ${categoryBadge}
           ${tooltip}
-          <h1 class="text-[#079F9F] font-['DM_Sans'] flex-shrink-0 font-bold text-sm sm:text-lg whitespace-nowrap">${formatToPeso(expense.amount)}</h1>
+          <h1 class=" flex-shrink-0 whitespace-nowrap font-bold text-[#079F9F] text-sm sm:text-base lg:text-[18px]">${formatToPeso(expense.amount)}</h1>
           ${actions}
         </div>
       `;
@@ -68,12 +74,20 @@ export async function renderExpensesHTML(expenses, variant = "home") {
 
     if (variant === "expenses") {
       return `
-        <div class="group expense-card relative flex w-full rounded-xl p-2 py-3 gap-2.5">
-          <h1 class="font-bold flex-1 min-w-0 truncate">${expense.description}</h1>
+        <div class="font-['DM_Sans'] group expense-card relative
+        flex items-center gap-2
+        w-full
+        rounded-xl
+        p-3 sm:p-4
+        bg-white
+        shadow-[0_4px_4px_rgba(0,0,0,0.25)]
+        hover:shadow-[0_6px_6px_rgba(0,0,0,0.3)]
+        transition-all">
+          <h1 class="flex-1 min-w-0 truncate font-bold text-sm sm:text-base lg:text-lg">${expense.description}</h1>
           ${categoryBadge}
           ${tooltip}
-          <h1 class="text-[#079F9F] font-['DM_Sans'] flex-shrink-0 font-bold text-sm sm:text-lg whitespace-nowrap">${formatToPeso(expense.amount)}</h1>
-          <p class = "font-['DM_Sans'] text-[10px]">[${dayjs(expense.date_time).format('h:mm A')}]</p>
+          <h1 class="flex-shrink-0 whitespace-nowrap font-bold text-[#079F9F] text-sm sm:text-base lg:text-[18px]">${formatToPeso(expense.amount)}</h1>
+          <p class = "text-[10px] sm:text-xs">[${dayjs(expense.date_time).format('h:mm A')}]</p>
           ${actions}
         </div>
       `;

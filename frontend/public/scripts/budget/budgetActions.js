@@ -156,6 +156,7 @@ export function initSaveBudget() {
 
 
 export async function checkBudgetData() {
+ 
   const [dataDaily, dataMonthly] = await Promise.all([
     budget.getBudget('daily'),
     budget.getBudget('monthly')
@@ -166,13 +167,12 @@ export async function checkBudgetData() {
 
   const monthlySpent = dataMonthly?.totalSpent ?? 0;
   const monthlyBudget = dataMonthly?.originalBudget ?? 0;
+  
 
-await Promise.all([
-  recalculateBudget(
-    dailySpent,
-    dailyBudget,
-    monthlySpent,
-    monthlyBudget
-  ),
-]);
+await recalculateBudget(
+  dailySpent,
+  dailyBudget,
+  monthlySpent,
+  monthlyBudget
+);
 }

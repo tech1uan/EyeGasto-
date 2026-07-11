@@ -65,7 +65,7 @@ showLoading(verifyBtn);
 
 let countdown;
 
-export function startCooldown(duration = 3) {
+export function startCooldown(duration = 30) {
 
   clearInterval(countdown);
   
@@ -108,6 +108,9 @@ async function resendCode() {
   const message = document.getElementById('success')
   const error = document.getElementById('message');
   const cooldown = document.getElementById('cooldown');
+  const resendBtn = document.getElementById('resend-btn');
+
+  showLoading(resendBtn);
   try {
     const res = await fetch('/auth/resend-code', {
       method: 'POST',
@@ -128,6 +131,8 @@ async function resendCode() {
     }
   } catch (error) {
     console.error(error)
+  } finally {
+    hideLoading(resendBtn)
   }
 }
 document.addEventListener('DOMContentLoaded', async () => {
@@ -153,11 +158,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
   } else {
-    const success = await resendCode();
-
-    if (success) {
-      startCooldown();
-    }
+      resendBtn.disabled = false;
   }
 
   resendBtn?.addEventListener('click', async () => {
@@ -166,6 +167,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (success) {
       startCooldown();
     }
+    
   });
 
 

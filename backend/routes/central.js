@@ -9,6 +9,8 @@ import { smartInsightsRouter } from './smartInsightsAI.js';
 import { notificationsRouter } from './notifications.js';
 import adminRouter from './admin.js';
 import feedbackRouter from './feedback.js';
+import subscriptionsRouter from './subscription.js';
+import settingsRouter from './settings.js';
 
 const router = express.Router();
 
@@ -22,5 +24,6 @@ router.use('/smart', smartInsightsRouter);
 router.use('/notifications', notificationsRouter);
 router.use('/admin', adminRouter)
 router.use('/feedback', feedbackRouter);
-
+router.use('/subscriptions', subscriptionsRouter);
+router.use('/settings', settingsRouter)
 export default router;

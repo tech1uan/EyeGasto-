@@ -38,9 +38,6 @@ export async function getUser() {
   }
 }
 
-export async function updateProfile(newFirstName,newLastName,newUsername,newEmail) {
-  
-}
 
 
 export async function clearData() {
@@ -70,6 +67,10 @@ export async function clearData() {
 export let user = 'Tracker';
 
 export async function setProfilePicture(file) {
+
+  const success = document.getElementById('success-upload-profile');
+  const error = document.getElementById('error-upload-profile');
+
   try {
     const formData = new FormData();
     formData.append("profile", file);
@@ -78,7 +79,21 @@ export async function setProfilePicture(file) {
       method: 'PATCH',
       body: formData
     });
-    return res.ok ? await res.json() : null;
+
+    const data = await res.json();
+
+    if(!res.ok) {
+      showMessage(error, data.msg);
+      return {
+        success: false,
+        message: data
+      }
+    }
+
+    showMessage(success, 'Profile uploaded successfully!')
+
+    return data;
+
   } catch (error) {
     console.error(error);
     return null;

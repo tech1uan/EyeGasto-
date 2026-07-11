@@ -74,16 +74,10 @@ userRouter.delete('/clear-data', authMiddleware, async (req, res, next) => {
   }
 });
 
-userRouter.patch('/profile-picture', authMiddleware, upload.single('profile'),
+userRouter.patch('/profile-picture', authMiddleware, upload.single('profile'), 
 async(req,res,next) => {
   try {
     const {userId} = req.user;
-
-    if(!req.file) {
-      const error = new Error('No image uploaded');
-      error.status = 400;
-      return next(error);
-    }
 
     const user = await getUserByUserID(userId)
     if(!user) return next(new Error('User not found'));
@@ -98,6 +92,7 @@ async(req,res,next) => {
         process.cwd(),
         oldPicture.substring(1)
       );
+    
 
     try {
       await fs.unlink(filePath)
@@ -109,7 +104,8 @@ async(req,res,next) => {
     await updateProfilePicture(userId, imagePath);
 
     res.status(200).json({
-      success:true
+      success:true,
+      
     })
      
   } catch (error) {

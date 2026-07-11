@@ -36,8 +36,6 @@ if(!firstName || !lastName || !username || !email || !password || !confirmPasswo
 
 showLoading(registerBtn);
 
-localStorage.setItem('email', email);
-
 try {
   const res = await fetch('/auth/register', {
     method:'POST',
@@ -63,7 +61,10 @@ try {
     },2000)
     
   } else {
-     window.location.replace('/verify');
+    localStorage.setItem("email", email);
+    localStorage.setItem("resendCooldown", Date.now() + 30 * 1000);
+
+    window.location.replace("/verify");
     setTimeout(() => {
       success.style.display = 'none';
     },2000)

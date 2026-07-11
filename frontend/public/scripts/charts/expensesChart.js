@@ -22,7 +22,7 @@ export async function updateExpensesChart() {
   const colors = labels.map(label => grouped[label].color);
 
   renderChart(labels, amounts, colors);
-
+  renderExpensesLegend(grouped);
 }
 
 function showNoData() {
@@ -49,14 +49,14 @@ function hideNoData() {
   const legend = document.getElementById('expensesLegend');
 
   if (legend) {
-    legend.classList.remove('hidden');
+    legend.classList.remove('lg-visible');
   }
 }
 
 
 const centerTextPlugin = {
   id: 'centerText',
-  afterDraw(chart) {
+   beforeDraw(chart) {
     const { ctx, chartArea } = chart;
     const dataset = chart.data.datasets[0]?.data ?? [];
     const total = dataset.reduce((sum, v) => sum + Number(v), 0) || 1;
@@ -133,8 +133,20 @@ function renderChart(labels, data, colors) {
 
         tooltip: {
           backgroundColor: 'rgba(0,0,0,0.8)',
-          padding: 12,
-          cornerRadius: 8,
+            padding: 8,
+            cornerRadius: 8,
+
+            titleFont: {
+              size: 9,
+              family: "'DM Sans', sans-serif",
+              weight: 'bold'
+            },
+
+              bodyFont: {
+              size: 8,
+              family: "'DM Sans', sans-serif"
+            },
+
 
           callbacks: {
             label(context) {
@@ -153,14 +165,18 @@ function renderChart(labels, data, colors) {
           }
         },
 
-        datalabels: {
-          color: '#fff',
+      datalabels: {
+        color: '#ffffff',
 
-          font: {
-            weight: 'bold',
-            size: 14,
-            family: "'DM Sans', sans-serif"
-          },
+        textStrokeColor: '#111827',
+        textStrokeWidth: 1,
+
+        font: {
+          weight: 'bold',
+          size: 14,
+          family: "'DM Sans', sans-serif"
+        },
+
 
           formatter(value, context) {
             const total = context.dataset.data.reduce(
@@ -184,3 +200,42 @@ function renderChart(labels, data, colors) {
   });
 }
 
+
+function renderExpensesLegend(grouped) {
+  const legend = document.getElementById('expensesLegend');
+  if (!legend) return;
+
+  const total = Object.values(grouped)
+    .reduce((sum, item) => sum + parseFloat(item.total), 0);
+  const safeTotal = total || 1;
+
+  legend.innerHTML = Object.entries(grouped)
+    .sort(([, a], [, b]) => parseFloat(b.total) - parseFloat(a.total))
+    .map(([category, item]) => {
+      const amount = parseFloat(item.total);
+      const percent = ((amount / safeTotal) * 100).toFixed(1);
+
+      return `
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2 font-['DM_Sans'] min-w-0">
+            <span class="w-2 h-2 rounded-full flex-shrink-0" style="background:${item.color}"></span>
+            <span class="text-[11px] sm:text-[13px] font-medium text-gray-600 truncate">
+              ${category}
+            </span>
+          </div>
+
+          <div class="flex items-center gap-2 flex-shrink-0">
+            <span class="text-[11px] sm:text-[13px] font-semibold text-gray-800">
+              ₱${amount.toLocaleString('en-PH', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+              })}
+            </span>
+            <span class="text-[10px] sm:text-[12px]  font-medium text-gray-400 w-9 text-right">
+              ${percent}%
+            </span>
+          </div>
+        </div>
+      `;
+    }).join('');
+}

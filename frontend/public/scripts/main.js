@@ -16,9 +16,12 @@ import { initFeedbackModal } from './features/feedback/feedback.js';
 import { initEditGoalModal, initGoal } from './features/savings_goal/goal.js';
 
 import {initTransactionsFilter } from './features/transactions/viewTransactions.js';
-import { initUser, renderNotifications, showNotif } from './notifs/notifications.js';
+import { initDeleteNotification, initUser, renderNotifications, showNotif } from './notifs/notifications.js';
 import { checkSpendingTrend, sendDailyNotifications } from './notifs/pushNotifications.js';
 import { initDLReportBtn } from './saveData/saveToPDF.js';
+import { initializePushNotifications, initNotificationPermissionStatus } from './services/notification.js';
+import { loadNotificationPreference } from './settings/settings.js';
+
 import { initNavbar } from './ui/navbar.js';
 import { initBudgetTabFilter, renderBudget } from './ui/renderBudget.js';
 import { initDateFilter } from './ui/renderDateToday.js';
@@ -113,7 +116,16 @@ initBudgetTabFilter();
 await sendDailyNotifications()
 await renderNotifications();
 await initFeedbackModal();
+initDeleteNotification()
 
+const enabled = await loadNotificationPreference();
+
+if (enabled) {
+    await initializePushNotifications();
+}
+
+loadNotificationPreference();
+initNotificationPermissionStatus();
 } catch (error) {
   console.error("Initialization crash:", error);
   return window.location.replace('/login');

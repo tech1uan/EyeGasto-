@@ -38,7 +38,7 @@ container.addEventListener('click', async (e) => {
      updateTotalExpenses(),
      updateRecentExpenses(),
      updateExpensesChart(),
-  
+     renderBudget()
     ])
   
     await checkBudgetData()

@@ -2,15 +2,21 @@ import { fetchGetUserExpenses, getExpensesByRange, getExpensesDailyStats, getTot
 import { markGoalCompletedNotified, userSavings } from "../data/savings.js";
 import { getNotificationStatus, markReminderShown, markTipShown } from "../data/user.js";
 import { pushGastooMood } from "../ui/renderMascot.js";
-import { pushNotification } from "./notifications.js";
+import { pushNotification, webPushNotifToUser } from "./notifications.js";
 
 export async function recalculateBudget(dailySpent,dailyBudget,monthlySpent, monthlyBudget) {
   
-  if (dailyBudget <= 0 || monthlyBudget <= 0) return;
 
-  const dailyRatio = dailySpent / dailyBudget;
-  const monthlyRatio = monthlySpent / monthlyBudget;
+  const hasDailyBudget = dailyBudget > 0;
+  const hasMonthlyBudget = monthlyBudget > 0;
 
+  if (!hasDailyBudget && !hasMonthlyBudget) return;
+
+
+  const dailyRatio = hasDailyBudget ? dailySpent / dailyBudget : 0;
+  const monthlyRatio = hasMonthlyBudget ? monthlySpent / monthlyBudget : 0;
+
+  if (hasDailyBudget && hasMonthlyBudget) {
   if (dailyRatio >= 1 && monthlyRatio >= 1) {
     await pushNotification(
       'worried',
@@ -30,18 +36,22 @@ export async function recalculateBudget(dailySpent,dailyBudget,monthlySpent, mon
   pushGastooMood('bothBudgetConcerned');
   return;
   }
+  }
   
-
+  if (hasDailyBudget) {
    if (dailyRatio >= 1) {
     await pushNotification(
       'worried',
       'Daily budget exceeded',
       `You've gone ₱${(dailySpent - dailyBudget).toFixed(2)} over your daily budget.`
     );
+
     pushGastooMood('worriedDaily');
     return;
   }
+}
 
+  if (hasMonthlyBudget) {
   if (monthlyRatio >= 1) {
     await pushNotification(
       'worried',
@@ -51,7 +61,10 @@ export async function recalculateBudget(dailySpent,dailyBudget,monthlySpent, mon
     pushGastooMood('worriedMonthly');
     return;
   }
+  }
 
+  
+  if (hasDailyBudget) {
   if (dailyRatio >= 0.7) {
     await pushNotification(
       'concerned',
@@ -61,7 +74,9 @@ export async function recalculateBudget(dailySpent,dailyBudget,monthlySpent, mon
     pushGastooMood('concernedDaily');
     return;
   }
+  }
 
+  if (hasMonthlyBudget) {
   if (monthlyRatio >= 0.7) {
     await pushNotification(
       'concerned',
@@ -71,6 +86,7 @@ export async function recalculateBudget(dailySpent,dailyBudget,monthlySpent, mon
     pushGastooMood('concernedMonthly');
     return;
   }
+}
 }
 
 export async function checkSpendingTrend(){
@@ -185,17 +201,22 @@ async function calculateSavingsMilestone(currentSaved, goal) {
   const rawTipDate = notificationStatus?.data?.last_tip_date; 
  
  const lastTip = rawTipDate? new Date(rawTipDate).toLocaleDateString('sv') : null;
+ const lastReminder = lastReminderDate? new Date(lastReminderDate).toLocaleDateString('sv') : null;
 
- if(hour >= 19 && todayExpenseCount === 0 && lastReminderDate !== today) {
+ if(hour >= 19 && todayExpenseCount === 0 && lastReminder !== today) {
+  
    await pushNotification(
       'happy',
       "Don't forget to log!",
       "You haven't added any expenses today. Keep your records accurate!",
     );
+  
+  await webPushNotifToUser("Don't forget to log!", "You haven't added any expenses today. Keep your records accurate!")
+
 
     pushGastooMood('happy')
    
-     await markReminderShown();
+    await markReminderShown();
 
   }
     const tips = [
@@ -216,6 +237,8 @@ async function calculateSavingsMilestone(currentSaved, goal) {
         "Gastoo's Tip",
         tip,
       );
+
+    await webPushNotifToUser("Gastoo's Tip", tip);
    pushGastooMood('happy'); 
      await markTipShown()
   }

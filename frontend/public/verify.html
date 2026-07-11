@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Register to Eyegasto!</title>
+<title>Register to GASTOO!</title>
   <link href="./src/output.css" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -15,10 +15,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Lilita+One&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-  <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="./favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="./favicon/favicon-16x16.png">
-  <link rel="manifest" href="./favicon/site.webmanifest">
+  <link rel="icon" type="image/png" href="./favicon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="./favicon/favicon.svg" />
+  <link rel="shortcut icon" href="./favicon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="GASTOO" />
+  <link rel="manifest" href="./favicon/site.webmanifest" />
   <link rel="stylesheet" href="./animations/styles.css">
 
 </head>
@@ -49,7 +51,6 @@
         <p id="cooldown" class=" font-['DM_Sans'] text-center text-sm text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 rounded-lg py-2 px-1 hidden"></p>
         <p id="success" class=" font-['DM_Sans'] text-center text-sm text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 rounded-lg py-2 px-1 hidden"></p>
       </div>
- = 
 
         <div class="glow-tr absolute -top-5 -right-5 w-16 h-16 rounded-full bg-[#00d4c8] blur-xl pointer-events-none">
         </div>
@@ -95,20 +96,28 @@
 
         <div>
 
-          <label for="verification-code"
-          class="reveal-4 block text-[11px] font-black tracking-widest uppercase text-[#00d4c8] mb-1
-          font-['DM_Sans']">
-          Enter verification code</label>
+            <label for="verification-code"
+                  class="reveal-4 block text-[11px] font-black tracking-widest uppercase text-[#00d4c8] mb-1
+                  font-['DM_Sans']">
+                  Enter verification code</label>
 
-        <div class="reveal-5 relative">
-          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-lg pointer-events-none select-none"><i class="fa fa-lock text-[#00d4c8]"></i></span>
-          <div class="relative password-wrapper">
-          <input id = "code-input" type="text" maxlength="6" placeholder="Enter code.."
-            class="code-input w-full pl-11 px-3 py-3 bg-white/5 border-2 border-[#00d4c8]/30 rounded-2xl text-white font-black text-sm placeholder-white/25 transition-all duration-300 font-['DM_Sans'] relative focus:border-[#00d4c8] focus:bg-[#00d4c8]/10 focus:ring-4 focus:ring-[#00d4c8]/15 focus:outline-none"/>
-        
-           <div class="bg-gradient-to-br from-[#00d4c8] via-[#009e94] to-[#007a74] w-4 h-3 absolute right-3 top-2 rounded-full flex p-4 items-center justify-center cursor-pointer" id="resend-btn">
-          <i class="fa-solid fa-rotate-right text-white"></i>
-      </div>
+              <div class="reveal-5 relative">
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-lg pointer-events-none select-none"><i class="fa fa-lock text-[#00d4c8]"></i></span>
+              <div class="relative password-wrapper">
+          <input
+            id="code-input"
+            type="text"
+            maxlength="6"
+            placeholder="Enter code..."
+            class="code-input w-full pl-11 pr-14 px-3 py-3 bg-white/5 border-2 border-[#00d4c8]/30 rounded-2xl text-white font-black text-sm placeholder-white/25 transition-all duration-300 font-['DM_Sans'] focus:border-[#00d4c8] focus:bg-[#00d4c8]/10 focus:ring-4 focus:ring-[#00d4c8]/15 focus:outline-none"
+          />
+
+          <button
+            id="resend-btn"
+            type="button"
+            class="absolute right-3 top-1/2 -translate-y-1/2 bg-gradient-to-br from-[#00d4c8] via-[#009e94] to-[#007a74] w-8 h-8 rounded-full flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed">
+            <i class="fa-solid fa-rotate-right text-white"></i>
+          </button>
         </div>
         </div>
         </div>

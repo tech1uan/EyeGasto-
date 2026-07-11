@@ -1,3 +1,4 @@
+import { confirmMessage } from "../core/confirmActions.js";
 import { getRelativeTime, isToday } from "../core/utils.js";
 import { loadUser } from "../data/user.js";
 import { authFetch } from "../main.js";
@@ -201,7 +202,6 @@ export async function renderNotifications() {
     earlierPanel.innerHTML = "";
     
     if (!data.notifications || !Array.isArray(data.notifications)) {
-      console.log("Invalid response:", data);
       return;
     }
 
@@ -228,7 +228,6 @@ export async function renderNotifications() {
       let className;
       let innerHTML;
 
-      console.log(isToday(time))
   
     if(notification.is_read === 1) {
        className = `notif-row flex items-start gap-[10px] p-[11px] rounded-2xl cursor-pointer
@@ -245,13 +244,24 @@ export async function renderNotifications() {
                       alt="icon" />
 
                 </div>
+            <div class="flex items-center gap-[10px]">
               <div class="flex-1 min-w-0">
-                <p class="notif-title font-['DM_Sans'] font-bold text-[13px] text-black/50">${title}</p>
+                <p class="notif-title font-['DM_Sans'] font-bold text-[13px] text-black">${title}</p>
                 <p class="font-['DM_Sans'] text-[11.5px] text-black/50 leading-[1.4] mt-0.5">
                   ${msg}
                 </p>
-                <span class="font-['DM_Sans'] text-[10.5px] text-black/30 mt-1.5 block">${getRelativeTime(time)}</span>
+                <span class="font-['DM_Sans'] text-[10.5px] text-black/30 mt-1.5 block">
+                  ${getRelativeTime(time)}
+                </span>
               </div>
+
+              <button
+                class="delete-notif-btn text-black hover:text-red-700 transition-colors"
+                data-id="${id}"
+                title="Delete Notification">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+</div>
         
       `
     } else {
@@ -268,14 +278,24 @@ export async function renderNotifications() {
                   alt="icon" />
 
             </div>
+          <div class="flex items-center gap-[10px]">
           <div class="flex-1 min-w-0">
             <p class="notif-title font-['DM_Sans'] font-bold text-[13px] text-black">${title}</p>
             <p class="font-['DM_Sans'] text-[11.5px] text-black/50 leading-[1.4] mt-0.5">
               ${msg}
             </p>
-            <span class="font-['DM_Sans'] text-[10.5px] text-black/30 mt-1.5 block">${getRelativeTime(time)}</span>
+            <span class="font-['DM_Sans'] text-[10.5px] text-black/30 mt-1.5 block">
+              ${getRelativeTime(time)}
+            </span>
           </div>
-          <span class="notif-unread-dot w-2 h-2 rounded-full bg-[#079F9F] flex-shrink-0 mt-1"></span>`
+
+          <button
+            class="delete-notif-btn cursor-pointer text-black hover:text-red-500 transition-colors"
+            data-id="${id}"
+            title="Delete Notification">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div> `
     }
 
       const row = document.createElement('div');
@@ -322,20 +342,74 @@ export async function pushNotification(mood,title,message) {
     const data = await res.json();
 
     if(!res.ok) {
-      console.log(data.msg)
-      return null;
+       const errorMessage =
+        data.errors?.map(err => err.msg).join("\n") ||
+        data.msg ||
+        "Something went wrong.";
+
+      console.error(errorMessage);
+
+      return {
+        success: false,
+        message: errorMessage,
+      };
     }
    
     await renderNotifications();
 
-   
-   return data;
+    return {
+      success: true,
+      data,
+    };
+
+
   } catch (error) {
     console.error(error);
-    return null
+
+    return {
+      success: false,
+      message: "Network error. Please try again.",
+    };
   }
 
 
+}
+
+export async function deleteNotification(notificationId) {
+  try {
+    const res = await authFetch('/notifications/delete', {
+      method: 'DELETE',
+      headers: {
+        'Content-type':'application/json'
+      },
+      body: JSON.stringify({notificationId})
+    })
+
+    const data = await res.json();
+
+    if(!res.ok) {
+      const errorMessage =
+      data.errors?.map(err => err.msg).join(", ") ||
+      data.msg ||
+      "Something went wrong";
+
+       return {
+        success: false,
+        message: errorMessage,
+      };
+    }
+
+        return {
+        success: true,
+        message: data,
+      }; 
+  } catch (error) {
+     console.error(error);
+      return {
+      success: false,
+      message: "Network error. Please try again.",
+    };
+  }
 }
 
 
@@ -348,6 +422,84 @@ export async function setIsRead(notificationId) {
       },
       body: JSON.stringify({notificationId})
     })
+
+    const data = await res.json();
+
+    if(!res.ok) {
+       const errorMessage =
+        data.errors?.map(err => err.msg).join("\n") ||
+        data.msg ||
+        "Something went wrong.";
+
+
+      console.error(errorMessage);
+
+      return {
+        success: false,
+        message: errorMessage,
+      };
+    }
+
+    return {
+      success: true,
+      data,
+    };
+
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false,
+      message: "Network error. Please try again.",
+    };
+  }
+}
+
+
+export function initDeleteNotification() {
+  const notifPanel  = document.getElementById("notif-panel");
+
+  notifPanel.addEventListener('click', async (e) => {
+
+      const deleteBtn = e.target.closest(".delete-notif-btn");
+
+    if(!deleteBtn) return;
+        
+    e.stopPropagation();
+
+    const notificationId = deleteBtn.dataset.id;
+
+  confirmMessage('red', `Are you sure you want to delete this notification`, async () => {
+   const result = await deleteNotification(notificationId);
+
+   if(result?.success) {
+    await renderNotifications();
+   }
+    })
+
+  })
+
+}
+
+export async function webPushNotifToUser(title,body) {
+  try {
+    let res = await authFetch('/subscriptions/notify', {
+      method: 'POST',
+      headers: {
+        'Content-type':'application/json'
+      },
+      body: JSON.stringify({title,body})
+    })
+
+    const data = await res.json();
+
+    if(!res.ok) {
+      const message =
+      data.errors?.map(err => err.msg).join(", ") ||
+      "Something went wrong";
+      console.log(message);
+      return null;
+    }
+
   } catch (error) {
     console.error(error);
     return null

@@ -10,10 +10,6 @@ export async function renderBudget(data = null) {
     data = await budget.getBudget(currentView);
   }
 
-
-
-
-
   const isDaily = currentView === 'daily';
 
   const el = isDaily
@@ -55,15 +51,15 @@ export async function renderBudget(data = null) {
   const spent = original - remaining;
 
   el.innerHTML = `
-    <p class="text-2xl">
+    <p class="text-2xl sm:text-[26px] md:text-[28px]">
       ${original.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })}
     </p>
 
     <div class="flex w-full gap-2">
-      <p class="text-[11px] text-black/50">
+      <p class="text-[11px] sm:text-[12px] text-black/50">
         Spent: ${spent.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })}
       </p>
-      <p class="text-[11px] text-black/50">
+      <p class="text-[11px] sm:text-[12px] text-black/50">
         Remaining: ${remaining.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })}
       </p>
     </div>
@@ -92,7 +88,6 @@ export async function initBudgetTabFilter() {
   const budgetTabDaily = document.getElementById('budget-tab-daily');
   const budgetTabMonthly = document.getElementById('budget-tab-monthly');
 
-  
  setActiveBtn(budgetTabDaily, budgetTabMonthly)
 
   budgetTabDaily.addEventListener('click', async () => {
@@ -100,7 +95,7 @@ export async function initBudgetTabFilter() {
       setActiveBtn(budgetTabDaily, budgetTabMonthly)
       document.getElementById('daily-budget-panel').classList.remove('hidden');
        document.getElementById('monthly-budget-panel').classList.add('hidden');
-      await renderBudget();
+       renderBudget();
   })
 
   budgetTabMonthly.addEventListener('click', async () => {
@@ -108,7 +103,7 @@ export async function initBudgetTabFilter() {
           document.getElementById('daily-budget-panel').classList.add('hidden');
        document.getElementById('monthly-budget-panel').classList.remove('hidden');
       setActiveBtn(budgetTabMonthly, budgetTabDaily)
-      await renderBudget();
+       renderBudget();
   })
 }
 

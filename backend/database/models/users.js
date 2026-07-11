@@ -535,3 +535,34 @@ export async function getUserGrowth(range) {
   }
 
 }
+
+
+export async function getNotificationPreference(userId) {
+  try {
+      const [rows] = await pool.execute(
+        `
+        SELECT notifications_enabled
+        FROM users
+        WHERE id = ?
+        `,
+        [userId]
+    );
+
+    return rows[0];
+  } catch (error) {
+     throw error
+  }
+
+}
+
+export async function updateNotificationPreference(userId, enabled) {
+
+    await pool.execute(
+        `
+        UPDATE users
+        SET notifications_enabled = ?
+        WHERE id = ?
+        `,
+        [enabled, userId]
+    );
+}

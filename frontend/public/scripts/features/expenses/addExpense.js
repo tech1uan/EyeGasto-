@@ -70,7 +70,8 @@ import { checkSpendingTrend } from "../../notifs/pushNotifications.js";
               await Promise.all([
               updateTotalExpenses(),
               updateExpensesChart(),
-              renderBudget()
+              renderBudget(),
+  
               ])
 
               await checkBudgetData()
