@@ -4,7 +4,7 @@ import pool from "../config.js";
 export async function getUserSavings (userId) {
   try {
     const[result] = await pool.query(`
-    SELECT * FROM SAVINGS
+    SELECT * FROM savings
     WHERE user_id = ?
     `,[userId]);
 
