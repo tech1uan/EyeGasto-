@@ -1,6 +1,6 @@
 import { confirmMessage } from "../../core/confirmActions.js";
 import { formatToPeso } from "../../core/utils.js";
-import { updateSavingsGoal, userSavings } from "../../data/savings.js";
+import { invalidateSavingsCache, updateSavingsGoal, userSavings } from "../../data/savings.js";
 
 export async function initEditGoalModal() {
     const button = document.getElementById('edit-goal-btn');
@@ -31,6 +31,7 @@ export async function initEditGoalModal() {
                 alert('Failed to update goaL!');
                 return;
             }
+            invalidateSavingsCache();
             await initGoal();
             modal.classList.add('hidden');
         
@@ -56,7 +57,6 @@ export async function initGoal() {
         const savings = await userSavings();
         if(!savings) return;
         
-
         savingsGoalContainer.textContent = `${formatToPeso(savings.targetAmount)}`;
         currentSavingsGoalContainer.textContent = `Current goal: ₱${savings.targetAmount}`;
 
