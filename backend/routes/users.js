@@ -102,17 +102,14 @@ async(req,res,next) => {
     oldPicture.startsWith("https://res.cloudinary.com/")
     ){
       const publicId = getPublicId(oldPicture);
-
-      console.log("Deleting:", publicId);
-
       try {
       const result = await cloudinary.uploader.destroy(publicId);
-      console.log("Deleted:", result);
+
       } catch (err) {
           console.warn("Couldn't delete old image:", err.message);
       }
 }
-  
+
     await updateProfilePicture(userId, imagePath);
 
     res.status(200).json({
