@@ -192,7 +192,6 @@ export async function renderNotifications() {
     })
 
     const data = await res.json();
-    console.log(data.notifications, 'from render notifications')
 
     if(!res.ok) {
       return null

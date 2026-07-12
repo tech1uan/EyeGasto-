@@ -41,19 +41,16 @@ export async function authFetch(url, options = {}) {
   })
  
 if(res.status === 401) {
-  console.log("🔄 Access token expired. Attempting refresh...");
   let refresh = await fetch(`${API_BASE}/auth/token`, {
     method: 'POST',
     credentials:'include',
   });
 
   if(!refresh.ok) {
-    console.error("❌ Refresh token expired or invalid. Redirecting to login.");
     window.location.replace('/login.html');
     return res;
   }
 
-  console.log("✅ Token refreshed successfully! Retrying original request...");
     res = await fetch(url, {
       ...options,
       credentials: 'include'

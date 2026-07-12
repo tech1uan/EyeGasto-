@@ -50,7 +50,6 @@ export async function clearData() {
     const data = await res.json();
 
     if(!res.ok) {
-      console.log(data.msg)
       return null
     } else {
       return data;
@@ -130,7 +129,6 @@ export function updateProfileImagesUI(pictureUrl) {
 }
 
 export async function loadUser() {
-  console.log('LOAD USER IS CALLED')
   const [data, userProfileStats, savings] = await Promise.all([
     getUser(),
     getProfileStats(),
@@ -140,8 +138,6 @@ export async function loadUser() {
   user = data?.user?.first_name || 'Tracker'; 
   const picture = data?.user?.profile_picture || `${API_BASE}/images/user.png`;
 
-  console.log("PROFILE PICTURE", picture);
-  console.log(data.user);
   const name = data?.user?.username ? data.user.full_name : 'Tracker';
   const email = data?.user?.email || 'Unknown';
 

@@ -85,6 +85,8 @@ async(req,res,next) => {
     const oldPicture = user.profile_picture;
 
     const imagePath = `/uploads/profiles/${req.file.filename}`
+    
+console.log(req.file);
 
     if(oldPicture && oldPicture !== "/images/user.png") {
 

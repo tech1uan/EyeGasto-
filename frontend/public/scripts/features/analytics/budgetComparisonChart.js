@@ -12,7 +12,7 @@ export function showNoData() {
     
 export async function updateBudgetComparisonChart() {
     const data = await getBudgetComparison();
-    console.log(data);
+    
     if(!data || data.budgetComparison.length === 0) {
       showNoData();
       return;      

@@ -90,7 +90,6 @@ export async function updateAnalytics(range) {
       tipMessage.classList.add("text-[#e0f5f0]");
     }
 
-    console.log(spentPercent)
 }  
   const avgPerDay = daysLogged > 0 ? totalSpent / daysLogged : 0;
 
@@ -114,7 +113,7 @@ export async function updateAnalytics(range) {
   const totalSpentThisMonth = await fetchTotalExpenses('1month')
   
   const budgetLeft = monthlyBudget - totalSpentThisMonth
-  console.log(totalSpentThisMonth)
+
   budgetLeftContainer.textContent = formatToPeso(budgetLeft || 0);
 
   if (!monthlyBudget || monthlyBudget <= 0) {

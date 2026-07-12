@@ -210,7 +210,7 @@ function renderTopMood() {
 
   }
    
-  console.log(best)
+
   
   const face = document.querySelector(".gastoo-container");
 

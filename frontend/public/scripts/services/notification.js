@@ -48,7 +48,7 @@ export async function initializePushNotifications() {
         }
 
         // Get public key from Express
-        const res = await authFetch(`${API_BASE}VAPID_PUBLIC_KEY_URL`, {
+        const res = await authFetch(`${API_BASE}/VAPID_PUBLIC_KEY_URL`, {
         });
         const result = await res.json();
         // Create browser subscription

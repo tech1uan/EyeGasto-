@@ -9,7 +9,6 @@ export async function getUserExpenses() {
     })
     const data = await res.json();
     if(!res.ok) {
-    console.log(data.msg);
     return null;  
 }
     return data;
@@ -29,7 +28,7 @@ export async function fetchGetUserExpenses(range) {
       const data = await res.json();
 
       if(!res.ok) {
-        console.log(data.msg);
+
         return null;
       }
       return data;
@@ -47,7 +46,6 @@ export async function getUserRecentExpenses(filter) {
     const data = await res.json();
 
     if(!res.ok) {
-      console.log(data.msg);
       return null
     }
     
@@ -70,7 +68,6 @@ try {
   const data = await res.json();
 
   if(!res.ok) {
-    console.log(data.msg);
     return null
   }
 
@@ -94,7 +91,6 @@ try {
   const data = await res.json();
 
   if(!res.ok) {
-    console.log(data.msg);
     return null;
   }
   
@@ -120,7 +116,6 @@ try {
     const data = await res.json();
 
     if(!res.ok) {
-      console.log(data.msg);
       return null;
     }
 
@@ -160,7 +155,7 @@ try {
     const data = await res.json();
 
     if(!res.ok) {
-      console.log(data.msg);
+
       return null
     }
 
@@ -181,7 +176,6 @@ try {
     const data = await res.json();
 
     if(!res.ok) {
-      console.log(data.msg);
 
       return null
     }
@@ -204,7 +198,6 @@ try {
     const data = await res.json();
 
     if(!res.ok) {
-      console.log(data.msg);
       return null
     }
 
@@ -224,9 +217,7 @@ try {
 
     const data = await res.json();
 
-    console.log(data)
     if(!res.ok) {
-      console.log(data.msg);
       return null;
     }
     
@@ -246,9 +237,7 @@ try {
 
     const data = await res.json();
 
-    console.log(data)
     if(!res.ok) {
-      console.log(data.msg);
       return null;
     }
     
@@ -269,9 +258,7 @@ try {
 
     const data = await res.json();
 
-    console.log(data)
     if(!res.ok) {
-      console.log(data.msg);
       return null;
     }
     

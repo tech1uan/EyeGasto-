@@ -197,8 +197,8 @@ async function calculateSavingsMilestone(currentSaved, goal) {
  const today = new Date().toLocaleDateString('sv');
 
  const hour = new Date().getHours();
- const lastReminderDate = notificationStatus?.data?.last_reminder_date;
-  const rawTipDate = notificationStatus?.data?.last_tip_date; 
+const lastReminderDate = notificationStatus?.last_reminder_date;
+const rawTipDate = notificationStatus?.last_tip_date;
  
  const lastTip = rawTipDate? new Date(rawTipDate).toLocaleDateString('sv') : null;
  const lastReminder = lastReminderDate? new Date(lastReminderDate).toLocaleDateString('sv') : null;
