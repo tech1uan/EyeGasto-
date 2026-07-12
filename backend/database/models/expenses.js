@@ -28,7 +28,7 @@ export async function addExpense(userId, description, amount, category_id) {
 export async function deleteExpense(expenseId, userId) {
   try {
     const [result] = await pool.query(`
-      UPDATE EXPENSES
+      UPDATE expenses
        SET isDeleted = 1,
        deletedAt = NOW()
        WHERE expense_id = ? AND user_id = ?
