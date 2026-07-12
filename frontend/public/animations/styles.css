@@ -294,7 +294,7 @@ input:-webkit-autofill:focus{
 
 
 
-.gastoo-container, .gastoo-container-auth, .gastoo-container-load{
+.gastoo-container, .gastoo-container-auth{
     width: 128px;
     height: 128px;
     background-repeat: no-repeat;
@@ -306,11 +306,6 @@ input:-webkit-autofill:focus{
 .gastoo-container-auth{
     background-image: url('/images/gastoo-assets/mascot/happy.png');
 }
-
-.gastoo-container-load{
-    background-image: url('/images/gastoo-assets/mascot/happy.png');
-}
-
 
 .gastoo-happy {
   background-image: url('/images/gastoo-assets/mascot/happy.png');
