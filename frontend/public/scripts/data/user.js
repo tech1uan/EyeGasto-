@@ -13,12 +13,16 @@ import { renderExpensesHTML } from "../ui/renderExpenses.js";
 import { renderSavingsHTML } from "../ui/renderSavings.js";
 import { showMessage } from "../withdrawals/addWithdraw.js";
 
-import { getProfileStats } from "./expenses.js";
-import { userSavings } from "./savings.js";
+import { getProfileStats, initProfileStats, invalidateProfileStats } from "./expenses.js";
+import { invalidateSavingsCache, userSavings } from "./savings.js";
 
 
+export let user = 'Tracker';
+let _userCache = null;
 
 export async function getUser() {
+  if(_userCache) return _userCache;
+
   try {
     const res = await authFetch ('/users/', {
       method: 'GET',
@@ -30,7 +34,8 @@ export async function getUser() {
 
       return null
     } else {
-      return data;
+      _userCache = data
+      return _userCache;
     }
 
   } catch (error) {
@@ -39,6 +44,9 @@ export async function getUser() {
   }
 }
 
+export function invalidateUserCache() {
+  _userCache = null;
+}
 
 
 export async function clearData() {
@@ -60,11 +68,6 @@ export async function clearData() {
     return null;
   }
 }
-
-
-
-
-export let user = 'Tracker';
 
 export async function setProfilePicture(file) {
 
@@ -131,7 +134,7 @@ export function updateProfileImagesUI(pictureUrl) {
 export async function loadUser() {
   const [data, userProfileStats, savings] = await Promise.all([
     getUser(),
-    getProfileStats(),
+    initProfileStats(),
     userSavings()
   ]);
 
@@ -185,6 +188,8 @@ export async function loadUser() {
 
     const result = await setProfilePicture(file);
     if (result) {
+      invalidateUserCache()
+      invalidateProfileStats();
       loadUser();
     }
   });
@@ -196,6 +201,8 @@ export async function loadUser() {
 
     const result = await setProfilePicture(file);
     if (result) {
+      invalidateUserCache();
+      invalidateProfileStats();
       loadUser();
     }
   });
@@ -214,7 +221,10 @@ confirmMessage('red',`<strong>This will permanently delete all your expenses and
 
   try {
     await clearData(),
-              
+    invalidateUserCache();
+    invalidateProfileStats();
+    invalidateSavingsCache();
+
      await Promise.all([ 
        initAnalytics(),
        loadUser(),
@@ -343,6 +353,8 @@ export async function initSaveChangesOnProfileEdit() {
             return null
           } else {
             showMessage(success, 'Edited successfully!', 3000);
+            invalidateUserCache();
+            invalidateProfileStats();
             await loadUser();
             await initGreetings()
       
@@ -362,7 +374,7 @@ export async function initSaveChangesOnProfileEdit() {
 }
 
 export async function initGreetings() {
-  const user = await loadUser();
+  
   const greetingContainer= document.querySelector('.greeting');
   
   const hour = new Date().getHours();

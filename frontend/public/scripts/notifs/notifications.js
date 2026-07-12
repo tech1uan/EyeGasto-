@@ -7,7 +7,7 @@ import { authFetch } from "../main.js";
 
 let currentUser = null; 
 
-export async function initUser() {
+export async function initUser() {    
   currentUser = await loadUser();
   return currentUser;
 }

@@ -1,4 +1,4 @@
-import { addSavings, deductSavings, userSavings } from "../data/savings.js";
+import { addSavings, deductSavings, invalidateSavingsCache, userSavings } from "../data/savings.js";
 import { renderSavingsHTML } from "../ui/renderSavings.js";
 import { confirmMessage } from "../core/confirmActions.js";
 import { addTransaction } from "../data/transactions.js";
@@ -67,6 +67,7 @@ export function initAddWithdraw() {
         showMessage(error, msg);
         return;
       }
+      invalidateSavingsCache();
       await addTransaction(amount,description,type)
       await renderSavingsHTML();
       await initGoal();
@@ -107,7 +108,7 @@ export function initAddWithdraw() {
     confirmMessage('green',`Are you sure you want to withdraw <strong>₱${amount}</strong>?`, async () => {
       try {
 
-      const savings = await userSavings();
+      const savings = currentSavings
 
       if (!savings) {
           showMessage(error, 'Failed to load savings');
@@ -129,7 +130,9 @@ export function initAddWithdraw() {
         return;
       }
 
+
       await addTransaction(amount,description,type);
+        invalidateSavingsCache();
       await renderSavingsHTML();
       await initGoal();
       descriptionInput.value = '';

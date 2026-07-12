@@ -1,6 +1,24 @@
 import { API_BASE } from "../config.js";
 import { authFetch } from "../main.js";
 
+let _profileStatsCache = null;
+
+export async function initProfileStats() {
+if(_profileStatsCache) return _profileStatsCache;
+
+const profileStats = await getProfileStats();
+if(!profileStats) return null;
+
+_profileStatsCache = profileStats
+
+return profileStats; 
+
+}
+
+
+export function invalidateProfileStats(){
+  _profileStatsCache = null;
+}
 
 export async function getUserExpenses() {
   try {

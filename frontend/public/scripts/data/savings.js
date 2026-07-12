@@ -2,6 +2,9 @@ import { API_BASE } from "../config.js";
 import { formatToPeso } from "../core/utils.js";
 import { authFetch } from "../main.js";
 
+
+let _savingsCache = null;
+
 export async function getUserSavings() {
  try {
   let res = await authFetch(`${API_BASE}/savings`, {
@@ -65,13 +68,19 @@ export async function deductSavings(amount) {
   }
 }
 
+export function invalidateSavingsCache() {
+  _savingsCache = null;
+} 
 
 export async function userSavings() {
+  if(_savingsCache) return _savingsCache;
+
   const data = await getUserSavings();
   if(!data){
     return null;
   }
-  return {
+
+  _savingsCache = {
     money: data.balance,
     goalDescription: data.goal_name,
     targetAmount: data.target_amount,
@@ -80,10 +89,10 @@ export async function userSavings() {
     },
     goalCompleted: data.goal_completed_notified
   }
+
+  return _savingsCache;
 }
 
-  let isRefreshing = false
-  let refreshPromise = null;
 
 
 export async function updateSavingsGoal(description,amount) {

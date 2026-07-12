@@ -4,6 +4,7 @@ import { initBudgetModal, initSaveBudget } from './budget/budgetActions.js';
 import { updateExpensesChart } from './charts/expensesChart.js';
 import { API_BASE } from './config.js';
 import { getUserExpenses } from './data/expenses.js';
+import { userSavings } from './data/savings.js';
 import { getUser, initChangePasswordEdit, initClearDataBtn, initEditProfileBtn, initGreetings, initSaveChangesOnProfileEdit, initSetNewPassword, loadUser } from './data/user.js';
 import {initAnalytics, initAnalyticsFilter } from './features/analytics/analytics.js';
 import { initToolTipForHeatmap, updateExpenseHeatMap } from './features/analytics/analyticsHeatMap.js';
@@ -76,8 +77,9 @@ if (!res.ok) {
 
 await initUser();
 showNotif('existingUser');
+
 await Promise.all([
-renderSavingsHTML(),
+renderSavingsHTML(savings),
 renderBudget(),
 renderTotalExpensesHTML(),
 initExpensesPage()
