@@ -79,11 +79,18 @@ await initUser();
 showNotif('existingUser');
 
 await Promise.all([
-renderSavingsHTML(savings),
+renderSavingsHTML(),
 renderBudget(),
 renderTotalExpensesHTML(),
 initExpensesPage()
         ]);
+
+const loader = document.getElementById('app-loader');
+    if (loader) {
+      loader.style.transition = 'opacity 0.3s ease';
+      loader.style.opacity = '0';
+      setTimeout(() => loader.remove(), 300);
+}
 
  // Navigation & Event Listeners
         initNavbar();
