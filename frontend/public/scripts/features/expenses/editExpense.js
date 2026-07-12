@@ -10,6 +10,7 @@ import { editExpense } from "../../data/expenses.js";
 import { renderBudget } from "../../ui/renderBudget.js";
 import { budget } from "../../data/budget.js";
 import { initAnalytics } from "../analytics/analytics.js";
+import { checkBudgetData } from "../../budget/budgetActions.js";
 
 
 

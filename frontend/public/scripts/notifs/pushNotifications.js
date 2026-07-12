@@ -200,8 +200,13 @@ async function calculateSavingsMilestone(currentSaved, goal) {
 const lastReminderDate = notificationStatus?.last_reminder_date;
 const rawTipDate = notificationStatus?.last_tip_date;
  
+console.log(lastReminderDate, rawTipDate);
+
  const lastTip = rawTipDate? new Date(rawTipDate).toLocaleDateString('sv') : null;
  const lastReminder = lastReminderDate? new Date(lastReminderDate).toLocaleDateString('sv') : null;
+
+ 
+console.log(lastTip, lastReminder);
 
  if(hour >= 19 && todayExpenseCount === 0 && lastReminder !== today) {
   
