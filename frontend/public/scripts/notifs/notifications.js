@@ -11,6 +11,7 @@ export async function initUser() {
   currentUser = await loadUser();
   return currentUser;
 }
+
 const NOTIF_TYPES = {
   newUser: {
     emoji: "🎉",
