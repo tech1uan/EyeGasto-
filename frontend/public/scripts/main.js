@@ -79,59 +79,101 @@ if (!res.ok) {
 
 await initUser();
 showNotif('existingUser');
-renderSavingsHTML();
-initExpensesPage();
-updateExpensesChart();
-renderBudget();
-renderTotalExpensesHTML();
-initReceipts();
-initDateFilter();
-initEditExpensesTools();
-initExpensesTooltip();
-initNavbar();
-initAddExpense();
-initExpensesFilter();
-initCategoryShortcut();
-initAddExpenseNavigator();
-initAddWithdraw();
-initBudgetModal();
-initSaveBudget();
-initTransactionsFilter();
-initGreetings();
-initGastooMessages();
-initGoal()
-initEditGoalModal();
-initAnalytics();
-initAnalyticsFilter();
-updateBudgetComparisonChart();
-updateExpenseHeatMap();
-initToolTipForHeatmap();
-initDLReportBtn();
-initLogoutBtn();
-initClearDataBtn();
-initEditProfileBtn();
-initSaveChangesOnProfileEdit();
-initChangePasswordEdit();
-initSetNewPassword();
-initBudgetTabFilter();
-await sendDailyNotifications()
-await renderNotifications();
-await initFeedbackModal();
-initDeleteNotification()
+await Promise.all([
+renderSavingsHTML(),
+renderBudget(),
+renderTotalExpensesHTML(),
+initExpensesPage()
+        ]);
 
-const enabled = await loadNotificationPreference();
+ // Navigation & Event Listeners
+        initNavbar();
+        initDateFilter();
+        initExpensesTooltip();
+        initEditExpensesTools();
 
-if (enabled) {
-    await initializePushNotifications();
-}
+        initAddExpense();
+        initCategoryShortcut();
+        initAddExpenseNavigator();
+        initExpensesFilter();
 
-loadNotificationPreference();
-initNotificationPermissionStatus();
+        initAddWithdraw();
+
+        initBudgetModal();
+        initSaveBudget();
+        initBudgetTabFilter();
+
+        initTransactionsFilter();
+
+        initGreetings();
+        initGastooMessages();
+
+        initGoal();
+        initEditGoalModal();
+
+        initLogoutBtn();
+        initClearDataBtn();
+        initEditProfileBtn();
+        initSaveChangesOnProfileEdit();
+        initChangePasswordEdit();
+        initSetNewPassword();
+
+        initDLReportBtn();
+
+        requestAnimationFrame(loadSecondaryFeatures)
+
 } catch (error) {
   console.error("Initialization crash:", error);
   return window.location.replace('/login.html');
 }
 
+}
+
+
+async function loadSecondaryFeatures() {
+
+    await Promise.all([
+
+        updateExpensesChart(),
+
+        updateBudgetComparisonChart(),
+
+        updateExpenseHeatMap(),
+
+        initAnalytics(),
+
+        initAnalyticsFilter(),
+
+        initReceipts()
+
+    ]);
+
+    initToolTipForHeatmap();
+
+    requestAnimationFrame(loadBackgroundFeatures);
+
+}
+
+
+async function loadBackgroundFeatures() {
+
+    await sendDailyNotifications();
+
+    await renderNotifications();
+
+    await initFeedbackModal();
+
+    initDeleteNotification();
+
+    const enabled = await loadNotificationPreference();
+
+    if (enabled) {
+        await initializePushNotifications();
+    }
+
+    initNotificationPermissionStatus();
+
+  
 }
 
 initApp();
