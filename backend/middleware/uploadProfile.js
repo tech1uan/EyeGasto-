@@ -1,19 +1,15 @@
 import multer from 'multer'
-import path from 'path'
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import cloudinary from '../services/cloudinary.js';
 
-const storage = multer.diskStorage({
-    destination(req,file,cb) {
 
-    cb(null,"uploads/profiles")
+const storage = new CloudinaryStorage({
+    cloudinary,
+    params: {
+        folder: "gastoo-profiles",
+        allowed_formats: ["jpg", "jpeg", "png", "webp"],
     },
-
-    filename(req,file,cb) {
-        
-     const uniqueName = Date.now() + path.extname(file.originalname);
-
-     cb(null, uniqueName);
-    }
-}) 
+});
 
 const fileFilter = (req, file, cb) => {
   const allowed = [

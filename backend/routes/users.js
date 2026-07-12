@@ -2,8 +2,6 @@ import express from 'express';
 import { authMiddleware } from '../middleware/authMiddleware.js';
 import { getTotalUsersByRange, getUserByEmail, getUserByUserID, requestEmailChange, setNewPassword, updateEmailChange, updateProfile, updateProfilePicture, updateVerificationCode, updateVerificationCodeByID } from '../database/models/users.js';
 import upload from '../middleware/uploadProfile.js';
-import fs from 'fs/promises';
-import path from 'path';
 import { resetSavings } from '../database/models/savings.js';
 import { deleteAllExpenses } from '../database/models/expenses.js';
 import { resetBudget } from '../database/models/budget.js';
@@ -15,8 +13,20 @@ import transporter from '../services/mailer.js';
 import { resendLimiter, verifyLimiter } from './auth.js';
 import bcrypt from 'bcrypt';
 import { authorizeMiddleware } from '../middleware/authorizeMiddleware.js';
+import cloudinary from '../services/cloudinary.js';
 
 const userRouter = express.Router();
+
+function getPublicId(imageUrl) {
+  const parts = imageUrl.split("/");
+
+  const filename = parts.pop(); 
+  const folder = parts.pop();  
+
+  const name = filename.substring(0, filename.lastIndexOf("."));
+
+  return `${folder}/${name}`;
+}
 
 userRouter.get('/', authMiddleware, async(req,res,next) => {
 try {
@@ -84,25 +94,25 @@ async(req,res,next) => {
 
     const oldPicture = user.profile_picture;
 
-    const imagePath = `/uploads/profiles/${req.file.filename}`
-    
-console.log(req.file);
+    const imagePath = req.file.path;
+    console.log(req.file.path);
 
-    if(oldPicture && oldPicture !== "/images/user.png") {
+    if (
+    oldPicture &&
+    oldPicture.startsWith("https://res.cloudinary.com/")
+    ){
+      const publicId = getPublicId(oldPicture);
 
-      const filePath = path.join(
-        process.cwd(),
-        oldPicture.substring(1)
-      );
-    
+      console.log("Deleting:", publicId);
 
-    try {
-      await fs.unlink(filePath)
-    } catch (error) {
-      console.log('Old profile picture already deleted.')
-    }
-
-  }
+      try {
+      const result = await cloudinary.uploader.destroy(publicId);
+      console.log("Deleted:", result);
+      } catch (err) {
+          console.warn("Couldn't delete old image:", err.message);
+      }
+}
+  
     await updateProfilePicture(userId, imagePath);
 
     res.status(200).json({
