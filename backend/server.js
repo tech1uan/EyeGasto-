@@ -35,10 +35,10 @@ server.use(cors({
   origin: [
     'https://gastoos.onrender.com',
     'https://gastoo-the-expense-tracker.vercel.app',
+    'http://localhost:8000',      
   ],
   credentials: true
 }));
-
 
 server.use(cookieParser());
 server.use(express.json());
