@@ -55,7 +55,7 @@ try {
   await createUserBudget(user.id);
    
  try {
-    await mailer.sendTransacEmail({
+    await mailer.transactionalEmails.sendTransacEmail({
       sender: { email: 'gastoo.official@gmail.com', name: 'Gastoo' },
       to: [{ email }],
       subject: 'Verify your email',
@@ -185,7 +185,7 @@ authRouter.post('/resend-code', resendLimiter, async (req,res,next) => {
     await updateVerificationCode(email,hashedNewCode,newExpiresAt);
     
    try {
-    await mailer.sendTransacEmail({
+    await mailer.transactionalEmails.sendTransacEmail({
       sender: { email: 'gastoo.official@gmail.com', name: 'Gastoo' },
       to: [{ email }],
       subject: 'Verify your email',
