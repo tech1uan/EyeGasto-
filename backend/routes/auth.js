@@ -46,18 +46,14 @@ authRouter.post('/register', [...registerNameValidator,... registerUsernameValid
 
 try { 
   const hashedPassword = await bcrypt.hash(password, 10);
-  console.log('1')
   await createUser(firstName,lastName,username,email,hashedPassword,hashedVerificationCode,codeExpiresAt);
-  console.log('2')
-  const user = await getUserByUsername(username);
-  console.log('3')
-  await createUserSavingsAcc(user.id);
-    console.log('4')
-  await createUserBudget(user.id);
-    console.log('5')
 
-    console.log(process.env.EMAIL_USER);
-console.log(process.env.EMAIL_PASS);
+  const user = await getUserByUsername(username);
+
+  await createUserSavingsAcc(user.id);
+  
+  await createUserBudget(user.id);
+   
   try {
     await transporter.sendMail({
     from: process.env.EMAIL_USER,
