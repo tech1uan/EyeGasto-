@@ -46,14 +46,15 @@ authRouter.post('/register', [...registerNameValidator,... registerUsernameValid
 
 try { 
   const hashedPassword = await bcrypt.hash(password, 10);
-
+  console.log('1')
   await createUser(firstName,lastName,username,email,hashedPassword,hashedVerificationCode,codeExpiresAt);
-
+  console.log('2')
   const user = await getUserByUsername(username);
-
+  console.log('3')
   await createUserSavingsAcc(user.id);
+    console.log('4')
   await createUserBudget(user.id);
-  
+    console.log('5')
   try {
     await transporter.sendMail({
     from: process.env.EMAIL_USER,
@@ -127,6 +128,7 @@ try {
       `
 
     })
+    console.log('6')
     console.log("✅ Email sent successfully!");
   } catch (error) {
     console.error("❌ Nodemailer Error:", error);
