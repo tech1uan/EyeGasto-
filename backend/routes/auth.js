@@ -55,6 +55,9 @@ try {
     console.log('4')
   await createUserBudget(user.id);
     console.log('5')
+
+    console.log(process.env.EMAIL_USER);
+console.log(process.env.EMAIL_PASS);
   try {
     await transporter.sendMail({
     from: process.env.EMAIL_USER,
