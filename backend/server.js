@@ -40,12 +40,21 @@ server.use(cors({
   credentials: true
 }));
 
-console.log({
+
+ console.log({
   DB_HOST: !!process.env.DB_HOST,
-  VAPID: !!process.env.VAPID_PUBLIC_KEY,
-  RESEND: !!process.env.RESEND_API_KEY,
-  NODE_ENV: process.env.NODE_ENV
+  DB_PORT: !!process.env.DB_PORT,
+  DB_USERNAME: !!process.env.DB_USERNAME,
+  DB_PASSWORD: !!process.env.DB_PASSWORD,
+  DB_DATABASE: !!process.env.DB_DATABASE,
+  ACCESS_KEY_SECRET: !!process.env.ACCESS_KEY_SECRET,
+  REFRESH_KEY_SECRET: !!process.env.REFRESH_KEY_SECRET,
+  MAILEROO_API_KEY: !!process.env.MAILEROO_API_KEY,
+  VAPID_SUBJECT: !!process.env.VAPID_SUBJECT,
+  VAPID_PUBLIC_KEY: !!process.env.VAPID_PUBLIC_KEY,
+  VAPID_PRIVATE_KEY: !!process.env.VAPID_PRIVATE_KEY,
 });
+
 
 server.use(cookieParser());
 server.use(express.json());
