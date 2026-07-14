@@ -45,7 +45,7 @@ export async function sendVerificationEmail(email, code) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${MAILEROO_API_KEY}`,
+       'X-API-Key': MAILEROO_API_KEY,
     },
     body: JSON.stringify({
       from: {
