@@ -73,20 +73,23 @@ export const loginPasswordValidator = [
 ]
 
 export const emailValidator = [
-body('email')
-.trim()
-.notEmpty().withMessage('Email is required.')
-.bail()
-.isEmail().withMessage('Invalid email')
-.normalizeEmail()
-.bail()
-.custom(async (value) => {
-      const user = await getUserByEmail(value);
+  body('email')
+    .trim()
+    .notEmpty()
+    .withMessage('Email is required.')
+    .bail()
+    .isEmail()
+    .withMessage('Invalid email')
+    .bail()
+    .custom(async (value) => {
+      const normalizedEmail = value.toLowerCase();
 
-      if(user) {
-       throw new Error('Email already in use')
+      const user = await getUserByEmail(normalizedEmail);
+
+      if (user) {
+        throw new Error('Email already in use');
       }
 
-      return true
-})
-]
+      return true;
+    })
+];
