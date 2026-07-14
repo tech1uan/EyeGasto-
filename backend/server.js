@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+dotenv.config();
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import path from 'path';
@@ -15,8 +16,11 @@ import notFound from './middleware/notFound.js';
 import errorHandler from './middleware/errorHandler.js';
 import { optionalAuth } from './middleware/optionalAuth.js';
 import webpush from 'web-push';
+import dns from "dns";
 
-dotenv.config();
+dns.setDefaultResultOrder("ipv4first");
+
+
 
 const PORT = process.env.PORT || 8000;
 
