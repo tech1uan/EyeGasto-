@@ -40,6 +40,13 @@ server.use(cors({
   credentials: true
 }));
 
+console.log({
+  DB_HOST: !!process.env.DB_HOST,
+  VAPID: !!process.env.VAPID_PUBLIC_KEY,
+  RESEND: !!process.env.RESEND_API_KEY,
+  NODE_ENV: process.env.NODE_ENV
+});
+
 server.use(cookieParser());
 server.use(express.json());
 
