@@ -9,7 +9,7 @@ import pool from '../database/config.js';
 import validate from '../middleware/validate.js';
 import { changePasswordValidator, updateEmailValidator, updateProfileValidator } from '../validators/inputValidators.js';
 import { matchedData, validationResult } from 'express-validator';
-import transporter from '../services/mailer.js';
+import {sendVerificationEmail} from '../services/mailer.js';
 import { resendLimiter, verifyLimiter } from './auth.js';
 import bcrypt from 'bcrypt';
 import { authorizeMiddleware } from '../middleware/authorizeMiddleware.js';
@@ -95,8 +95,7 @@ async(req,res,next) => {
     const oldPicture = user.profile_picture;
 
     const imagePath = req.file.path;
-    console.log(req.file.path);
-
+  
     if (
     oldPicture &&
     oldPicture.startsWith("https://res.cloudinary.com/")
@@ -148,16 +147,7 @@ userRouter.put('/request-email-change', authMiddleware, updateEmailValidator[0],
       message: 'Verification code sent to your new email.'
     });
 
-    transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: newEmail,
-      subject: 'Verify your new email address',
-      html: `
-          <h2>Your Verification Code</h2>
-          <h1 style="letter-spacing:8px">${verificationCode}</h1>
-          <p>Expires in <b>10 minutes</b></p>
-      `
-    });
+    await sendVerificationEmail(newEmail, verificationCode);
 
 
   } catch (error) {
@@ -220,16 +210,7 @@ userRouter.post('/resend-code', authMiddleware, resendLimiter, async(req,res,nex
 
     await updateVerificationCodeByID(userId,newCode,newExpiresAt);
 
-    transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: user.pending_email,
-      subject: 'Your new verification code',
-         html: `
-        <h2>New Verification Code</h2>
-        <h1 style="letter-spacing:8px">${newCode}</h1>
-        <p>Expires in <b>10 minutes</b></p>
-      `
-    })
+    await sendVerificationEmail(newEmail, verificationCode);
 
     res.status(200).json({msg: 'New code sent!'});
 
