@@ -1,6 +1,5 @@
-import { Resend } from 'resend';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+const MAILEROO_API_KEY = process.env.MAILEROO_API_KEY;
+const MAILEROO_ENDPOINT = 'https://smtp.maileroo.com/api/v2/emails';
 
 function verificationEmailTemplate(code) {
   return `
@@ -42,15 +41,28 @@ function verificationEmailTemplate(code) {
 }
 
 export async function sendVerificationEmail(email, code) {
-  const { data, error } = await resend.emails.send({
-    from: 'Gastoo <onboarding@resend.dev>', // swap to noreply@yourdomain.com once verified in Resend
-    to: [email],
-    subject: 'Verify your email',
-    html: verificationEmailTemplate(code),
+  const response = await fetch(MAILEROO_ENDPOINT, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${MAILEROO_API_KEY}`,
+    },
+    body: JSON.stringify({
+      from: {
+        address: 'noreply@564a7ea69375bf15.maileroo.org', 
+      },
+      to: [
+        { address: email },
+      ],
+      subject: 'Verify your email',
+      html: verificationEmailTemplate(code),
+    }),
   });
 
-  if (error) {
-    throw error;
+  const data = await response.json();
+
+  if (!response.ok || data.success === false) {
+    throw new Error(data.message || 'Failed to send email via Maileroo');
   }
 
   return data;

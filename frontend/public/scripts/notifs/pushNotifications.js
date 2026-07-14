@@ -239,7 +239,7 @@ async function calculateSavingsMilestone(currentSaved, goal) {
       );
 
     await webPushNotifToUser("Gastoo's Tip", tip);
-   pushGastooMood('happy'); 
+    pushGastooMood('happy'); 
      await markTipShown()
   }
  }
