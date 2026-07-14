@@ -16,10 +16,9 @@ import notFound from './middleware/notFound.js';
 import errorHandler from './middleware/errorHandler.js';
 import { optionalAuth } from './middleware/optionalAuth.js';
 import webpush from 'web-push';
+
 import dns from "dns";
-
 dns.setDefaultResultOrder("ipv4first");
-
 
 
 const PORT = process.env.PORT || 8000;
@@ -38,26 +37,11 @@ server.use(latencyCheck);
 server.use(cors({
   origin: [
     'https://gastoos.onrender.com',
-    'https://gastoo-the-expense-tracker.vercel.app',
     'http://localhost:8000',      
   ],
   credentials: true
 }));
 
-
- console.log({
-  DB_HOST: !!process.env.DB_HOST,
-  DB_PORT: !!process.env.DB_PORT,
-  DB_USERNAME: !!process.env.DB_USERNAME,
-  DB_PASSWORD: !!process.env.DB_PASSWORD,
-  DB_DATABASE: !!process.env.DB_DATABASE,
-  ACCESS_KEY_SECRET: !!process.env.ACCESS_KEY_SECRET,
-  REFRESH_KEY_SECRET: !!process.env.REFRESH_KEY_SECRET,
-  MAILEROO_API_KEY: !!process.env.MAILEROO_API_KEY,
-  VAPID_SUBJECT: !!process.env.VAPID_SUBJECT,
-  VAPID_PUBLIC_KEY: !!process.env.VAPID_PUBLIC_KEY,
-  VAPID_PRIVATE_KEY: !!process.env.VAPID_PRIVATE_KEY,
-});
 
 
 server.use(cookieParser());

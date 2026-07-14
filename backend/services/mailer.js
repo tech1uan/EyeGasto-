@@ -31,12 +31,12 @@ export async function sendVerificationEmail(email, code) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${MAILEROO_API_KEY}`,
         },
-        timeout: 10000,
+        timeout: 30000
       }
     );
 
     const data = response.data;
-
+console.log("Maileroo response:", data);
     if (data.success === false) {
       throw new Error(data.message || "Maileroo failed");
     }
