@@ -15,6 +15,9 @@ import notFound from './middleware/notFound.js';
 import errorHandler from './middleware/errorHandler.js';
 import { optionalAuth } from './middleware/optionalAuth.js';
 import webpush from 'web-push';
+import dns from 'dns';
+dns.setDefaultResultOrder('ipv4first');
+
 
 dotenv.config();
 
