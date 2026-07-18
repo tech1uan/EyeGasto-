@@ -34,6 +34,27 @@ export const resendLimiter = rateLimit({
   message: {msg: 'Too many resend attempts.'},
 })
 
+async function notifyn8n(user) {
+ const response = await fetch(process.env.N8N_WEBHOOK_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": process.env.N8N_WEBHOOK_SECRET,
+    },
+    body: JSON.stringify({
+      userId: user.id,
+      firstName: user.first_name,
+      lastName: user.last_name,
+      username: user.username,
+      email: user.email,
+    }),
+  });
+
+    if (!response.ok) {
+    throw new Error("Failed to notify n8n");
+  }
+}
+
 
 authRouter.post('/register', [...registerNameValidator,... registerUsernameValidator, ...emailValidator, ...registerPasswordValidator], validate,
   async (req,res,next) => {
@@ -52,8 +73,15 @@ try {
   await createUserSavingsAcc(user.id);
   
   await createUserBudget(user.id);
-   
+  
+  try {
+      await notifyn8n(user);
+  } catch (error) {
+      console.error("Failed to notify n8n:", error);
+  }
+
  try {
+
     await sendVerificationEmail(email, verificationCode);
     console.log("✅ Email sent successfully!");
   } catch (error) {
