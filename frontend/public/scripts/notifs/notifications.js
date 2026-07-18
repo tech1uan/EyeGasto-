@@ -237,11 +237,11 @@ export async function renderNotifications() {
           innerHTML = `
       
         <div class="notif-gastoo-icon mood-concerned
-                  w-10 h-10 p rounded-full flex items-center justify-center
+                   w-9 h-9 rounded-full  flex-shrink-0 flex items-center justify-center
                     bg-[#FBE3B8] overflow-hidden">
 
                   <img src="${face}" 
-                      class="block w-15 h-15 object-contain" 
+                      class="block w-full h-full object-cover" 
                       alt="icon" />
 
                 </div>
@@ -270,12 +270,12 @@ export async function renderNotifications() {
         className = `notif-row unread flex items-start gap-[10px] p-[11px] rounded-2xl cursor-pointer
                 bg-[#EBF8F7] hover:bg-[#f0fdfa] transition-colors duration-150 relative`
 
-        innerHTML = `<div class="notif-gastoo-icon mood-concerned
-              w-10 h-10 p rounded-full flex items-center justify-center
+        innerHTML = `<div class="notif-gastoo-icon  flex-shrink-0 mood-concerned
+                w-9 h-9 rounded-full flex items-center justify-center
                 bg-[#FBE3B8] overflow-hidden">
 
               <img src="${face}" 
-                  class="block w-15 h-15 object-contain" 
+                  class="block w-full h-full object-cover" 
                   alt="icon" />
 
             </div>
