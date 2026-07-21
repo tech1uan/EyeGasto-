@@ -1290,8 +1290,7 @@
     </div>
 
         </div>
-      </div>
-        <div id="analytics-loader" class="hidden">
+  
           
           <div id="analytics-loader" class="hidden px-4 pb-6 animate-pulse">
 
@@ -1362,8 +1361,12 @@
 
         </div>
 
-    </div>
-    </div>
+    
+          </div>
+
+
+      </div>
+      
    </div>
 
    <div class="section profile-section hidden">
@@ -1904,12 +1907,87 @@
       </main>
 
       
-        <div id="app-loader" 
-        class="fixed inset-0 z-[9999] flex flex-col items-center justify-center"
-        style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100vw; height: 100vh; background: #0d2b2b; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999;">
-        <img src="images/gastoo-assets/gastoo_head_nav.png" class="w-16 h-16 animate-bounce mb-4" alt="Loading">
-        <p class="font-['DM_Sans'] text-[#6ab3a6] text-sm">Loading Gastoo...</p>
+            <div
+      id="app-loader"
+      class="fixed inset-0 z-[9999] bg-[#0d2b2b] flex items-center justify-center px-5"
+    >
+
+      <div class="w-full max-w-md animate-pulse">
+
+        <!-- Header -->
+        <div class="flex items-center gap-3 mb-8">
+
+          <div
+            class="w-14 h-14 rounded-2xl bg-[#1c4d47] border border-[#2c6b63] flex-shrink-0">
+          </div>
+
+          <div class="flex-1 space-y-2">
+
+            <div class="h-5 w-36 rounded-full bg-[#1c4d47]"></div>
+
+            <div class="h-3 w-24 rounded-full bg-[#17403b]"></div>
+
+          </div>
+
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="grid grid-cols-2 gap-3 mb-6">
+
+          <div class="rounded-3xl bg-[#123733] border border-[#1d4d47] p-4">
+
+            <div class="h-3 w-20 rounded-full bg-[#1f5a53] mb-4"></div>
+
+            <div class="h-8 w-24 rounded-xl bg-[#1c4d47]"></div>
+
+          </div>
+
+          <div class="rounded-3xl bg-[#123733] border border-[#1d4d47] p-4">
+
+            <div class="h-3 w-20 rounded-full bg-[#1f5a53] mb-4"></div>
+
+            <div class="h-8 w-24 rounded-xl bg-[#1c4d47]"></div>
+
+          </div>
+
+        </div>
+
+        <!-- Chart -->
+        <div
+          class="rounded-3xl bg-[#123733] border border-[#1d4d47] p-6 flex justify-center mb-6">
+
+          <div
+            class="w-40 h-40 rounded-full border-[18px] border-[#1f5a53]">
+          </div>
+
+        </div>
+
+        <!-- Recent Expenses -->
+        <div
+          class="rounded-3xl bg-[#123733] border border-[#1d4d47] p-5 space-y-4">
+
+          <div class="h-4 w-32 rounded-full bg-[#1c4d47]"></div>
+
+          <div class="h-3 rounded-full bg-[#17403b]"></div>
+
+          <div class="h-3 rounded-full bg-[#17403b]"></div>
+
+          <div class="h-3 w-3/4 rounded-full bg-[#17403b]"></div>
+
+        </div>
+
+        <!-- Loading -->
+        <div class="flex justify-center mt-8">
+
+          <p class="text-[#73b4a8] text-sm font-['DM_Sans']">
+            Loading Gastoo...
+          </p>
+
+        </div>
+
       </div>
+
+    </div>
 
       
       <div  id ="notif-container"></div>
