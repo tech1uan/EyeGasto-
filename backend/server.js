@@ -18,6 +18,7 @@ import { optionalAuth } from './middleware/optionalAuth.js';
 import webpush from 'web-push';
 
 import dns from "dns";
+import { startNotificationCron } from './cron/notificationCron.js';
 dns.setDefaultResultOrder("ipv4first");
 
 
@@ -130,4 +131,7 @@ server.use(errorHandler);
 
 server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
+
+    startNotificationCron();
+    console.log("Notification cron started.")
 });
