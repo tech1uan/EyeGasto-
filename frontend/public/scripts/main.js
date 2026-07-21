@@ -86,11 +86,7 @@ initExpensesPage()
         ]);
 
 const loader = document.getElementById('app-loader');
-    if (loader) {
-      loader.style.transition = 'opacity 0.3s ease';
-      loader.style.opacity = '0';
-      setTimeout(() => loader.remove(), 300);
-}
+  
 
  // Navigation & Event Listeners
         initNavbar();
@@ -126,7 +122,9 @@ const loader = document.getElementById('app-loader');
 
         initDLReportBtn();
 
-        requestAnimationFrame(loadSecondaryFeatures)
+       await loadSecondaryFeatures()
+
+       document.getElementById("app-loader").classList.add("hidden");
 
 } catch (error) {
   console.error("Initialization crash:", error);
@@ -146,8 +144,6 @@ async function loadSecondaryFeatures() {
 
         updateExpenseHeatMap(),
 
-        initAnalytics(),
-
         initAnalyticsFilter(),
 
         initReceipts()
@@ -156,7 +152,7 @@ async function loadSecondaryFeatures() {
 
     initToolTipForHeatmap();
 
-    requestAnimationFrame(loadBackgroundFeatures);
+   await loadBackgroundFeatures()
 
 }
 
