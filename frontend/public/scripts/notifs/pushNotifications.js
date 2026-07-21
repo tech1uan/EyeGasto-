@@ -2,7 +2,7 @@ import { fetchGetUserExpenses, getExpensesByRange, getExpensesDailyStats, getTot
 import { markGoalCompletedNotified, userSavings } from "../data/savings.js";
 import { getNotificationStatus, markReminderShown, markTipShown } from "../data/user.js";
 import { pushGastooMood } from "../ui/renderMascot.js";
-import { pushNotification, webPushNotifToUser } from "./notifications.js";
+import { pushNotification } from "./notifications.js";
 
 export async function recalculateBudget(dailySpent,dailyBudget,monthlySpent, monthlyBudget) {
   
@@ -211,9 +211,7 @@ async function calculateSavingsMilestone(currentSaved, goal) {
       "You haven't added any expenses today. Keep your records accurate!",
     );
   
-  await webPushNotifToUser("Don't forget to log!", "You haven't added any expenses today. Keep your records accurate!")
-
-
+ 
     pushGastooMood('happy')
    
     await markReminderShown();
@@ -238,7 +236,6 @@ async function calculateSavingsMilestone(currentSaved, goal) {
         tip,
       );
 
-    await webPushNotifToUser("Gastoo's Tip", tip);
     pushGastooMood('happy'); 
      await markTipShown()
   }

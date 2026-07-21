@@ -1,6 +1,22 @@
 
 import pool from "../config.js";
 
+export async function getAllUsers() {
+  try {
+   const [result] = await pool.query(
+    `
+    SELECT *
+    FROM users
+    WHERE notifications_enabled = 1;
+    `
+   )  
+
+   return result
+  } catch (error) {
+    throw error
+  }
+}
+
 export async function createUser(firstName,lastName,username,email,password,verification_code, expires_at) {
   
   try {
