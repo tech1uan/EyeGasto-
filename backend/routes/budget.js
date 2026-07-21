@@ -1,7 +1,7 @@
 import express from 'express';
 import { authMiddleware } from '../middleware/authMiddleware.js';
 import {addBudget,editBudget, getBudgetComparison, getUserBudgetSummary } from '../database/models/budget.js';
-import { budgetRangeQueryValidator, budgetRangeValidator, inputAmount } from '../validators/inputValidators.js';
+import { budgetRangeQueryValidator, budgetRangeValidator, editBudgetAmount, inputAmount } from '../validators/inputValidators.js';
 import validate from '../middleware/validate.js';
 import { matchedData } from 'express-validator';
 import { deleteInsights } from '../database/models/insights.js';
@@ -26,7 +26,7 @@ budgetRouter.post('/add', authMiddleware, inputAmount, budgetRangeValidator, val
   }
 })
 
-budgetRouter.put('/edit', authMiddleware, inputAmount, budgetRangeValidator, validate, async(req,res,next) => {
+budgetRouter.put('/edit', authMiddleware, editBudgetAmount, budgetRangeValidator, validate, async(req,res,next) => {
   try {
     const {userId} = req.user;
     const {amount,range} = matchedData(req);

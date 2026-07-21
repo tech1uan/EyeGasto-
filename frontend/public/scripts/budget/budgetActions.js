@@ -48,17 +48,19 @@ export function initSaveBudget() {
     const mode = saveBtn.dataset.mode;
     const amount = Number(document.getElementById('budget-amount').value);
 
+    if(mode == 'add-daily') {
+      
     if(!amount) {
       showMessage(errorMessage, 'Please enter an amount!');
       return;
     }
 
+    
     if(amount < 0) {
       showMessage(errorMessage, 'Please enter a valid amount!');
       return;
     }
 
-    if(mode == 'add-daily') {
     confirmMessage('green', `Do you want to add this amount?`, async () => {
     saveBtn.disabled = true;
     showLoading(saveBtn);
@@ -79,6 +81,16 @@ export function initSaveBudget() {
     } 
   })
     } else if (mode == 'add-monthly') {
+    if(!amount) {
+      showMessage(errorMessage, 'Please enter an amount!');
+      return;
+    }
+
+    
+    if(amount < 0) {
+      showMessage(errorMessage, 'Please enter a valid amount!');
+      return;
+    }
     confirmMessage('green', `Do you want to add this amount?`, async () => {
     saveBtn.disabled = true;
     showLoading(saveBtn);

@@ -19,6 +19,15 @@ export const inputAmount = [
     .toFloat()
 ];
 
+export const editBudgetAmount = [
+  body('amount')
+    .notEmpty().withMessage('Amount is required')
+    .bail() 
+    .isNumeric().withMessage('Amount must contain numbers only')
+    .bail()
+];
+
+
 export const updateProfileValidator = [
   body('newFirstName')
     .trim()
