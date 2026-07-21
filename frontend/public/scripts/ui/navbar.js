@@ -44,7 +44,7 @@ export function initNavbar() {
         
         document.querySelector(`.${targetSection}-section`).classList.remove('hidden');
 
-
+    
         navButtons.forEach(btn => {
             btn.classList.remove('active');
         })

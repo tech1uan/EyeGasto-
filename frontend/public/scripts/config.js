@@ -1,5 +1,12 @@
-const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const host = window.location.hostname;
+
+const isLocal =
+  host === "localhost" ||
+  host === "127.0.0.1" ||
+  host.startsWith("192.168.") ||
+  host.startsWith("10.") ||
+  host.startsWith("172.");
 
 export const API_BASE = isLocal
-  ? 'http://localhost:8000'
-  : 'https://gastoos.onrender.com';
+  ? `http://${host}:8000`
+  : "https://gastoos.onrender.com";

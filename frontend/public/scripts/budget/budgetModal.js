@@ -12,9 +12,6 @@ export async function openSetBudgetModal(mode) {
         document.querySelector('.edit-budget-container').classList.add('hidden');
     }
     
-
-    const userBudget = await budget.getBudget(currentView);
-   
     if(mode === 'add-daily') {
         saveBtn.dataset.mode = 'add-daily';
         document.querySelector('.edit-budget-container').classList.remove('hidden');
@@ -28,6 +25,11 @@ export async function openSetBudgetModal(mode) {
         document.querySelector('.budget-mode-title').textContent = 'Add Budget';;
         document.querySelector('.budget-mode-description').textContent = 'Set your budget for this month and stay on track with your spending.';
     }
+
+
+    
+    const userBudget = await budget.getBudget(currentView)
+   
 
     if(mode === 'edit-daily') {
         document.getElementById('budget-amount').value = await userBudget.originalBudget.toFixed(2);

@@ -80,7 +80,7 @@ async function openEditForm(id) {
   const expenses = await getCurrentExpenses();
   renderExpensesHTML(expenses, "home");
   renderExpensesHTML(expenses,"expenses")
-
+  
   await Promise.all([
   updateTotalExpenses(),
   updateRecentExpenses(),

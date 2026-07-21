@@ -31,7 +31,9 @@ async function login() {
   }
 
   showLoading(loginBtn);
-
+    console.log("Login button clicked");
+    console.log("Password:", password);
+    console.log("API:", API_BASE);
   try {
     const res = await fetch(`${API_BASE}/auth/login`, {
       method: 'POST',

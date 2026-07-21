@@ -130,7 +130,17 @@ export function updateProfileImagesUI(pictureUrl) {
     container.innerHTML = `<img src="${picture}" class="rounded-full w-8 h-8 object-cover" alt="User default avatar">`;
   }
 }
+export async function refreshProfileStats() {
+  const stats = await initProfileStats();
 
+  const expensesLogged = stats?.profileStats?.expenses_logged || '0';
+  const monthsActive = stats?.profileStats?.months_active || '0';
+
+  console.log(stats)
+  document.getElementById('expenses-logged-num').textContent = expensesLogged;
+  document.getElementById('months-active-num').textContent = monthsActive;
+
+}
 export async function loadUser() {
   const [data, userProfileStats, savings] = await Promise.all([
     getUser(),

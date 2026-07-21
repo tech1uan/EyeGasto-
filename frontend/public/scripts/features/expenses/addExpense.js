@@ -1,4 +1,4 @@
-  import {addExpense } from "../../data/expenses.js";
+  import {addExpense, invalidateProfileStats } from "../../data/expenses.js";
   import { renderExpensesHTML } from "../../ui/renderExpenses.js";
   import { removeJustifyCenter } from "../../core/utils.js";
   import { confirmMessage } from "../../core/confirmActions.js";
@@ -12,6 +12,7 @@ import { hideLoading, showLoading } from "../../ui/loading.js";
 import { initAnalytics } from "../analytics/analytics.js";
 import { checkBudgetData } from "../../budget/budgetActions.js";
 import { checkSpendingTrend } from "../../notifs/pushNotifications.js";
+import { refreshProfileStats } from "../../data/user.js";
    
 
    export async function initCategoryShortcut() {
@@ -66,12 +67,13 @@ import { checkSpendingTrend } from "../../notifs/pushNotifications.js";
 
               renderExpensesHTML(expenses, "home")
               renderExpensesHTML(expenses, "expenses")
-
+              await invalidateProfileStats()
+              
               await Promise.all([
               updateTotalExpenses(),
               updateExpensesChart(),
               renderBudget(),
-  
+              refreshProfileStats()
               ])
 
               await checkBudgetData()
@@ -106,11 +108,13 @@ import { checkSpendingTrend } from "../../notifs/pushNotifications.js";
     const expensesSection = document.querySelector('.expenses-section');
     const homeSection = document.querySelector('.home-section');
     const analyticsSection = document.querySelector('.analytics-section');
-   
+    const profileSection = document.querySelector('.profile-section');
+
     expensesNavigatorContainer.classList.add('hidden');
     expensesSection.classList.remove('hidden');
     homeSection.classList.add('hidden');
     analyticsSection.classList.add('hidden');
+    profileSection.classList.add('hidden');
 
         navButtons.forEach(nav => {
             nav.classList.remove('active')
