@@ -30,11 +30,7 @@ export function initNavbar() {
         } else {
             document.querySelector('.gastoo-mascot-main-container').classList.remove('hidden');
         }
-
-        if(targetSection === 'analytics') {
-             await initAnalytics()
-        }
-
+        
 
         const sections = document.querySelectorAll('.section');
 
@@ -50,9 +46,17 @@ export function initNavbar() {
         })
 
         button.classList.add('active');
+
+         if(targetSection === 'analytics') {
+             await initAnalytics()
+        }
+
         })
 
+        
     })
+
+    
  
     seeAll.addEventListener('click', () => {
         document.querySelector('.home-section').classList.add('hidden');

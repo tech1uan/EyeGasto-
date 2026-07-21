@@ -155,10 +155,15 @@ export async function updateAnalytics(range) {
 export async function initAnalytics() {
   setActiveBtn(document.querySelector(`button[value="${currentView}"]`));
 
-  await updateAnalyticsDonut(currentView)
-  await updateAnalytics(currentView);
-  await updateBudgetComparisonChart();
-  
+  showAnalyticsLoader();
+
+await Promise.all([
+    updateAnalyticsDonut(currentView),
+    updateAnalytics(currentView),
+    updateBudgetComparisonChart()
+]);
+
+hideAnalyticsLoader();
 }
 
 export async function initAnalyticsFilter() {
@@ -170,9 +175,16 @@ export async function initAnalyticsFilter() {
 
     currentView = button.value;
     setActiveBtn(document.querySelector(`button[value="${currentView}"]`));
+    
+    showAnalyticsLoader();
+    
+    await Promise.all([
+    await updateAnalyticsDonut(currentView),
+    await updateAnalytics(currentView)
+     ])
 
-    await updateAnalyticsDonut(currentView)
-    await updateAnalytics(currentView); 
+     hideAnalyticsLoader();
+   
   });
 }
 
@@ -195,4 +207,29 @@ function setActiveBtn(activeBtn) {
     indicator.style.left = `${btnRect.left - containerRect.left}px`;
     indicator.style.width = `${btnRect.width}px`;
   }
+}
+
+
+export function showAnalyticsLoader() {
+
+    document
+        .getElementById("analytics-loader")
+        .classList.remove("hidden");
+
+    document
+        .querySelector(".analytics-content")
+        .classList.add("hidden");
+
+}
+
+export function hideAnalyticsLoader() {
+
+    document
+        .getElementById("analytics-loader")
+        .classList.add("hidden");
+
+    document
+        .querySelector(".analytics-content")
+        .classList.remove("hidden");
+
 }
