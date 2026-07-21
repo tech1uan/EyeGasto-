@@ -76,6 +76,7 @@
     --ease-in: cubic-bezier(0.4, 0, 1, 1);
     --ease-out: cubic-bezier(0, 0, 0.2, 1);
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --animate-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     --animate-bounce: bounce 1s infinite;
     --blur-sm: 8px;
     --blur-md: 12px;
@@ -651,6 +652,9 @@
   .h-30 {
     height: calc(var(--spacing) * 30);
   }
+  .h-56 {
+    height: calc(var(--spacing) * 56);
+  }
   .h-\[3px\] {
     height: 3px;
   }
@@ -726,6 +730,9 @@
   .w-2 {
     width: calc(var(--spacing) * 2);
   }
+  .w-2\/3 {
+    width: calc(2/3 * 100%);
+  }
   .w-3 {
     width: calc(var(--spacing) * 3);
   }
@@ -771,8 +778,14 @@
   .w-24 {
     width: calc(var(--spacing) * 24);
   }
+  .w-28 {
+    width: calc(var(--spacing) * 28);
+  }
   .w-40 {
     width: calc(var(--spacing) * 40);
+  }
+  .w-56 {
+    width: calc(var(--spacing) * 56);
   }
   .w-\[0\%\] {
     width: 0%;
@@ -928,6 +941,9 @@
   .animate-bounce {
     animation: var(--animate-bounce);
   }
+  .animate-pulse {
+    animation: var(--animate-pulse);
+  }
   .cursor-default {
     cursor: default;
   }
@@ -1049,6 +1065,13 @@
       margin-block-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-y-reverse)));
     }
   }
+  .space-y-3 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--spacing) * 3) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--spacing) * 3) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
   .truncate {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1071,6 +1094,9 @@
   }
   .rounded-2xl {
     border-radius: var(--radius-2xl);
+  }
+  .rounded-3xl {
+    border-radius: var(--radius-3xl);
   }
   .rounded-4xl {
     border-radius: var(--radius-4xl);
@@ -1133,6 +1159,10 @@
   .border-2 {
     border-style: var(--tw-border-style);
     border-width: 2px;
+  }
+  .border-\[18px\] {
+    border-style: var(--tw-border-style);
+    border-width: 18px;
   }
   .border-t {
     border-top-style: var(--tw-border-style);
@@ -3706,6 +3736,11 @@
   syntax: "*";
   inherits: false;
   initial-value: 1;
+}
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
 }
 @keyframes bounce {
   0%, 100% {

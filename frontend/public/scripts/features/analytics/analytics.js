@@ -212,24 +212,16 @@ function setActiveBtn(activeBtn) {
 
 export function showAnalyticsLoader() {
 
-    document
-        .getElementById("analytics-loader")
-        .classList.remove("hidden");
+    document.getElementById("analytics-loader").classList.remove("hidden");
 
-    document
-        .querySelector(".analytics-content")
-        .classList.add("hidden");
+    document.querySelector(".analytics-content").classList.add("hidden");
 
 }
 
 export function hideAnalyticsLoader() {
 
-    document
-        .getElementById("analytics-loader")
-        .classList.add("hidden");
+    document.getElementById("analytics-loader").classList.add("hidden");
 
-    document
-        .querySelector(".analytics-content")
-        .classList.remove("hidden");
+    document.querySelector(".analytics-content").classList.remove("hidden");
 
 }
