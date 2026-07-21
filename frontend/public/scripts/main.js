@@ -34,6 +34,28 @@ import { initReceipts } from './ui/renderReceipts.js';
 import { renderSavingsHTML } from './ui/renderSavings.js'
 import { initAddWithdraw } from './withdrawals/addWithdraw.js';
 
+function showAppLoader() {
+    document.querySelector(".app-loader").classList.remove("hidden");
+    document.querySelector(".app-container").classList.add("hidden");
+}
+
+function hideAppLoader() {
+
+    const loader = document.querySelector(".app-loader");
+
+    loader.classList.add("fade-out");
+
+    setTimeout(() => {
+
+        loader.classList.add("hidden");
+        loader.classList.remove("fade-out");
+
+        document.querySelector(".app-container").classList.remove("hidden");
+
+    },350);
+
+}
+
 export async function authFetch(url, options = {}) {
 
   let res = await fetch(url, {
@@ -64,6 +86,8 @@ return res;
 
 async function initApp() {
   console.log('App is initializing!')
+
+  showAppLoader()
 try {
   let res = await authFetch(`${API_BASE}/app/auth`, {
   method: 'GET',
@@ -75,8 +99,10 @@ if (!res.ok) {
        return; 
     }
 
+
 await initUser();
 showNotif('existingUser');
+
 
 await Promise.all([
 renderSavingsHTML(),
@@ -85,8 +111,7 @@ renderTotalExpensesHTML(),
 initExpensesPage()
         ]);
 
-const loader = document.getElementById('app-loader');
-  
+hideAppLoader()
 
  // Navigation & Event Listeners
         initNavbar();
@@ -124,8 +149,8 @@ const loader = document.getElementById('app-loader');
 
        await loadSecondaryFeatures()
 
-       document.getElementById("app-loader").classList.add("hidden");
 
+       
 } catch (error) {
   console.error("Initialization crash:", error);
   return window.location.replace('/login.html');

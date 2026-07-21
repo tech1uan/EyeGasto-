@@ -219,9 +219,19 @@ export function showAnalyticsLoader() {
 }
 
 export function hideAnalyticsLoader() {
+  const loader = document.getElementById("analytics-loader");
 
-    document.getElementById("analytics-loader").classList.add("hidden");
+  if (!loader) return;
 
-    document.querySelector(".analytics-content").classList.remove("hidden");
+  loader.classList.add("fade-out");
 
+  setTimeout(() => {
+    loader.classList.add("hidden");
+    loader.classList.remove("fade-out");
+
+    const content = document.querySelector(".analytics-content");
+    if (content) {
+      content.classList.remove("hidden");
+    }
+  }, 350);
 }
