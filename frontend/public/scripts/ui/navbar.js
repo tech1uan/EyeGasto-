@@ -32,7 +32,7 @@ export function initNavbar() {
         }
 
         if(targetSection === 'analytics') {
-             initAnalytics()
+             await initAnalytics()
         }
 
 
