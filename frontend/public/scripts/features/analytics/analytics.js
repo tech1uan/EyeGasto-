@@ -177,10 +177,10 @@ export async function initAnalyticsFilter() {
     setActiveBtn(document.querySelector(`button[value="${currentView}"]`));
     
     showAnalyticsLoader();
-    
+
     await Promise.all([
-    await updateAnalyticsDonut(currentView),
-    await updateAnalytics(currentView)
+     updateAnalyticsDonut(currentView),
+     updateAnalytics(currentView)
      ])
 
      hideAnalyticsLoader();
