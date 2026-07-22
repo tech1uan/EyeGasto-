@@ -5,7 +5,7 @@ import { notifyUser } from "../services/pushNotification.js";
 
 export function startNotificationCron() {
 
-    cron.schedule(" 0 19 * * *", async () => {
+    cron.schedule("0 19 * * *", async () => {
        
         const users = await getAllUsers();
 
