@@ -15,7 +15,7 @@ export async function startNotificationCron() {
             const stats = await getDailyStats(user.id);
 
             if(stats.todayExpenseCount === 0) {
-
+                console.log(`Sending notification to user ${user.id}`);
                 await notifyUser(user.id, "Dont forget to log!", "You haven't added any expenses today.");
             }
         }

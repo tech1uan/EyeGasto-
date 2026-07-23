@@ -6,7 +6,8 @@ export const notifyUser = async (userId, title, body) => {
   const subscriptions = await getSubscriptionsByUser(userId);
   const settings = await getNotificationPreference(userId);
 
-  
+     console.log("notifyUser called", userId);
+     
   if(!settings.notifications_enabled) {
     return;
   }
