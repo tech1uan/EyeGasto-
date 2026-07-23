@@ -193,31 +193,74 @@ async function calculateSavingsMilestone(currentSaved, goal) {
   }
 }
 
- async function initDailyNotifications(todayExpenseCount, notificationStatus) {
- const today = new Date().toLocaleDateString('sv');
+async function initDailyNotifications(todayExpenseCount, notificationStatus) {
 
- const hour = new Date().getHours();
- const lastReminderDate = notificationStatus?.data?.last_reminder_date;
-  const rawTipDate = notificationStatus?.data?.last_tip_date; 
- 
- const lastTip = rawTipDate? new Date(rawTipDate).toLocaleDateString('sv') : null;
- const lastReminder = lastReminderDate? new Date(lastReminderDate).toLocaleDateString('sv') : null;
+  const now = new Date();
 
- if(hour >= 19 && todayExpenseCount === 0 && lastReminder !== today) {
-  
-   await pushNotification(
+  // Philippines date (YYYY-MM-DD)
+  const today = now.toLocaleDateString('sv-SE', {
+    timeZone: 'Asia/Manila'
+  });
+
+
+  // Philippines hour
+  const hour = Number(
+    now.toLocaleString('en-US', {
+      timeZone: 'Asia/Manila',
+      hour: 'numeric',
+      hour12: false
+    })
+  );
+
+
+  const rawReminderDate = notificationStatus?.last_reminder_at;
+  const rawTipDate = notificationStatus?.last_tip_at;
+
+
+  // Convert database UTC date to PH date
+  const getPHDate = (date) => {
+
+    if (!date) return null;
+
+    const utcDate = new Date(
+      typeof date === "string" 
+        ? date.replace(" ", "T") + "Z"
+        : date
+    );
+
+    return utcDate.toLocaleDateString('sv-SE', {
+      timeZone: 'Asia/Manila'
+    });
+  };
+
+
+  const lastTip = getPHDate(rawTipDate);
+  const lastReminder = getPHDate(rawReminderDate);
+
+
+
+  // Reminder once per day at 7PM Philippines time
+  if (
+    hour >= 19 &&
+    todayExpenseCount === 0 &&
+    lastReminder !== today
+  ) {
+
+    await pushNotification(
       'happy',
       "Don't forget to log!",
-      "You haven't added any expenses today. Keep your records accurate!",
+      "You haven't added any expenses today. Keep your records accurate!"
     );
-  
- 
-    pushGastooMood('happy')
-   
-    await markReminderShown();
 
+
+    pushGastooMood('happy');
+
+    await markReminderShown();
   }
-    const tips = [
+
+
+
+  const tips = [
     "Small daily expenses add up fast — log everything, even ₱20 snacks.",
     "Try the 24-hour rule before any non-essential purchase.",
     "Reviewing last week's expenses takes 2 minutes and saves a lot.",
@@ -226,20 +269,45 @@ async function calculateSavingsMilestone(currentSaved, goal) {
     "Try to beat yesterday's spending total — even by ₱10.",
     "Tracking expenses is the first step. The habit makes the difference.",
   ];
-  const tip = tips[new Date().getDay()];
 
 
-  if(lastTip !== today) {
+  // Get Philippines weekday
+  const dayName = now.toLocaleDateString('en-US', {
+    timeZone: 'Asia/Manila',
+    weekday: 'long'
+  });
+
+
+  const dayIndex = {
+    Sunday: 0,
+    Monday: 1,
+    Tuesday: 2,
+    Wednesday: 3,
+    Thursday: 4,
+    Friday: 5,
+    Saturday: 6
+  }[dayName];
+
+
+  const tip = tips[dayIndex];
+
+
+
+  // Send tip once per day
+  if (lastTip !== today) {
+
     await pushNotification(
-        'happy',
-        "Gastoo's Tip",
-        tip,
-      );
+      'happy',
+      "Gastoo's Tip",
+      tip
+    );
 
-    pushGastooMood('happy'); 
-     await markTipShown()
+
+    pushGastooMood('happy');
+
+    await markTipShown();
   }
- }
+}
  
 export async function sendDailyNotifications() {
   const stats = await getExpensesDailyStats();

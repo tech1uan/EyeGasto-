@@ -1,5 +1,4 @@
 
-import { getPhilippineDate } from "../../utils/date.js";
 import pool from "../config.js";
 
 export async function getAllUsers() {
@@ -238,8 +237,8 @@ export async function getNotificationStatus(userId) {
   const [rows] = await pool.query(
     `
     SELECT
-      last_tip_date,
-      last_reminder_date
+      last_tip_at,
+      last_reminder_at
     FROM users
     WHERE id = ?
     `,
@@ -251,14 +250,13 @@ export async function getNotificationStatus(userId) {
 
 export async function updateLastTipDate(userId) {
 
-  const today = getPhilippineDate();
   const [result] = await pool.query(
     `
     UPDATE users
-    SET last_tip_date = ?
+    SET last_tip_at = UTC_TIMESTAMP()
     WHERE id = ?
     `,
-    [today, userId]
+    [userId]
   );
 
   return result;
@@ -270,7 +268,7 @@ export async function updateLastReminderDate(userId) {
     const [result] = await pool.query(
     `
     UPDATE users
-    SET last_reminder_date = CURDATE()
+    SET last_reminder_at = UTC_TIMESTAMP()
     WHERE id = ?
     `,
     [userId]
@@ -298,33 +296,33 @@ export async function getTotalUsersByRange(range) {
  
   if(range === 'last7') {
     current = `
-    created_at >= NOW() - INTERVAL 7 DAY
+    created_at >=  UTC_TIMESTAMP() - INTERVAL 7 DAY
     `
   } else if (range === 'last30') {
     current = `
-    created_at >= NOW() - INTERVAL 30 DAY
+    created_at >=  UTC_TIMESTAMP() - INTERVAL 30 DAY
     `
   } else if(range === 'last90') {
     current = `
-    created_at >= NOW() - INTERVAL 90 DAY
+    created_at >=  UTC_TIMESTAMP() - INTERVAL 90 DAY
     `
   }
 
 
   if(range === 'last7') {
     previous = `
-    created_at >= NOW() - INTERVAL 14 DAY
-    AND created_at < NOW() - INTERVAL 7 DAY
+    created_at >=  UTC_TIMESTAMP() - INTERVAL 14 DAY
+    AND created_at <  UTC_TIMESTAMP() - INTERVAL 7 DAY
     ` 
   } else if (range === 'last30') {
     previous = `
-   created_at >= NOW() - INTERVAL 60 DAY
-    AND created_at < NOW() - INTERVAL 30 DAY
+   created_at >=  UTC_TIMESTAMP() - INTERVAL 60 DAY
+    AND created_at <  UTC_TIMESTAMP()- INTERVAL 30 DAY
     `
   } else if(range === 'last90') {
     previous = `
-   created_at >= NOW() - INTERVAL 180 DAY
-   AND created_at < NOW() - INTERVAL 90 DAY
+   created_at >=  UTC_TIMESTAMP() - INTERVAL 180 DAY
+   AND created_at <  UTC_TIMESTAMP() - INTERVAL 90 DAY
     `
   }
 
@@ -373,7 +371,7 @@ export async function setLastLogin(userId) {
   try {
     const [result] = await pool.query(`
       UPDATE users
-      SET last_login = NOW()
+      SET last_login =  UTC_TIMESTAMP()
       WHERE id = ?
       
       `, [userId])
@@ -387,7 +385,7 @@ export async function getActiveUsersToday() {
      const [result] = await pool.query(`
       SELECT COUNT(*) as active_users_today
       FROM users
-      WHERE DATE(last_login) = CURDATE();
+      WHERE DATE(last_login) = UTC_DATE()
       `)
 
     return result[0]
@@ -407,33 +405,33 @@ export async function getNewSignups(range) {
 
     if(range === 'last7') {
       current = `
-      created_at >= NOW() - INTERVAL 7 DAY
+      created_at >=  UTC_TIMESTAMP()- INTERVAL 7 DAY
       `
     } else if (range === 'last30') {
       current = `
-      created_at >= NOW() - INTERVAL 30 DAY
+      created_at >=  UTC_TIMESTAMP()- INTERVAL 30 DAY
       `
     } else if(range === 'last90') {
       current = `
-      created_at >= NOW() - INTERVAL 90 DAY
+      created_at >=  UTC_TIMESTAMP()- INTERVAL 90 DAY
       `
     }
 
 
     if(range === 'last7') {
       previous = `
-      created_at >= NOW() - INTERVAL 14 DAY
-      AND created_at < NOW() - INTERVAL 7 DAY
+      created_at >= UTC_TIMESTAMP() - INTERVAL 14 DAY
+      AND created_at <  UTC_TIMESTAMP() - INTERVAL 7 DAY
       ` 
     } else if (range === 'last30') {
       previous = `
-    created_at >= NOW() - INTERVAL 60 DAY
-      AND created_at < NOW() - INTERVAL 30 DAY
+    created_at >=  UTC_TIMESTAMP() - INTERVAL 60 DAY
+      AND created_at <  UTC_TIMESTAMP()- INTERVAL 30 DAY
       `
     } else if(range === 'last90') {
       previous = `
-    created_at >= NOW() - INTERVAL 180 DAY
-    AND created_at < NOW() - INTERVAL 90 DAY
+    created_at >=  UTC_TIMESTAMP()- INTERVAL 180 DAY
+    AND created_at <  UTC_TIMESTAMP() - INTERVAL 90 DAY
       `
     }
   try {
@@ -528,7 +526,7 @@ export async function getUserGrowth(range) {
       DATE(created_at) AS day,
       COUNT(*) AS signups
       FROM users
-      WHERE created_at >= CURDATE() - INTERVAL ? DAY
+      WHERE created_at >= UTC_TIMESTAMP() - INTERVAL ? DAY
       GROUP BY DATE(created_at)
       ORDER BY day
     `, [interval - 1]);
@@ -538,7 +536,7 @@ export async function getUserGrowth(range) {
       DATE(last_login) AS day,
       COUNT(*) AS activeUsers
       FROM users
-      WHERE last_login >= CURDATE() - INTERVAL ? DAY
+      WHERE last_login >= UTC_TIMESTAMP() - INTERVAL ? DAY
       GROUP BY DATE(last_login)
       ORDER BY day
     `, [interval - 1]);
