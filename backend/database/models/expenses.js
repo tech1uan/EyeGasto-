@@ -99,7 +99,7 @@ export async function getExpensesForToday(userId) {
   try {
     const [result] = await pool.query(
       `
-          SELECT expenses.expense_id,expenses.description, expenses.amount, expenses.category_id, expenses.date_time, category.name AS category, category.color, category.logo
+         SELECT expenses.expense_id,expenses.description, expenses.amount, expenses.category_id, expenses.date_time, category.name AS category, category.color, category.logo
         FROM expenses
         INNER JOIN category
         ON expenses.category_id = category.id

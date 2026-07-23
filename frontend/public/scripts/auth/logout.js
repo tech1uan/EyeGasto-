@@ -20,4 +20,4 @@ const button = document.getElementById('logoutBtn');
 if(!button) return; 
 
 button.addEventListener('click', logout)
-}
+} 

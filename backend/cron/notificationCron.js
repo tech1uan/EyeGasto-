@@ -3,10 +3,12 @@ import { getAllUsers } from "../database/models/users.js";
 import { getDailyStats } from "../database/models/expenses.js";
 import { notifyUser } from "../services/pushNotification.js";
 
-export function startNotificationCron() {
+export async function startNotificationCron() {
+   
 
-    cron.schedule("0 19 * * *", async () => {
-       
+    cron.schedule("* * * * *", async () => {
+        console.log("Cron fired!", new Date());
+
         const users = await getAllUsers();
 
         for(const user of users) {

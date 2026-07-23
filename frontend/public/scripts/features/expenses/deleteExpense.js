@@ -1,4 +1,4 @@
-import { deleteExpense } from "../../data/expenses.js";
+import { deleteExpense, invalidateProfileStats } from "../../data/expenses.js";
 import { confirmMessage } from "../../core/confirmActions.js";
 import { renderExpensesHTML } from "../../ui/renderExpenses.js";
 import { getCurrentExpenses } from "./viewExpense.js";
@@ -34,7 +34,8 @@ container.addEventListener('click', async (e) => {
 
     renderExpensesHTML(expenses, "home");
     renderExpensesHTML(expenses, "expenses")
-    
+   await invalidateProfileStats()
+              
     await Promise.all([
      updateTotalExpenses(),
      updateRecentExpenses(),

@@ -6,19 +6,7 @@ export const notifyUser = async (userId, title, body) => {
   const subscriptions = await getSubscriptionsByUser(userId);
   const settings = await getNotificationPreference(userId);
 
-  console.log(subscriptions)
-
-  try {
-    console.log("Sending notification to:", subscription.endpoint);
-
-    await webpush.sendNotification(subscription, payload);
-
-    console.log("Success");
-
-} catch (err) {
-    console.log(err.statusCode);
-    console.log(err.body);
-}
+  
   if(!settings.notifications_enabled) {
     return;
   }

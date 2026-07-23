@@ -51,6 +51,7 @@ export function initNavbar() {
              await initAnalytics()
         }
 
+
         })
 
         
