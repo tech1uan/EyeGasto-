@@ -117,6 +117,7 @@ server.use(
 server.use('/uploads', express.static('uploads'));
 
 server.get('/app/auth', authMiddleware, (req, res) => {
+         console.log("Retry result:", res.status);
     return res.json({ user: req.user });
 });
 

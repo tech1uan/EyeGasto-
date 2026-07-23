@@ -426,6 +426,6 @@ authRouter.post('/logout', async (req,res,next) => {
 
 function generateAccessToken (jwtUser) {
 
-return jwt.sign(jwtUser,process.env.ACCESS_KEY_SECRET, {expiresIn: '15m'})
+return jwt.sign(jwtUser,process.env.ACCESS_KEY_SECRET, {expiresIn: '30s'})
 }
 
