@@ -82,25 +82,24 @@ notificationsRouter.get(
   }
 );
 
+notificationsRouter.patch('/tip', authMiddleware, async (req, res, next) => {
+  try {
+    console.log("User:", req.user);
 
-notificationsRouter.patch(
-  '/tip',
-  authMiddleware,
-  async (req, res, next) => {
-    try {
+    const { userId } = req.user;
+    console.log("Updating:", userId);
 
-      const { userId } = req.user;
+    const result = await updateLastTipDate(userId);
+    console.log(result);
 
-      await updateLastTipDate(userId);
+    res.json({ success: true });
 
-      res.json({
-        success: true
-      });
-
-    } catch (error) {
-      next(error);
-    }
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
 });
+
 
 notificationsRouter.patch(
   '/reminder',
