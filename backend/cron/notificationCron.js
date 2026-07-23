@@ -6,16 +6,15 @@ import { notifyUser } from "../services/pushNotification.js";
 export async function startNotificationCron() {
    
 
-    cron.schedule("* * * * *", async () => {
-        console.log("Cron fired!", new Date());
-
+    cron.schedule("0 19 * * *", async () => {
+       
         const users = await getAllUsers();
 
         for(const user of users) {
             const stats = await getDailyStats(user.id);
 
             if(stats.todayExpenseCount === 0) {
-                console.log(`Sending notification to user ${user.id}`);
+
                 await notifyUser(user.id, "Dont forget to log!", "You haven't added any expenses today.");
             }
         }
