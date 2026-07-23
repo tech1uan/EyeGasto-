@@ -1,4 +1,5 @@
 
+import { getPhilippineDate } from "../../utils/date.js";
 import pool from "../config.js";
 
 export async function getAllUsers() {
@@ -249,13 +250,15 @@ export async function getNotificationStatus(userId) {
 }
 
 export async function updateLastTipDate(userId) {
+
+  const today = getPhilippineDate();
   const [result] = await pool.query(
     `
     UPDATE users
-    SET last_tip_date = CURDATE()
+    SET last_tip_date = ?
     WHERE id = ?
     `,
-    [userId]
+    [today, userId]
   );
 
   return result;
