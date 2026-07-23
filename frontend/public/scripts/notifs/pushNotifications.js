@@ -197,13 +197,10 @@ async function initDailyNotifications(todayExpenseCount, notificationStatus) {
 
   const now = new Date();
 
-  // Philippines date (YYYY-MM-DD)
   const today = now.toLocaleDateString('sv-SE', {
     timeZone: 'Asia/Manila'
   });
 
-
-  // Philippines hour
   const hour = Number(
     now.toLocaleString('en-US', {
       timeZone: 'Asia/Manila',
@@ -212,54 +209,53 @@ async function initDailyNotifications(todayExpenseCount, notificationStatus) {
     })
   );
 
-
-  const rawReminderDate = notificationStatus?.last_reminder_at;
-  const rawTipDate = notificationStatus?.last_tip_at;
-
-
-  // Convert database UTC date to PH date
   const getPHDate = (date) => {
-
     if (!date) return null;
 
-    const utcDate = new Date(
-      typeof date === "string" 
-        ? date.replace(" ", "T") + "Z"
-        : date
-    );
+    let utcDate;
+    if (typeof date === 'string') {
+      const normalized = date.includes('T')
+        ? date.endsWith('Z') ? date : date + 'Z'
+        : date.replace(' ', 'T') + 'Z';
+      utcDate = new Date(normalized);
+    } else {
+      utcDate = new Date(date);
+    }
+
+    if (isNaN(utcDate.getTime())) {
+      console.warn('⚠️ Invalid date:', date);
+      return null;
+    }
 
     return utcDate.toLocaleDateString('sv-SE', {
       timeZone: 'Asia/Manila'
     });
   };
 
+  const lastTip = getPHDate(notificationStatus?.last_tip_at);
+  const lastReminder = getPHDate(notificationStatus?.last_reminder_at);
 
-  const lastTip = getPHDate(rawTipDate);
-  const lastReminder = getPHDate(rawReminderDate);
+  console.log({
+    today,
+    hour,
+    lastReminder,
+    lastTip,
+    reminderAlreadySent: lastReminder === today,
+    tipAlreadySent: lastTip === today,
+  });
 
-
-
-  // Reminder once per day at 7PM Philippines time
-  if (
-    hour >= 19 &&
-    todayExpenseCount === 0 &&
-    lastReminder !== today
-  ) {
-
+  // Reminder — once per day at 7PM PH, only if no expenses logged
+  if (hour >= 19 && todayExpenseCount === 0 && lastReminder !== today) {
     await pushNotification(
       'happy',
       "Don't forget to log!",
       "You haven't added any expenses today. Keep your records accurate!"
     );
-
-
     pushGastooMood('happy');
-
     await markReminderShown();
   }
 
-
-
+  // Daily tip — once per day after 8AM PH
   const tips = [
     "Small daily expenses add up fast — log everything, even ₱20 snacks.",
     "Try the 24-hour rule before any non-essential purchase.",
@@ -270,41 +266,19 @@ async function initDailyNotifications(todayExpenseCount, notificationStatus) {
     "Tracking expenses is the first step. The habit makes the difference.",
   ];
 
-
-  // Get Philippines weekday
   const dayName = now.toLocaleDateString('en-US', {
     timeZone: 'Asia/Manila',
     weekday: 'long'
   });
 
-
   const dayIndex = {
-    Sunday: 0,
-    Monday: 1,
-    Tuesday: 2,
-    Wednesday: 3,
-    Thursday: 4,
-    Friday: 5,
-    Saturday: 6
+    Sunday: 0, Monday: 1, Tuesday: 2, Wednesday: 3,
+    Thursday: 4, Friday: 5, Saturday: 6
   }[dayName];
 
-
-  const tip = tips[dayIndex];
-
-
-
-  // Send tip once per day
-  if (lastTip !== today) {
-
-    await pushNotification(
-      'happy',
-      "Gastoo's Tip",
-      tip
-    );
-
-
+  if (lastTip !== today && hour >= 8) {
+    await pushNotification('happy', "Gastoo's Tip", tips[dayIndex]);
     pushGastooMood('happy');
-
     await markTipShown();
   }
 }
