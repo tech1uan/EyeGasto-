@@ -63,6 +63,8 @@ notificationsRouter.patch('/set-read', authMiddleware, setReadValidator, validat
       next(error)
     }
 })
+
+
 notificationsRouter.get(
   "/notif-status",
   authMiddleware,
@@ -71,7 +73,7 @@ notificationsRouter.get(
       const { userId } = req.user;
 
       const data = await getNotificationStatus(userId);
-
+     
       return res.json({
         success: true,
         data,

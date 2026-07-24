@@ -248,6 +248,7 @@ export async function getNotificationStatus(userId) {
   return rows[0];
 }
 
+
 export async function updateLastTipDate(userId) {
 
   const [result] = await pool.query(

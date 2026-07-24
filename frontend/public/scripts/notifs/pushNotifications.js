@@ -232,17 +232,14 @@ async function initDailyNotifications(todayExpenseCount, notificationStatus) {
     });
   };
 
-  const lastTip = getPHDate(notificationStatus?.last_tip_at);
-  const lastReminder = getPHDate(notificationStatus?.last_reminder_at);
+  const lastTip = getPHDate(notificationStatus?.data?.last_tip_at);
+  const lastReminder = getPHDate(notificationStatus?.data?.last_reminder_at);
 
-  console.log({
-    today,
-    hour,
-    lastReminder,
-    lastTip,
-    reminderAlreadySent: lastReminder === today,
-    tipAlreadySent: lastTip === today,
-  });
+  console.log("Today:", today);
+  console.log("Hour:", hour);
+  console.log("Expense Count:", todayExpenseCount);
+  console.log("Last Tip:", lastTip);
+  console.log("Last Reminder:", lastReminder);
 
   // Reminder — once per day at 7PM PH, only if no expenses logged
   if (hour >= 19 && todayExpenseCount === 0 && lastReminder !== today) {
@@ -284,12 +281,22 @@ async function initDailyNotifications(todayExpenseCount, notificationStatus) {
 }
  
 export async function sendDailyNotifications() {
-  const stats = await getExpensesDailyStats();
-  const notificationStatus = await getNotificationStatus();
 
-  if (!stats?.success || !notificationStatus.success) return;
+    console.log("===== sendDailyNotifications =====");
 
-   await initDailyNotifications(Number(stats.data.todayExpenseCount), notificationStatus.data);
+    const stats = await getExpensesDailyStats();
+    const notificationStatus = await getNotificationStatus();
+
+      console.log(stats);
+      console.log(notificationStatus);
+
+    if (!stats?.success || !notificationStatus.success) return;
+
+  
+    await initDailyNotifications(
+        Number(stats.data.todayExpenseCount),
+        notificationStatus.data
+    );
 }
 
 export async function checkStreakNotifications(currentStreak) {
