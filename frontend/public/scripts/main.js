@@ -75,8 +75,8 @@ if(res.status === 401) {
 
 
   if(!refresh.ok) {
-         console.log("Refresh failed.");
-    window.location.replace('/login.html');
+    console.log("Refresh failed.");
+
     return res;
   }
 
@@ -195,7 +195,7 @@ async function loadSecondaryFeatures() {
 
 async function loadBackgroundFeatures() {
   console.log('Load backround features called');
-  
+
     await sendDailyNotifications();
 
     await renderNotifications();

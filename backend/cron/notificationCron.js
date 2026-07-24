@@ -18,7 +18,9 @@ export async function startNotificationCron() {
                 await notifyUser(user.id, "Dont forget to log!", "You haven't added any expenses today.");
             }
         }
-    })
+            }, {
+                timezone: "Asia/Manila"
+            })
 
 
      const tips = [
@@ -39,5 +41,7 @@ export async function startNotificationCron() {
         for(const user of users) {
             await notifyUser(user.id,  "💡 Gastoo's Daily Tip", randomTip)
         }
+    }, {
+        timezone: "Asia/Manila"
     })
 }
