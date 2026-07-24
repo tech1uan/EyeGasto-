@@ -1,5 +1,6 @@
 import { API_BASE } from "../config.js";
 import { hideLoading, showLoading } from "../ui/loading.js";
+import { checkSession } from "./checkSession.js";
 
 
 const button = document.getElementById('login-btn')
@@ -102,6 +103,8 @@ hidePassword.addEventListener('click', () => {
   showPassword.style.display = 'block';
   hidePassword.style.display = 'none';
 })
+
+checkSession();
 
 button.addEventListener('click', login);
 
