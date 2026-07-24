@@ -194,7 +194,8 @@ async function loadSecondaryFeatures() {
 
 
 async function loadBackgroundFeatures() {
-
+  console.log('Load backround features called');
+  
     await sendDailyNotifications();
 
     await renderNotifications();
