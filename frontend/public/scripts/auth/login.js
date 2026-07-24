@@ -1,7 +1,5 @@
 import { API_BASE } from "../config.js";
 import { hideLoading, showLoading } from "../ui/loading.js";
-import { checkSession } from "./checkSession.js";
-
 
 const button = document.getElementById('login-btn')
 let messageTimer = null;
@@ -32,9 +30,7 @@ async function login() {
   }
 
   showLoading(loginBtn);
-    console.log("Login button clicked");
-    console.log("Password:", password);
-    console.log("API:", API_BASE);
+
   try {
     const res = await fetch(`${API_BASE}/auth/login`, {
       method: 'POST',
@@ -104,7 +100,6 @@ hidePassword.addEventListener('click', () => {
   hidePassword.style.display = 'none';
 })
 
-checkSession();
 
 button.addEventListener('click', login);
 

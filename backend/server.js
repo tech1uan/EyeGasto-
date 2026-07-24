@@ -19,6 +19,7 @@ import webpush from 'web-push';
 
 import dns from "dns";
 import { startNotificationCron } from './cron/notificationCron.js';
+import { sessionAuth } from './middleware/sessionAuth.js';
 dns.setDefaultResultOrder("ipv4first");
 
 
@@ -62,7 +63,7 @@ server.get('/', optionalAuth, (req, res) => {
     return res.sendFile(path.join(publicPath, 'index.html'));
 });
 
-server.get('/login', optionalAuth, (req, res) => {
+server.get('/login', sessionAuth, (req, res) => {
     res.set('Cache-Control', 'no-store');
     if (req.user?.role === 'admin') {
         return res.redirect('/gastoo-admin-dashboard');
