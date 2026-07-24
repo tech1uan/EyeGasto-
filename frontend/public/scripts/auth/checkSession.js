@@ -8,7 +8,7 @@ export async function checkSession() {
                 credentials: "include"
             });
 
-            if(!refresh.ok) {
+            if(refresh.ok) {
                 console.log("Session restored")
                 window.location.replace("/index.html");
 
