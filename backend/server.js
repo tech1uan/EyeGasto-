@@ -55,12 +55,18 @@ webpush.setVapidDetails(
     process.env.VAPID_PRIVATE_KEY
 )
 
-server.get('/', optionalAuth, (req, res) => {
-    if (req.user?.role === 'admin') {
+server.get('/', sessionAuth, (req, res) => {
+
+    if (!req.user) {
+        return res.redirect('/login');
+    }
+
+    if (req.user.role === 'admin') {
         return res.redirect('/gastoo-admin-dashboard');
     }
 
     return res.sendFile(path.join(publicPath, 'index.html'));
+
 });
 
 server.get('/login', sessionAuth, (req, res) => {
