@@ -152,7 +152,6 @@ export async function loadUser() {
   const picture = data?.user?.profile_picture || `${API_BASE}/images/user.png`;
 
   const name = data?.user?.username ? data.user.full_name : 'Tracker';
-  const email = data?.user?.email || 'Unknown';
 
   const expensesLogged = userProfileStats?.profileStats?.expenses_logged || '0';
   const monthsActive = userProfileStats?.profileStats?.months_active || '0';
@@ -176,7 +175,6 @@ export async function loadUser() {
 
   document.getElementById('profile-name').textContent = name;
   document.getElementById('edit-profile-name').textContent = name;
-  document.getElementById('profile-email').textContent = email;
   document.getElementById('expenses-logged-num').textContent = expensesLogged;
   document.getElementById('months-active-num').textContent = monthsActive;
 
@@ -263,7 +261,6 @@ export async function initEditProfileBtn () {
   const data = await getUser();
   const userFirstName = data.user.first_name;
   const userLastName = data.user.last_name;
-  const userEmail = data.user.email
   const username = data.user.username;
 
   const editProfileContainer = document.querySelector('.edit-profile-container');
@@ -272,7 +269,6 @@ export async function initEditProfileBtn () {
   
   document.getElementById('input-first-name').value = userFirstName;
   document.getElementById('input-last-name').value = userLastName;
-  document.getElementById('input-email').value = userEmail;
   document.getElementById('input-username').value = username;
 
   editProfileBtn.addEventListener('click', () => { 
@@ -297,48 +293,17 @@ export async function initSaveChangesOnProfileEdit() {
   const newFirstName = document.getElementById('input-first-name').value;
   const newLastName = document.getElementById('input-last-name').value;
   const newUsername = document.getElementById('input-username').value;
-  const newEmail = document.getElementById('input-email').value;
-  const originalEmail = document.getElementById('profile-email').textContent;
 
   const success = document.getElementById('success-edit-profile');
   const error = document.getElementById('error-edit-profile');
   
   if(!success || !error) return;
 
-  const isEmailChanging = newEmail !== originalEmail;
-  
-  if(!newFirstName || !newLastName || !newUsername || !newEmail) {
+  if(!newFirstName || !newLastName || !newUsername) {
     showMessage(error, 'Please fill in all fields');
     return;
   }
 
-  if(isEmailChanging) {
-    try {
-      const res = await authFetch(`${API_BASE}/users/request-email-change`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify({newEmail})
-      });
-      
-      const data = await res.json();
-
-      if(!res.ok) {
-         const errors = data.errors 
-        ? data.errors.map(err => err.msg).join(', ')
-        : data.message || data.msg || 'Something went wrong';
-        showMessage(error, errors, 3000);
-        return null;
-      }
-
-        showVerificationInput();
-    
-    } catch (error) {
-      console.error(error);
-      return null
-    }
-  } else {
     confirmMessage('green',`<strong>Are you sure you want to save this changes?</strong>`, async () => {
       saveBtn.disabled = true;
       showLoading(saveBtn);
@@ -379,7 +344,7 @@ export async function initSaveChangesOnProfileEdit() {
         }
   })
 
-  }})
+  })
 
 }
 
@@ -403,37 +368,6 @@ export async function initGreetings() {
   `
 }
 
-
-function showVerificationInput() {
-  document.getElementById('verification-section').classList.remove('hidden');
-  document.getElementById('submit-verification-btn').addEventListener('click', async () => {
-    const code = document.getElementById('input-verification-code').value;
-
-    const res = await authFetch(`${API_BASE}/users/verify-email-change`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code })
-    });
-    const data = await res.json();
- 
-    if(!res.ok) {
-      showMessage(document.getElementById('verify-error'), data.msg);
-    } else {
-      showMessage(document.getElementById('success-edit-profile'), 'Email updated successfully!', 3000);
-      document.getElementById('verification-section').classList.add('hidden');
-      document.getElementById('save-profile-btn').classList.remove('hidden');
-      await loadUser();
-      document.querySelector('.edit-profile-container').classList.add('hidden');
-
-    }
-  },{once:true});
-
-  const cancelBtn = document.getElementById('cancel-verification-btn');
-
-  cancelBtn.addEventListener('click', () => {
-    document.getElementById('verification-section').classList.add('hidden');
-  },{once:true})
-}
 
 export async function initChangePasswordEdit() {
   const openChangePasswordModalBtn = document.getElementById('change-password-btn');

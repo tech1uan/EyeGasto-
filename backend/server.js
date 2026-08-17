@@ -96,13 +96,6 @@ server.get('/register', optionalAuth, (req, res) => {
 });
 
 
-server.get('/verify', optionalAuth, (req,res) => {
-  if(req.user) {
-    return res.redirect('/')
-  }
-  return res.sendFile(path.join(publicPath, 'verify.html'));
-})
-
 server.get('/gastoo-admin-dashboard', (req, res) => {
     return res.sendFile(path.join(protectedPath, 'admin.html'));
 });

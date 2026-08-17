@@ -1,5 +1,5 @@
 import {body,param,query,validationResult,matchedData} from 'express-validator';
-import { getUserByEmail, getUserByUsername } from '../database/models/users.js';
+import { getUserByUsername } from '../database/models/users.js';
 
 export const registerNameValidator = [
   body('firstName')
@@ -52,15 +52,14 @@ body('confirmPassword')
       })
 ]
 
-export const loginIdentifierValidator = [
+export const loginUsernameValidator = [
 body('login')
 .trim()
-.notEmpty().withMessage('Username or email is required.')
+.notEmpty().withMessage('Username is required.')
 .custom((value) => {
-      const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-      const isUsername = /^[a-zA-Z0-9_]{3,}$/.test(value);
-   if(!isEmail && !isUsername) {
-      throw new Error('Enter a valid email or username');
+   const isUsername = /^[a-zA-Z0-9_]{3,}$/.test(value);
+   if(!isUsername) {
+      throw new Error('Enter a valid username');
    }
    return true;
 })
@@ -71,25 +70,3 @@ export const loginPasswordValidator = [
       .trim()
       .notEmpty().withMessage('Please provide a password')
 ]
-
-export const emailValidator = [
-  body('email')
-    .trim()
-    .notEmpty()
-    .withMessage('Email is required.')
-    .bail()
-    .isEmail()
-    .withMessage('Invalid email')
-    .bail()
-    .custom(async (value) => {
-      const normalizedEmail = value.toLowerCase();
-
-      const user = await getUserByEmail(normalizedEmail);
-
-      if (user) {
-        throw new Error('Email already in use');
-      }
-
-      return true;
-    })
-];

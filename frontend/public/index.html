@@ -1357,7 +1357,6 @@
       </div>
       
       <h2 id="profile-name" class="font-['DM_Sans'] text-white text-base sm:text-lg font-semibold text-center"></h2>
-      <p id="profile-email" class="font-['DM_Sans'] text-[#6AB3A6] text-xs sm:text-sm text-center break-all"></p>
 
       <div class="py-2 space-y-2">
       <p id="error-upload-profile" class="font-['DM_Sans'] text-center text-sm text-red-400 bg-red-400/30 border border-red-400/30 rounded-lg py-2 px-1 hidden"></p>
@@ -1393,7 +1392,7 @@
              <div class="bg-[#0f3d2e] rounded-xl w-10 h-10 flex items-center justify-center"><i class="fa-regular fa-user text-[#18b498]"></i></div>
             <div class="profile-card-feature">
               <h1 class="font-['DM_Sans'] text-white text-[13px]">Edit Profile</h1>
-              <p class="font-['DM_Sans'] text-[#6AB3A6] text-[12px]">Name, email, photo</p>
+              <p class="font-['DM_Sans'] text-[#6AB3A6] text-[12px]">Name, photo</p>
             </div>
           </div>
 
@@ -1618,12 +1617,6 @@
           class="w-full bg-[#054d57]/35 text-slate-100 text-[13px] rounded-xl px-3.5 py-2.5 border border-[#054d57]/80 focus:outline-none focus:border-[#18b498]/40 font-['DM_Sans']">
       </div>
 
-      <div class="mb-3.5">
-        <label class="block text-[10px] sm:text-[11px]  font-semibold text-slate-400/50 mb-1.5 tracking-[0.07em] uppercase">Email address</label>
-        <input type="email" id="input-email"
-          class="w-full bg-[#054d57]/35 text-slate-100 text-[13px] rounded-xl px-3.5 py-2.5 border border-[#054d57]/80 focus:outline-none focus:border-[#18b498]/40 font-['DM_Sans']">
-      </div>
-
       <!-- Actions -->
       <div class="flex flex-col mt-2">
         <button type="submit" id="save-profile-btn"
@@ -1638,38 +1631,6 @@
       </div>
     </div>
 
-    <div id="verification-section" class="fixed hidden inset-0 z-[200] flex items-center justify-center" style="background: rgba(0,0,0,0.6);">
-      <div class="w-[90%] max-w-[380px] bg-[#08343a] border border-[#18b498]/15 text-slate-100 rounded-[20px] p-7 flex flex-col font-['DM_Sans']">
-
-        <div class="flex flex-col items-center gap-1 mb-5">
-          <div class="w-10 h-10 rounded-full border flex items-center justify-center mb-1"
-            style="background: rgba(24,180,152,0.1); border-color: rgba(24,180,152,0.2);">
-            <i class="fa-solid fa-envelope text-sm" style="color: #18b498;"></i>
-          </div>
-          <p class="text-sm font-bold text-white">Verify your new email</p>
-          <p class="text-[11px] text-center" style="color: rgba(24,180,152,0.55);">A 6-digit code was sent to your new email address</p>
-        </div>
-
-        <div class="h-px mb-5" style="background: rgba(24,180,152,0.08);"></div>
-
-        <p id="verify-error" class="font-['DM_Sans'] text-center text-sm text-red-400 bg-red-400/30 border border-red-400/30 rounded-lg py-2 px-1 hidden mb-3"></p>
-
-        <label class="block text-[10px] font-semibold text-slate-400/50 mb-1.5 tracking-[0.07em] uppercase">Verification Code</label>
-        <input type="text" id="input-verification-code" maxlength="6" placeholder="000000"
-          class="w-full bg-[#054d57]/35 text-slate-100 text-[13px] rounded-xl px-3.5 py-2.5 border border-[#054d57]/80 focus:outline-none focus:border-[#18b498]/40 font-['DM_Sans'] mb-3">
-
-        <button id="submit-verification-btn"
-          class="w-full hover:opacity-90 text-white font-bold text-[13px] py-2.5 rounded-xl border-none transition-colors font-['DM_Sans']"
-          style="background: #18b498;">
-          Verify Email
-        </button>
-        <button id="cancel-verification-btn"
-          class="w-full bg-transparent text-slate-400/45 hover:text-slate-100 text-[13px] py-2.5 rounded-xl border-none transition-colors mt-1.5 font-['DM_Sans']">
-          Cancel
-        </button>
-
-      </div>
-    </div>
   </div>
 
 

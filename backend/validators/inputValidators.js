@@ -1,5 +1,5 @@
 import { body, query } from 'express-validator';
-import { getUserByEmail, getUserByUsername } from '../database/models/users.js';
+import { getUserByUsername } from '../database/models/users.js';
 
 export const inputDescription = [
   body('description')
@@ -67,38 +67,6 @@ export const updateProfileValidator = [
     }),
 
 ];
-
-
-export const updateEmailValidator = [
-    body('newEmail')
-    .trim()
-    .notEmpty().withMessage('Please provide an email address')
-    .bail()
-    .isEmail()
-    .withMessage('Please enter a valid email address')
-    .normalizeEmail()
-    .bail()
-    .custom(async (value, { req }) => {
-      const user = await getUserByEmail(value);
-
-      if (user && user.id !== req.user.userId) {
-        throw new Error('Email already in use');
-      }
-
-      return true;
-    }),
-
-    body('code')
-    .trim()
-    .notEmpty()
-    .withMessage('Verification code is required')
-    .bail()
-    .isLength({ min: 6, max: 6 })
-    .withMessage('Verification code must be 6 digits')
-    .bail()
-    .isNumeric()
-    .withMessage('Verification code must contain only numbers')
-]
 
 
 export const changePasswordValidator = [

@@ -1,5 +1,6 @@
 import { API_BASE } from "../config.js";
 import { hideLoading, showLoading } from "../ui/loading.js";
+import { showMessage } from "../ui/message.js";
 
 const button = document.getElementById('register-btn');
 
@@ -8,7 +9,6 @@ async function registerUser() {
 const firstName = document.getElementById('firstname-input').value;
 const lastName = document.getElementById('lastname-input').value
 const username = document.getElementById('username-input').value
-const email = document.getElementById('email-input').value;
 const password = document.getElementById('password-input').value
 const confirmPassword = document.getElementById('confirm-password-input').value;
 const registerBtn = document.getElementById('register-btn');
@@ -23,7 +23,7 @@ success.style.display = 'none';
 success.innerText = '';
 
 
-if(!firstName || !lastName || !username || !email || !password || !confirmPassword) {
+if(!firstName || !lastName || !username || !password || !confirmPassword) {
   message.style.display = 'block';
   message.innerText = 'Please fill in all fields';
   
@@ -43,7 +43,7 @@ try {
     headers:{
       'Content-type':'application/json'
     },
-    body:JSON.stringify({firstName,lastName,username,email,password,confirmPassword})
+    body:JSON.stringify({firstName,lastName,username,password,confirmPassword})
   });
   
   const data = await res.json();
@@ -62,13 +62,11 @@ try {
     },2000)
     
   } else {
-    localStorage.setItem("email", email);
-    localStorage.setItem("resendCooldown", Date.now() + 30 * 1000);
+    showMessage(success, 'Account created successfully! Redirecting to login...', 2000);
 
-    window.location.replace("/verify");
     setTimeout(() => {
-      success.style.display = 'none';
-    },2000)
+      window.location.replace("/login");
+    }, 1500);
   }} catch (error) {
   hideLoading(registerBtn);
   console.log(error);

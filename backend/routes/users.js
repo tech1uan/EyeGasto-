@@ -1,18 +1,15 @@
 import express from 'express';
 import { authMiddleware } from '../middleware/authMiddleware.js';
-import { getTotalUsersByRange, getUserByEmail, getUserByUserID, requestEmailChange, setNewPassword, updateEmailChange, updateProfile, updateProfilePicture, updateVerificationCode, updateVerificationCodeByID } from '../database/models/users.js';
+import { getTotalUsersByRange, getUserByUserID, setNewPassword, updateProfile, updateProfilePicture } from '../database/models/users.js';
 import upload from '../middleware/uploadProfile.js';
 import { resetSavings } from '../database/models/savings.js';
 import { deleteAllExpenses } from '../database/models/expenses.js';
 import { resetBudget } from '../database/models/budget.js';
 import pool from '../database/config.js';
 import validate from '../middleware/validate.js';
-import { changePasswordValidator, updateEmailValidator, updateProfileValidator } from '../validators/inputValidators.js';
+import { changePasswordValidator, updateProfileValidator } from '../validators/inputValidators.js';
 import { matchedData, validationResult } from 'express-validator';
-import {sendVerificationEmail} from '../services/mailer.js';
-import { resendLimiter, verifyLimiter } from './auth.js';
 import bcrypt from 'bcrypt';
-import { authorizeMiddleware } from '../middleware/authorizeMiddleware.js';
 import cloudinary from '../services/cloudinary.js';
 
 const userRouter = express.Router();
@@ -116,104 +113,6 @@ async(req,res,next) => {
       
     })
      
-  } catch (error) {
-    next(error)
-  }
-})
-
-
-userRouter.put('/request-email-change', authMiddleware, updateEmailValidator[0], validate,async(req,res,next) => {
-  try {
-    const {userId} = req.user;
-    const {newEmail} = matchedData(req);
-    
-    const user = await getUserByUserID(userId);
-    
-    if(user.email === newEmail) {
-      const error = new Error('Email already verified!');
-      error.status = 404;
-      return next(error);
-  
-    }
-    const verificationCode = Math.floor(
-      100000 + Math.random() * 900000
-    ).toString();
-
-    const codeExpiresAt = new Date(Date.now() + 10 * 60 * 1000);
-
-    await requestEmailChange(userId, newEmail, verificationCode, codeExpiresAt);
-    
-    res.status(200).json({
-      message: 'Verification code sent to your new email.'
-    });
-
-    await sendVerificationEmail(newEmail, verificationCode);
-
-
-  } catch (error) {
-    next(error);
-  }
-})
-
-userRouter.post('/verify-email-change', authMiddleware, verifyLimiter, updateEmailValidator[1] ,validate, async (req,res,next) => {
-  
-   const {userId} = req.user;
-   const {code} = req.body;
-
-  try {
-
-    const user = await getUserByUserID(userId);
-    if(!user) return next(new Error('User not found'));
-
-    if(user.verification_code !== code) {
-      const error = new Error('Invalid verification code');
-      error.status = 403;
-      return next(error);
-    }
-
-    if(new Date(user.code_expires_at) < new Date()) {
-      const error = new Error('Verification code expired!');
-      error.status = 400;
-      return next(error);
-    }
-
-    await updateEmailChange(userId);
-
-    res.status(200).json({msg: 'Email verified successfully!'});
-
-  } catch (error) {
-    next(error)
-  }
-})
-
-userRouter.post('/resend-code', authMiddleware, resendLimiter, async(req,res,next) => {
- 
-  const {userId} = req.user;
-
-  try {
-    const user = await getUserByUserID(userId); 
-    if(!user) return next(new Error('User not found'));
-
-    const now = new Date();
-    const lastSent = new Date(user.code_expires_at) - 10*60*1000;
-    const secondsSinceLastSent = (now-lastSent) / 1000;
-
-    if(secondsSinceLastSent < 30) {
-      const secondsLeft = Math.ceil(30 - secondsSinceLastSent);
-      return res.status(429).json({
-        msg:`Please wait ${secondsLeft} seconds before resending!`
-      })
-    }
-
-    const newCode = Math.floor(100000 + Math.random() * 900000).toString();
-    const newExpiresAt = new Date (Date.now() + 10 * 60 * 1000);
-
-    await updateVerificationCodeByID(userId,newCode,newExpiresAt);
-
-    await sendVerificationEmail(newEmail, verificationCode);
-
-    res.status(200).json({msg: 'New code sent!'});
-
   } catch (error) {
     next(error)
   }

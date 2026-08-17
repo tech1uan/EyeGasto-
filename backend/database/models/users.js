@@ -17,13 +17,13 @@ export async function getAllUsers() {
   }
 }
 
-export async function createUser(firstName,lastName,username,email,password,verification_code, expires_at) {
+export async function createUser(firstName,lastName,username,password) {
   
   try {
       const [result] = await pool.query(`
-       INSERT INTO users(first_name,last_name, username,email,password, verification_code, code_expires_at)
-       VALUES (?,?,?,?,?,?,?)
-     `,[firstName,lastName,username,email,password,verification_code, expires_at]);
+       INSERT INTO users(first_name, last_name, username, password, is_verified)
+       VALUES (?,?,?,?,1)
+     `,[firstName,lastName,username,password]);
 
      return {
       id:result.insertId,
@@ -81,73 +81,7 @@ export async function getUserByUserID(userId) {
 
 
 
-export async function getUserByEmail(email) {
-  try {
-    const [row] = await pool.query(
-      `
-      SELECT * FROM users
-      WHERE email = ?
-      `,[email]
-    )
-    
-    return row[0];
-  } catch (error) {
-    throw(error)
-  }
-}
 
-export async function verifyUser(email) {
-  try {
-    const [row]  = await pool.query(
-      `
-      UPDATE users
-      SET
-      is_verified = true,
-      verification_code = NULL
-      WHERE email = ?
-      `, [email]
-    )
-
-    return row.affectedRows;
-  } catch (error) {
-    throw(error)
-  }
-}
-
-
-export async function updateVerificationCode(email,code,expiresAt) {
-  try {
-     const [result] = await pool.query (
-    `
-    UPDATE users
-    SET
-     verification_code = ?,
-     code_expires_at = ?
-    WHERE email = ?
-    `, [code,expiresAt,email]
-  )
-  return result.affectedRows
-  } catch (error) {
-    throw error
-  }
-}
-
-export async function updateVerificationCodeByID(userId,code,expiresAt) {
-  try {
-     const [result] = await pool.query (
-    `
-    UPDATE users
-    SET
-     verification_code = ?,
-     code_expires_at = ?
-    WHERE id = ?
-    `, [code,expiresAt,userId]
-  )
-  return result.affectedRows
-  } catch (error) {
-    throw error
-  }
-}
 
 export async function updateProfilePicture(userId, profilePicture) {
   try {
@@ -181,42 +115,6 @@ export async function updateProfile(userId, newFirstName,newLastName, newUsernam
     throw error
   }
 } 
-
-export async function requestEmailChange(userId, newEmail, verificationCode, codeExpiresAt) {
-  try {
-    const [result] = await pool.query(
-      `
-      UPDATE users
-      SET pending_email = ?,
-      verification_code = ?,
-      code_expires_at = ?
-      WHERE id = ?
-      `, [newEmail,verificationCode,codeExpiresAt,userId]);
-
-    return result.affectedRows
-  } catch (error) {
-    throw error
-  }
-}
-
-export async function updateEmailChange(userId) {
-  try {
-    const [result] = await pool.query(
-      `
-      UPDATE users
-      SET email = pending_email,
-      pending_email = NULL,
-      verification_code = NULL,
-      code_expires_at = NULL
-      WHERE id = ? 
-      `, [userId]
-    )
-
-    return result.affectedRows
-  } catch (error) {
-    throw error
-  }
-}
 
 export async function setNewPassword(userId, newPassword) {
   try {

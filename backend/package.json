@@ -27,8 +27,6 @@
     "multer-storage-cloudinary": "^4.0.0",
     "mysql2": "^3.20.0",
     "node-cron": "^4.2.1",
-    "nodemailer": "^9.0.3",
-    "resend": "^6.17.2",
     "web-push": "^3.6.7"
   }
 }

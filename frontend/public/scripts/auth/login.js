@@ -1,20 +1,8 @@
 import { API_BASE } from "../config.js";
 import { hideLoading, showLoading } from "../ui/loading.js";
+import { showMessage } from "../ui/message.js";
 
 const button = document.getElementById('login-btn')
-let messageTimer = null;
-
-
-export function showMessage(el,text, duration = 3000) {
-    clearTimeout(messageTimer);
-    el.style.display = 'block';
-    el.innerText = text,
-    messageTimer = setTimeout(() => {
-      el.style.display = 'none';
-      el.innerText = '';
-    }, duration);
-  }
-
 
 async function login() {
   
@@ -55,11 +43,6 @@ async function login() {
            showMessage(message, data.errors[0].msg, 5000);
           } else {
               showMessage(message, data.msg, 5000);
-          }
-
-          if (data.verified === false) {
-              localStorage.setItem("email", data.email);
-              document.getElementById("verify-container").classList.remove("hidden");
           }
 
         return;
