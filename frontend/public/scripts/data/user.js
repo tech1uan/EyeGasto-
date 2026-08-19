@@ -506,3 +506,19 @@ export async function markReminderShown() {
      }
 
 }
+
+export async function markFeatureTipShown() {
+     try {
+      const res = await authFetch(`${API_BASE}/notifications/feature-tip`, {
+        method: 'PATCH'
+    });
+
+    if(!res.ok) {
+      return null
+    }
+     } catch (error) {
+      console.error(error);
+      return null
+     }
+
+}

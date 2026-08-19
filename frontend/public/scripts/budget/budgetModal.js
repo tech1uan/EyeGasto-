@@ -14,25 +14,29 @@ export async function openSetBudgetModal(mode) {
     
     if(mode === 'add-daily') {
         saveBtn.dataset.mode = 'add-daily';
+        document.getElementById('budget-amount').value = '';
         document.querySelector('.edit-budget-container').classList.remove('hidden');
         document.querySelector('.budget-mode-title').textContent = 'Add Budget';;
         document.querySelector('.budget-mode-description').textContent = 'Set your budget for today and stay on track with your spending.';
+        return;
     }
 
     if(mode === 'add-monthly') {
         saveBtn.dataset.mode = 'add-monthly';
+        document.getElementById('budget-amount').value = '';
         document.querySelector('.edit-budget-container').classList.remove('hidden');
         document.querySelector('.budget-mode-title').textContent = 'Add Budget';;
         document.querySelector('.budget-mode-description').textContent = 'Set your budget for this month and stay on track with your spending.';
+        return;
     }
 
 
     
-    const userBudget = await budget.getBudget(currentView)
-   
+    const userBudget = await budget.getBudget(currentView).catch(() => null);
+    const originalBudget = userBudget?.originalBudget ?? 0;
 
     if(mode === 'edit-daily') {
-        document.getElementById('budget-amount').value = await userBudget.originalBudget.toFixed(2);
+        document.getElementById('budget-amount').value = originalBudget > 0 ? originalBudget.toFixed(2) : '';
         saveBtn.dataset.mode = 'edit-daily';
         document.querySelector('.edit-budget-container').classList.remove('hidden');
         document.querySelector('.budget-mode-title').textContent = 'Edit Budget';;
@@ -41,7 +45,7 @@ export async function openSetBudgetModal(mode) {
     }
 
     if(mode === 'edit-monthly') {
-        document.getElementById('budget-amount').value = await userBudget.originalBudget.toFixed(2);
+        document.getElementById('budget-amount').value = originalBudget > 0 ? originalBudget.toFixed(2) : '';
         saveBtn.dataset.mode = 'edit-monthly';
         document.querySelector('.edit-budget-container').classList.remove('hidden');
         document.querySelector('.budget-mode-title').textContent = 'Edit Budget';;

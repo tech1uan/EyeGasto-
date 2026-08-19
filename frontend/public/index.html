@@ -45,7 +45,7 @@
 
    <!--Floating Navbar-->
 
- <div class="fixed mx-auto bottom-5 pb-[env(safe-area-inset-bottom)] right-4 left-4 w-[90%] px-1 py-3 bg-white rounded-[10px] z-10 flex justify-evenly items-center
+ <div class="fixed mx-auto bottom-[calc(1.25rem+env(safe-area-inset-bottom))] right-4 left-4 w-[90%] px-1 py-3 bg-white rounded-[10px] z-10 flex justify-evenly items-center
             xl:top-1/2 xl:-translate-y-1/2 xl:bottom-auto xl:right-auto xl:left-5
             xl:w-auto xl:h-[450px] xl:flex-col xl:justify-evenly xl:gap-6 xl:py-6 xl:px-2">
 
@@ -158,7 +158,7 @@
                 <div class="dailyBudgetAmounts font-bold flex flex-col items-start flex-nowrap font-['DM_Sans']">
                 
                 </div>
-                <div class="bar-track bg-[#e5e7eb] rounded-lg h-[8px] w-full">
+                <div class="bar-track bg-[#e5e7eb] rounded-lg h-[8px] w-full mt-1">
                   <div class="bar-fill h-full rounded-lg bg-[#22c55e] w-[0%] transition-all duration-700 ease-in" id="dailyBudgetBar"></div>
                 </div>
               </div>
@@ -201,6 +201,7 @@
               <p class=" text-[10px] sm:text-[12px] text-black/40 font-['DM_Sans'] pt-2 mt-1 border-t border-gray-100">
               Track today, save tomorrow.
             </p>
+            <p class="text-[9px] text-black/30 font-['DM_Sans'] mt-2 text-center leading-tight">Expenses reduce both daily &amp; monthly budgets. Daily resets each day, monthly each month.</p>
             </div>
 
             <!-- MONTHLY BUDGET PANEL — your existing budget-container, untouched, just relocated here and toggled -->
@@ -257,10 +258,11 @@
                   </div>
                 </div>
               </div>
-
+              
               <p class=" text-[10px] sm:text-[12px] text-black/40 font-['DM_Sans'] pt-2 mt-1 border-t border-gray-100">
               Track today, save tomorrow.
             </p>
+             <p class="text-[9px] text-black/30 font-['DM_Sans'] mt-2 text-center leading-tight">Expenses reduce both daily &amp; monthly budgets. Daily resets each day, monthly each month.</p>
 
              </div>
             </div>
@@ -411,8 +413,8 @@
                 </div>
               </div>
 
-          </div>
-    
+    </div>
+
         </div>
       </div>
 
@@ -1116,7 +1118,7 @@
       </button>
 
       <button
-        class="analytics-btn relative cursor-pointer z-10 rounded-lg px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs md:text-sm font-medium font-['DM_Sans'] text-[#7FA39B] transition-colors duration-300 hover:text-[#e0f5f0]"
+        title="All Time" aria-label="All Time"  class="analytics-btn relative cursor-pointer z-10 rounded-lg px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs md:text-sm font-medium font-['DM_Sans'] text-[#7FA39B] transition-colors duration-300 hover:text-[#e0f5f0]"
         value="alltime">
         ALL
       </button>
@@ -1124,29 +1126,33 @@
     </div>
 
      <h1 class="font-['DM_Sans'] text-[#6ab3a6] font-medium text-[13px]">SPENDING OVERVIEW</h1>
-    <div class="overview-container grid grid-cols-1 lg:grid-cols-2 gap-2">
+    <div class="overview-container grid grid-cols-2 grid-rows-2 gap-2">
 
   
       <div class="analytics-card total-spent-container">
         <p class="analytics-card-title">Total Spent</p>
+        <p class="text-[10px] text-[#7FA39B] font-['DM_Sans'] -mt-0.5 mb-1">Based on selected period</p>
         <p class="analytics-amount total-spent"></p>
         <p class="analytics-tip total-tip-message"></p>
       </div>
       
       <div class="analytics-card budget-left-container">
-            <p class="analytics-card-title">Monthly Budget Left <span class="text-[10px] opacity-60 normal-case tracking-normal">(This month)</span></p>
+            <p class="analytics-card-title">Monthly Budget Left</p>
+            <p class="text-[10px] text-[#7FA39B] font-['DM_Sans'] -mt-0.5 mb-1">Based on your monthly budget</p>
             <p class="analytics-amount budget-left"></p>
             <p class="analytics-tip budget-tip-message"></p>
       </div>
       
       <div class="analytics-card avg-day-container">
-            <p class="analytics-card-title"> Avg Spending / Day</p>
+            <p class="analytics-card-title">Avg Spending / Day</p>
+            <p class="text-[10px] text-[#7FA39B] font-['DM_Sans'] -mt-0.5 mb-1">Based on selected period</p>
             <p class="analytics-amount average"></p>
             <p class="analytics-tip avg-tip-message"></p>
       </div>
       
       <div class="analytics-card saved-this-month-container">
-            <p class="analytics-card-title">Budget Surplus</p>
+            <p class="analytics-card-title">Saved This Month</p>
+            <p class="text-[10px] text-[#7FA39B] font-['DM_Sans'] -mt-0.5 mb-1">Monthly budget minus spending</p>
             <p class="analytics-amount saved-this-month"></p>
             <p class="analytics-tip saved-tip-message"></p>
       </div>
@@ -1155,7 +1161,7 @@
 
       <div class="mb-4">
         <h3 class="text-[#E6F4F1] text-lg font-semibold font-['DM_Sans']">
-          Spending vs Budget
+          Spending vs Budget <span class="text-[10px] opacity-60 normal-case tracking-normal font-normal">(This month)</span>
         </h3>
 
         <p class="text-[#7FA39B] text-[11px] sm:text-[13px] leading-relaxed font-['DM_Sans']">
@@ -1173,8 +1179,8 @@
           <path d="M8 21h8M12 17v4"/>
           <path d="M7 10h2M11 10h6M7 13h4M15 13h2"/>
         </svg>
-        <p class="text-[#7FA39B] text-[11px] sm:text-[13px] leading-relaxed font-['DM_Sans']">
-          No budget data yet.<br/>Set a budget to start tracking.
+        <p class="text-[#7FA39B] text-[10px] font-['DM_Sans'] text-center leading-relaxed">
+          No budget data yet. Set a budget to start tracking.
         </p>
       </div>
 
@@ -1192,7 +1198,7 @@
           <path d="M12 3a9 9 0 0 1 6.364 15.364"/>
           <path d="M12 7v5l3 3"/>
         </svg>
-        <p class="text-[#7FA39B] text-xs font-['DM_Sans'] text-center leading-relaxed">
+        <p class="text-[#7FA39B] text-[10px] font-['DM_Sans'] text-center leading-relaxed">
           No expenses yet.<br/>Add a transaction to see your breakdown.
         </p>
       </div>

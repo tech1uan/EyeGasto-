@@ -71,7 +71,11 @@ export async function updateAnalytics(range) {
 
   totalSpentContainer.textContent = formatToPeso(totalSpentAmount);
 
-  if (totalSpentLastPeriod > 0) {
+  if (range === 'alltime') {
+    tipMessage.classList.remove("text-[#7FA39B]");
+    tipMessage.textContent = "All-time total";
+    tipMessage.classList.add("text-[#e0f5f0]");
+  } else if (totalSpentLastPeriod > 0) {
     const spentPercent =
       ((totalSpentAmount - totalSpentLastPeriod) / totalSpentLastPeriod) * 100;
      
@@ -90,6 +94,9 @@ export async function updateAnalytics(range) {
       tipMessage.classList.add("text-[#e0f5f0]");
     }
 
+} else {
+    tipMessage.textContent = `— No prior data`;
+    tipMessage.classList.add("text-[#e0f5f0]");
 }  
   const avgPerDay = daysLogged > 0 ? totalSpent / daysLogged : 0;
 

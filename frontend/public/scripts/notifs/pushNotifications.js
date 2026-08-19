@@ -1,6 +1,6 @@
 import { fetchGetUserExpenses, getExpensesByRange, getExpensesDailyStats, getTotalExpensesByRange, getUserExpenses } from "../data/expenses.js";
 import { markGoalCompletedNotified, userSavings } from "../data/savings.js";
-import { getNotificationStatus, markReminderShown, markTipShown } from "../data/user.js";
+import { getNotificationStatus, markFeatureTipShown, markReminderShown, markTipShown } from "../data/user.js";
 import { pushGastooMood } from "../ui/renderMascot.js";
 import { pushNotification } from "./notifications.js";
 
@@ -263,6 +263,24 @@ async function initDailyNotifications(todayExpenseCount, notificationStatus) {
     "Tracking expenses is the first step. The habit makes the difference.",
   ];
 
+  // Feature tips + trivia — once per day after 9AM PH
+  const featureTips = [
+    { title: "Savings Goal", body: "You can set a savings goal with a target amount. Go to the savings section and tap 'Set Goal' to start tracking your progress." },
+    { title: "Dual Budgets", body: "You can set both daily and monthly budgets. Daily budgets help you control day-to-day spending while monthly budgets give the big picture." },
+    { title: "Edit Expenses", body: "Tap any expense card to edit it. You can change the amount, category, or description — or delete it entirely." },
+    { title: "Analytics Filters", body: "Try switching between 7D, 1M, 6M, and ALL in the analytics section to see how your spending changes over different periods." },
+    { title: "PDF Export", body: "You can export your expenses as a PDF report. Go to your profile and look for the export option." },
+    { title: "Category Breakdown", body: "The donut chart in analytics shows exactly where your money goes. Tap on a category to see how much you spent on it." },
+    { title: "Budget Chart", body: "The bar chart in analytics compares your weekly spending against your monthly budget. Each bar represents one week." },
+    { title: "Spending Heatmap", body: "The heatmap in analytics shows your spending intensity across the year. Darker squares mean higher spending." },
+    { title: "Why Gastoo?", body: "Gastoo was built because Juan, the creator, struggled with managing his own finances. He built this app to help himself — and now it helps you too." },
+    { title: "The Name", body: "'Gastoo' comes from the Filipino word 'gastos' meaning expenses. A fun twist on a word every Filipino knows." },
+    { title: "AI Insights", body: "Gastoo uses AI to analyze your spending patterns and generate personalized tips just for you." },
+    { title: "Small Expenses", body: "Tracking even small expenses like ₱20 snacks can reveal surprising patterns. Those small amounts add up fast." },
+    { title: "Weekly Review", body: "Reviewing your spending weekly takes just 2 minutes but can save you thousands over time. Try checking analytics every Sunday." },
+    { title: "Pay Yourself First", body: "Before spending on wants, set aside money for savings. Even ₱50 per day adds up to ₱18,250 in a year!" },
+  ];
+
   const dayName = now.toLocaleDateString('en-US', {
     timeZone: 'Asia/Manila',
     weekday: 'long'
@@ -277,6 +295,16 @@ async function initDailyNotifications(todayExpenseCount, notificationStatus) {
     await pushNotification('happy', "Gastoo's Tip", tips[dayIndex]);
     pushGastooMood('happy');
     await markTipShown();
+  }
+
+  // Feature tip + trivia — once per day after 9AM PH
+  const lastFeatureTip = getPHDate(notificationStatus?.data?.last_feature_tip_at);
+  if (lastFeatureTip !== today && hour >= 9) {
+    const tipIndex = Math.floor(Math.random() * featureTips.length);
+    const tip = featureTips[tipIndex];
+    await pushNotification('happy', `Did you know? — ${tip.title}`, tip.body);
+    pushGastooMood('happy');
+    await markFeatureTipShown();
   }
 }
  

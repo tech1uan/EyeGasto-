@@ -3,7 +3,7 @@ import { authMiddleware } from '../middleware/authMiddleware.js';
 import { deleteNotification, getNotifications, pushNotification, setNotificationRead } from '../database/models/notifications.js';
 import { notificationValidator, setReadValidator } from '../validators/notificationValidator.js';
 import { matchedData } from 'express-validator';
-import {getNotificationStatus, updateLastReminderDate, updateLastTipDate } from '../database/models/users.js';
+import {getNotificationStatus, updateLastFeatureTipDate, updateLastReminderDate, updateLastTipDate } from '../database/models/users.js';
 import validate from '../middleware/validate.js';
 
 export const notificationsRouter = express.Router();
@@ -116,6 +116,22 @@ notificationsRouter.patch(
       res.json({
         success: true
       });
+
+    } catch (error) {
+      next(error);
+    }
+});
+
+notificationsRouter.patch(
+  '/feature-tip',
+  authMiddleware,
+  async (req, res, next) => {
+    try {
+      const { userId } = req.user;
+
+      await updateLastFeatureTipDate(userId);
+
+      res.json({ success: true });
 
     } catch (error) {
       next(error);

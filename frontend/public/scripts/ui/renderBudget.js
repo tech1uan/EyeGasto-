@@ -1,7 +1,6 @@
 import { getRelativeTime } from "../core/utils.js";
 import {  budget } from "../data/budget.js";
-import { pushNotification } from "../notifs/notifications.js";
-
+import { openSetBudgetModal } from "../budget/budgetModal.js";
 
 export let currentView = 'daily';
 
@@ -19,18 +18,23 @@ export async function renderBudget(data = null) {
   const bar = isDaily
     ? document.getElementById('dailyBudgetBar')
     : document.getElementById('budgetBar');
-    const days = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday"
-    ];
+
+  const editBtn = isDaily
+    ? document.getElementById('edit-daily-budget-btn')
+    : document.getElementById('edit-monthly-budget-btn');
+
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ];
 
  if (!el || !bar) return;
-  bar.style.width = 0 + '%';
+  bar.style.width = '0%';
   
 
   const today = new Date();
@@ -50,36 +54,63 @@ export async function renderBudget(data = null) {
   const remaining = Number(data.budget) || 0;
   const spent = original - remaining;
 
+  if (original <= 0) {
+    const hintId = isDaily ? 'set-daily-budget-hint' : 'set-monthly-budget-hint';
+    el.innerHTML = `
+      <p class="text-[15px] sm:text-[16px] font-['DM_Sans'] text-black/30">No budget set</p>
+      <p class="text-[10px] sm:text-[11px] font-['DM_Sans'] font-bold text-[#079F9F] cursor-pointer hover:underline" id="${hintId}">
+        Set ${isDaily ? 'daily' : 'monthly'} budget →
+      </p>
+    `;
+    el.classList.remove("text-red-600");
+    el.classList.add("text-[#079F9F]");
+    bar.style.width = '0%';
+    bar.style.background = '#e5e7eb';
+
+    if (editBtn) editBtn.classList.add('hidden');
+
+    const hint = document.getElementById(hintId);
+    if (hint) {
+      hint.addEventListener('click', () => {
+        openSetBudgetModal(isDaily ? 'add-daily' : 'add-monthly');
+      });
+    }
+    return;
+  }
+
+  if (editBtn) editBtn.classList.remove('hidden');
+
   el.innerHTML = `
-    <p class="text-2xl sm:text-[26px] md:text-[28px]">
-      ${original.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })}
+    <p class="text-2xl sm:text-[26px] md:text-[28px] font-['DM_Sans']">
+      ${remaining.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })}
     </p>
 
-    <div class="flex w-full gap-2">
-      <p class="text-[11px] sm:text-[12px] text-black/50">
-        Spent: ${spent.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })}
-      </p>
-      <p class="text-[11px] sm:text-[12px] text-black/50">
-        Remaining: ${remaining.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })}
-      </p>
-    </div>
+    <div class="flex items-center gap-1.5 whitespace-nowrap font-['DM_Sans'] text-[11px] sm:text-xs text-black/50">
+  <span>
+    ${spent.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })} spent
+  </span>
+  <span>·</span>
+  <span>
+    ${remaining.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })} remaining
+  </span>
+</div>
   `;
+
+  const percent = Math.min(((spent / original) * 100), 100);
+  bar.style.width = percent + '%';
 
   if (remaining < 0) {
     el.classList.add("text-red-600");
     el.classList.remove("text-[#079F9F]");
+    bar.style.background = '#ef4444';
+  } else if (percent >= 100 || remaining <= 0) {
+    el.classList.remove("text-red-600");
+    el.classList.add("text-[#d97706]");
+    bar.style.background = '#f59e0b';
   } else {
     el.classList.remove("text-red-600");
+    el.classList.remove("text-[#d97706]");
     el.classList.add("text-[#079F9F]");
-  }
-
-  const percent = Math.min(((spent / original) * 100), 100);
-
-  bar.style.width = percent + '%';
-
-  if (percent === 100) {
-    bar.style.background = '#ef4444';
-  } else {
     bar.style.background = '#22c55e';
   }
 }

@@ -16,6 +16,20 @@ const gastooMessages = {
     "Keep track of your money — it's worth the habit.",
     "Start your day with confidence and a plan.",
     "You're one step closer to financial control.",
+    // Feature Tips
+    "Tip: You can set a savings goal with a target amount. Check the savings section!",
+    "Tip: You can set both daily AND monthly budgets. Try both!",
+    "Tip: Tap any expense card to edit or delete it.",
+    "Tip: Switch between 7D, 1M, 6M, ALL in analytics to compare your spending.",
+    "Tip: You can export your expenses as a PDF from your profile.",
+    "Tip: The donut chart shows exactly where your money goes by category.",
+    "Tip: The heatmap shows your spending intensity across the year.",
+    // Trivia
+    "Fun fact: Gastoo was built because Juan struggled with his own finances.",
+    "Fun fact: 'Gastoo' comes from the Filipino word 'gastos' meaning expenses.",
+    "Fun fact: Gastoo uses AI to give you personalized spending tips.",
+    "Fun fact: Tracking even ₱20 snacks reveals surprising patterns.",
+    "Fun fact: A ₱50 daily saving adds up to ₱18,250 in a year!",
   ],
 
   excited: [

@@ -133,7 +133,8 @@ export async function getNotificationStatus(userId) {
     `
     SELECT
       last_tip_at,
-      last_reminder_at
+      last_reminder_at,
+      last_feature_tip_at
     FROM users
     WHERE id = ?
     `,
@@ -165,6 +166,24 @@ export async function updateLastReminderDate(userId) {
     `
     UPDATE users
     SET last_reminder_at = UTC_TIMESTAMP()
+    WHERE id = ?
+    `,
+    [userId]
+  );
+
+  return result;
+  } catch (error) {
+    throw error
+  }
+
+}
+
+export async function updateLastFeatureTipDate(userId) {
+  try {
+    const [result] = await pool.query(
+    `
+    UPDATE users
+    SET last_feature_tip_at = UTC_TIMESTAMP()
     WHERE id = ?
     `,
     [userId]
