@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>GASTOO</title>
   <link href="./src/output.css" rel="stylesheet">
 
@@ -20,13 +20,14 @@
       <link rel="icon" type="image/svg+xml" href="./favicon/favicon.svg" />
       <link rel="shortcut icon" href="./favicon/favicon.ico" />
       <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-title" content="GASTOO" />
       <link rel="manifest" href="./favicon/site.webmanifest" />
   <link rel="stylesheet" href="./animations/styles.css">
 
 </head>
 
-<body class="bg-[#0d2b2b] flex items-center overflow-x-hidden flex min-h-screen pb-32 flex-col relative">
+<body class="bg-[#0d2b2b] flex items-center overflow-x-hidden flex min-h-[100dvh] min-h-screen pb-32 pb-[calc(8rem+env(safe-area-inset-bottom))] flex-col relative">
 
   <div class="bubble bubble-1"></div>
   <div class="bubble bubble-2"></div>
@@ -44,7 +45,7 @@
 
    <!--Floating Navbar-->
 
- <div class="fixed mx-auto bottom-5 right-4 left-4 w-[90%] px-1 py-3 bg-white rounded-[10px] z-10 flex justify-evenly items-center
+ <div class="fixed mx-auto bottom-5 pb-[env(safe-area-inset-bottom)] right-4 left-4 w-[90%] px-1 py-3 bg-white rounded-[10px] z-10 flex justify-evenly items-center
             xl:top-1/2 xl:-translate-y-1/2 xl:bottom-auto xl:right-auto xl:left-5
             xl:w-auto xl:h-[450px] xl:flex-col xl:justify-evenly xl:gap-6 xl:py-6 xl:px-2">
 
@@ -590,14 +591,14 @@
                    <label for="expense-description" class="label-normal text-[11px] font-semibold uppercase tracking-widest font-['DM_Sans'] ">Description</label>
                   <div class="relative w-[100%] col-span-2">
                         <i class="fa-solid fa-pen-to-square absolute z-1000 left-2 top-3 text-white"></i>
-                      <input type="text" id="expense-description" class="bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder:text-white/40 rounded-xl py-2.5 w-full text-sm font-['Poppins'] outline-none focus:bg-white/20 focus:border-white/50 focus:ring-2 focus:ring-white/10 p-8 transition-all duration-200" min="0" placeholder="Describe what you had spent..">
+                      <input type="text" id="expense-description" class="bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder:text-white/40 rounded-xl py-2.5 w-full text-[16px] font-['Poppins'] outline-none focus:bg-white/20 focus:border-white/50 focus:ring-2 focus:ring-white/10 p-8 transition-all duration-200" min="0" placeholder="Describe what you had spent..">
                   </div>
                   
                   <div class = "col-span-1">
                    <label for="expense-amount" class="label-normal  text-[11px] font-semibold uppercase tracking-widest font-['DM_Sans']">Amount</label>
                   <div class="relative w-[100%]">
                       <i class="fa-solid fa-peso-sign absolute z-1000 left-3 top-3 text-white"></i>
-                     <input type="number" id="expense-amount" placeholder="Amount" class="input-cozy bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder:text-white/40 rounded-xl py-2.5 pl-9 pr-3 text-sm font-['Poppins'] outline-none focus:bg-white/20 focus:border-white/50 focus:ring-2 focus:ring-white/10 transition-all duration-200" min="0">
+                     <input type="number" id="expense-amount" placeholder="Amount" class="input-cozy bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder:text-white/40 rounded-xl py-2.5 pl-9 pr-3 text-[16px] font-['Poppins'] outline-none focus:bg-white/20 focus:border-white/50 focus:ring-2 focus:ring-white/10 transition-all duration-200" min="0">
                   </div>
                   </div>
 
@@ -924,7 +925,7 @@
             Description
           </label>
           <input type="text" id="edit-goal-description" placeholder="e.g. Emergency fund, New laptop"
-                 class="rounded-[12px] px-[14px] py-[10px] text-[14px] outline-none transition-all w-full font-['DM_Sans'] placeholder:text-white/20"
+                 class="rounded-[12px] px-[14px] py-[10px] text-[16px] outline-none transition-all w-full font-['DM_Sans'] placeholder:text-white/20"
                  style="background: rgba(255,255,255,0.07); border: 1px solid rgba(29,158,117,0.2); color: #e8f5f0;">
         </div>
 
@@ -936,7 +937,7 @@
             New Goal (₱)
           </label>
           <input type="number" id="edit-goal-amount" placeholder="0.00" min="0"
-                 class="rounded-[12px] px-[14px] py-[10px] text-[14px] outline-none transition-all w-full font-['DM_Sans'] placeholder:text-white/20"
+                 class="rounded-[12px] px-[14px] py-[10px] text-[16px] outline-none transition-all w-full font-['DM_Sans'] placeholder:text-white/20"
                  style="background: rgba(255,255,255,0.07); border: 1px solid rgba(29,158,117,0.2); color: #e8f5f0;">
         </div>
       </div> 
@@ -995,7 +996,7 @@
             Amount
           </label>
           <input type="number" id="budget-amount" placeholder="0.00" min="0"
-                 class="rounded-[12px] px-[14px] py-[10px] text-[14px] outline-none transition-all w-full font-['DM_Sans'] placeholder:text-white/20"
+                 class="rounded-[12px] px-[14px] py-[10px] text-[16px] outline-none transition-all w-full font-['DM_Sans'] placeholder:text-white/20"
                  style="background: rgba(255,255,255,0.07); border: 1px solid rgba(29,158,117,0.2); color: #e8f5f0;">
         </div>
       </div>
@@ -1044,7 +1045,7 @@
         type="text"
         id="description"
         placeholder="What are you saving for?"
-        class="description w-full bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder:text-white/40 rounded-xl py-2.5 pl-9 pr-3 text-sm font-['Poppins'] outline-none focus:bg-white/20 focus:border-white/50 focus:ring-2 focus:ring-white/10 transition-all duration-200"
+        class="description w-full bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder:text-white/40 rounded-xl py-2.5 pl-9 pr-3 text-[16px] font-['Poppins'] outline-none focus:bg-white/20 focus:border-white/50 focus:ring-2 focus:ring-white/10 transition-all duration-200"
       >
       </div>
       </div>
@@ -1058,7 +1059,7 @@
           type="number"
           id="amount"
           placeholder="Enter amount"
-          class="amount w-full bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder:text-white/40 rounded-xl py-2.5 pl-9 pr-3 text-sm font-['Poppins'] outline-none focus:bg-white/20 focus:border-white/50 focus:ring-2 focus:ring-white/10 transition-all duration-200"
+          class="amount w-full bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder:text-white/40 rounded-xl py-2.5 pl-9 pr-3 text-[16px] font-['Poppins'] outline-none focus:bg-white/20 focus:border-white/50 focus:ring-2 focus:ring-white/10 transition-all duration-200"
         >
       </div>
       </div>
@@ -1602,19 +1603,19 @@
         <div class="mb-3.5">
           <label class="block text-[10px] sm:text-[11px] font-semibold text-slate-400/50 mb-1.5 tracking-[0.07em] uppercase">First name</label>
           <input type="text" id="input-first-name"
-            class="w-full bg-[#054d57]/35 text-slate-100 text-[13px] rounded-xl px-3.5 py-2.5 border border-[#054d57]/80 focus:outline-none focus:border-[#18b498]/40 font-['DM_Sans']">
+            class="w-full bg-[#054d57]/35 text-slate-100 text-[16px] rounded-xl px-3.5 py-2.5 border border-[#054d57]/80 focus:outline-none focus:border-[#18b498]/40 font-['DM_Sans']">
         </div>
         <div class="mb-3.5">
           <label class="block text-[10px] sm:text-[11px]  font-semibold text-slate-400/50 mb-1.5 tracking-[0.07em] uppercase">Last name</label>
           <input type="text" id="input-last-name"
-            class="w-full bg-[#054d57]/35 text-slate-100 text-[13px] rounded-xl px-3.5 py-2.5 border border-[#054d57]/80 focus:outline-none focus:border-[#18b498]/40 font-['DM_Sans']">
+            class="w-full bg-[#054d57]/35 text-slate-100 text-[16px] rounded-xl px-3.5 py-2.5 border border-[#054d57]/80 focus:outline-none focus:border-[#18b498]/40 font-['DM_Sans']">
         </div>
       </div>
 
       <div class="mb-3.5">
         <label class="block text-[10px] sm:text-[11px]  font-semibold text-slate-400/50 mb-1.5 tracking-[0.07em] uppercase">Username</label>
         <input type="text" id="input-username"
-          class="w-full bg-[#054d57]/35 text-slate-100 text-[13px] rounded-xl px-3.5 py-2.5 border border-[#054d57]/80 focus:outline-none focus:border-[#18b498]/40 font-['DM_Sans']">
+          class="w-full bg-[#054d57]/35 text-slate-100 text-[16px] rounded-xl px-3.5 py-2.5 border border-[#054d57]/80 focus:outline-none focus:border-[#18b498]/40 font-['DM_Sans']">
       </div>
 
       <!-- Actions -->
@@ -1663,7 +1664,7 @@
       <label class="block text-[10px] sm:text-[11px] font-semibold text-slate-400/50 mb-1.5 tracking-[0.07em] uppercase">Current Password</label>
       <div class="relative">
         <input type="password" id="input-current-password"
-          class="w-full bg-[#054d57]/35 text-slate-100 text-[13px] rounded-xl px-3.5 py-2.5 border border-[#054d57]/80 focus:outline-none focus:border-[#18b498]/40 font-['DM_Sans'] pr-10">
+          class="w-full bg-[#054d57]/35 text-slate-100 text-[16px] rounded-xl px-3.5 py-2.5 border border-[#054d57]/80 focus:outline-none focus:border-[#18b498]/40 font-['DM_Sans'] pr-10">
         <i class="fa-solid fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-slate-400/50 cursor-pointer hover:text-[#18b498] transition-colors js-toggle-current-pw" style="font-size:13px;"></i>
       </div>
     </div>
@@ -1672,7 +1673,7 @@
       <label class="block text-[10px] sm:text-[11px] font-semibold text-slate-400/50 mb-1.5 tracking-[0.07em] uppercase">New Password</label>
       <div class="relative">
         <input type="password" id="input-new-password"
-          class="w-full bg-[#054d57]/35 text-slate-100 text-[13px] rounded-xl px-3.5 py-2.5 border border-[#054d57]/80 focus:outline-none focus:border-[#18b498]/40 font-['DM_Sans'] pr-10">
+          class="w-full bg-[#054d57]/35 text-slate-100 text-[16px] rounded-xl px-3.5 py-2.5 border border-[#054d57]/80 focus:outline-none focus:border-[#18b498]/40 font-['DM_Sans'] pr-10">
         <i class="fa-solid fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-slate-400/50 cursor-pointer hover:text-[#18b498] transition-colors js-toggle-new-pw" style="font-size:13px;"></i>
       </div>
     </div>
@@ -1681,7 +1682,7 @@
       <label class="block text-[10px] sm:text-[11px] font-semibold text-slate-400/50 mb-1.5 tracking-[0.07em] uppercase">Confirm New Password</label>
       <div class="relative">
         <input type="password" id="input-confirm-password"
-          class="w-full bg-[#054d57]/35 text-slate-100 text-[13px] rounded-xl px-3.5 py-2.5 border border-[#054d57]/80 focus:outline-none focus:border-[#18b498]/40 font-['DM_Sans'] pr-10">
+          class="w-full bg-[#054d57]/35 text-slate-100 text-[16px] rounded-xl px-3.5 py-2.5 border border-[#054d57]/80 focus:outline-none focus:border-[#18b498]/40 font-['DM_Sans'] pr-10">
         <i class="fa-solid fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-slate-400/50 cursor-pointer hover:text-[#18b498] transition-colors js-toggle-confirm-pw" style="font-size:13px;"></i>
       </div>
     </div>
@@ -1782,7 +1783,7 @@
           Message
         </label>
         <textarea id="feedback-message" rows="4" placeholder="Tell us what's on your mind..."
-                  class="rounded-[12px] px-[14px] py-[10px] text-[14px] outline-none transition-all w-full font-['DM_Sans'] placeholder:text-white/20 resize-none"
+                  class="rounded-[12px] px-[14px] py-[10px] text-[16px] outline-none transition-all w-full font-['DM_Sans'] placeholder:text-white/20 resize-none"
                   style="background: rgba(255,255,255,0.07); border: 1px solid rgba(29,158,117,0.2); color: #e8f5f0;"></textarea>
       </div>
 

@@ -61,6 +61,7 @@
     --font-weight-extrabold: 800;
     --font-weight-black: 900;
     --tracking-tight: -0.025em;
+    --tracking-normal: 0em;
     --tracking-wide: 0.025em;
     --tracking-wider: 0.05em;
     --tracking-widest: 0.1em;
@@ -731,6 +732,9 @@
   }
   .max-h-\[90vh\] {
     max-height: 90vh;
+  }
+  .min-h-\[100dvh\] {
+    min-height: 100dvh;
   }
   .min-h-dvh {
     min-height: 100dvh;
@@ -1716,6 +1720,9 @@
   .pt-45 {
     padding-top: calc(var(--spacing) * 45);
   }
+  .pt-\[calc\(0\.75rem\+env\(safe-area-inset-top\)\)\] {
+    padding-top: calc(0.75rem + env(safe-area-inset-top));
+  }
   .pr-3 {
     padding-right: calc(var(--spacing) * 3);
   }
@@ -1757,6 +1764,15 @@
   }
   .pb-32 {
     padding-bottom: calc(var(--spacing) * 32);
+  }
+  .pb-\[calc\(0\.75rem\+env\(safe-area-inset-bottom\)\)\] {
+    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+  }
+  .pb-\[calc\(8rem\+env\(safe-area-inset-bottom\)\)\] {
+    padding-bottom: calc(8rem + env(safe-area-inset-bottom));
+  }
+  .pb-\[env\(safe-area-inset-bottom\)\] {
+    padding-bottom: env(safe-area-inset-bottom);
   }
   .pl-1 {
     padding-left: calc(var(--spacing) * 1);
@@ -1877,6 +1893,9 @@
   .text-\[15px\] {
     font-size: 15px;
   }
+  .text-\[16px\] {
+    font-size: 16px;
+  }
   .text-\[17px\] {
     font-size: 17px;
   }
@@ -1947,6 +1966,10 @@
   .tracking-\[2px\] {
     --tw-tracking: 2px;
     letter-spacing: 2px;
+  }
+  .tracking-normal {
+    --tw-tracking: var(--tracking-normal);
+    letter-spacing: var(--tracking-normal);
   }
   .tracking-tight {
     --tw-tracking: var(--tracking-tight);
@@ -2191,6 +2214,9 @@
   }
   .text-yellow-400 {
     color: var(--color-yellow-400);
+  }
+  .normal-case {
+    text-transform: none;
   }
   .uppercase {
     text-transform: uppercase;
@@ -3556,6 +3582,9 @@
     overflow-y: auto;
     overflow-x: hidden;
     touch-action: manipulation;
+  }
+  input, textarea, select {
+    font-size: 16px;
   }
 }
 @property --tw-translate-x {

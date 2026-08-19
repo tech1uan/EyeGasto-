@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Register to GASTOO!</title>
   <link href="./src/output.css" rel="stylesheet">
 
@@ -18,13 +18,14 @@
   <link rel="icon" type="image/svg+xml" href="./favicon/favicon.svg" />
   <link rel="shortcut icon" href="./favicon/favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png" />
-  <meta name="apple-mobile-web-app-title" content="GASTOO" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-title" content="GASTOO" />
   <link rel="manifest" href="./favicon/site.webmanifest" />
   <link rel="stylesheet" href="./animations/styles.css">
 
 </head>
 
-<body class="bg-[#0d1b3e] overflow-x-hidden p-3 flex items-center justify-center min-h-screen">
+<body class="bg-[#0d1b3e] overflow-x-hidden p-3 pt-[calc(0.75rem+env(safe-area-inset-top))] pb-[calc(0.75rem+env(safe-area-inset-bottom))] flex items-center justify-center min-h-[100dvh] min-h-screen">
 
   <div class="bubble bubble-1"></div>
   <div class="bubble bubble-2"></div>
@@ -102,7 +103,7 @@
         <i class="fa fa-user text-[#00d4c8]"></i>
       </span>
       <input id="firstname-input" type="text" maxlength="50" placeholder="First name.."
-        class="w-full pl-11 pr-4 py-2.5 bg-white/5 border-2 border-[#00d4c8]/30 rounded-xl text-white font-bold text-sm placeholder-white/25 transition-all duration-300 font-['DM_Sans'] focus:border-[#00d4c8] focus:bg-[#00d4c8]/10 focus:ring-4 focus:ring-[#00d4c8]/15 focus:outline-none" />
+        class="w-full pl-11 pr-4 py-2.5 bg-white/5 border-2 border-[#00d4c8]/30 rounded-xl text-white font-bold text-[16px] placeholder-white/25 transition-all duration-300 font-['DM_Sans'] focus:border-[#00d4c8] focus:bg-[#00d4c8]/10 focus:ring-4 focus:ring-[#00d4c8]/15 focus:outline-none" />
     </div>
   </div>
 
@@ -115,7 +116,7 @@
         <i class="fa fa-user text-[#00d4c8]"></i>
       </span>
       <input id="lastname-input" type="text" maxlength="50" placeholder="Last name.."
-        class="w-full pl-11 pr-4 py-2.5 bg-white/5 border-2 border-[#00d4c8]/30 rounded-xl text-white font-bold text-sm placeholder-white/25 transition-all duration-300 font-['DM_Sans'] focus:border-[#00d4c8] focus:bg-[#00d4c8]/10 focus:ring-4 focus:ring-[#00d4c8]/15 focus:outline-none" />
+        class="w-full pl-11 pr-4 py-2.5 bg-white/5 border-2 border-[#00d4c8]/30 rounded-xl text-white font-bold text-[16px] placeholder-white/25 transition-all duration-300 font-['DM_Sans'] focus:border-[#00d4c8] focus:bg-[#00d4c8]/10 focus:ring-4 focus:ring-[#00d4c8]/15 focus:outline-none" />
     </div>
   </div>
 </div>
@@ -130,7 +131,7 @@
       <i class="fa fa-at text-[#00d4c8]"></i>
     </span>
     <input id="username-input" type="text" maxlength="30" placeholder="Choose a unique name.."
-      class="w-full pl-11 pr-4 py-2.5 bg-white/5 border-2 border-[#00d4c8]/30 rounded-xl text-white font-bold text-sm placeholder-white/25 transition-all duration-300 font-['DM_Sans'] focus:border-[#00d4c8] focus:bg-[#00d4c8]/10 focus:ring-4 focus:ring-[#00d4c8]/15 focus:outline-none" />
+      class="w-full pl-11 pr-4 py-2.5 bg-white/5 border-2 border-[#00d4c8]/30 rounded-xl text-white font-bold text-[16px] placeholder-white/25 transition-all duration-300 font-['DM_Sans'] focus:border-[#00d4c8] focus:bg-[#00d4c8]/10 focus:ring-4 focus:ring-[#00d4c8]/15 focus:outline-none" />
   </div>
 </div>
 
@@ -146,7 +147,7 @@
     </span>
     <div class="relative password-wrapper w-full">
       <input id="password-input" type="password" maxlength="30" placeholder="At least 8 characters.."
-        class="password-input w-full pl-11 pr-11 py-2.5 bg-white/5 border-2 border-[#00d4c8]/30 rounded-xl text-white font-bold text-sm placeholder-white/25 transition-all duration-300 font-['DM_Sans'] focus:border-[#00d4c8] focus:bg-[#00d4c8]/10 focus:ring-4 focus:ring-[#00d4c8]/15 focus:outline-none"/>
+        class="password-input w-full pl-11 pr-11 py-2.5 bg-white/5 border-2 border-[#00d4c8]/30 rounded-xl text-white font-bold text-[16px] placeholder-white/25 transition-all duration-300 font-['DM_Sans'] focus:border-[#00d4c8] focus:bg-[#00d4c8]/10 focus:ring-4 focus:ring-[#00d4c8]/15 focus:outline-none"/>
       <i class="toggle-hide fa-solid fa-eye-slash absolute right-4 top-1/2 -translate-y-1/2 text-[#00d4c8] cursor-pointer text-sm hidden"></i>
       <i class="toggle-show fa-solid fa-eye absolute right-4 top-1/2 -translate-y-1/2 text-[#00d4c8] cursor-pointer text-sm"></i>
     </div>
@@ -164,7 +165,7 @@
     </span>
     <div class="relative password-wrapper w-full">
       <input id="confirm-password-input" type="password" maxlength="30" placeholder="Retype password.."
-        class="password-input w-full pl-11 pr-11 py-2.5 bg-white/5 border-2 border-[#00d4c8]/30 rounded-xl text-white font-bold text-sm placeholder-white/25 transition-all duration-300 font-['DM_Sans'] focus:border-[#00d4c8] focus:bg-[#00d4c8]/10 focus:ring-4 focus:ring-[#00d4c8]/15 focus:outline-none" />
+        class="password-input w-full pl-11 pr-11 py-2.5 bg-white/5 border-2 border-[#00d4c8]/30 rounded-xl text-white font-bold text-[16px] placeholder-white/25 transition-all duration-300 font-['DM_Sans'] focus:border-[#00d4c8] focus:bg-[#00d4c8]/10 focus:ring-4 focus:ring-[#00d4c8]/15 focus:outline-none" />
       <i class="toggle-hide fa-solid fa-eye-slash absolute right-4 top-1/2 -translate-y-1/2 text-[#00d4c8] cursor-pointer text-sm hidden"></i>
       <i class="toggle-show fa-solid fa-eye absolute right-4 top-1/2 -translate-y-1/2 text-[#00d4c8] cursor-pointer text-sm"></i>
     </div>

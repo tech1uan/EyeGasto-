@@ -88,7 +88,8 @@ input:-webkit-autofill:focus{
       flex-direction: column; 
       gap: 10px; 
       z-index: 9999;
-       width: 310px;
+       width: calc(100% - 40px);
+       max-width: 310px;
      }
 
 
@@ -417,7 +418,7 @@ input:-webkit-autofill:focus{
 }
 
 .lg-visible {
-  display: hidden;
+  display: none;
 }
 
 select option {
@@ -539,4 +540,15 @@ select option {
     opacity:0;
     visibility:hidden;
 
+}
+
+body:has(.edit-goal-option-container:not(.hidden)),
+body:has(.edit-budget-container:not(.hidden)),
+body:has(.add-withdraw-option-container:not(.hidden)),
+body:has(.send-feedback-container:not(.hidden)),
+body:has(.edit-profile-container:not(.hidden)),
+body:has(.change-password-container:not(.hidden)) {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
 }
