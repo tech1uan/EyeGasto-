@@ -28,8 +28,9 @@ authRouter.post('/register', [...registerNameValidator,... registerUsernameValid
 
 try { 
   const hashedPassword = await bcrypt.hash(password, 10);
-  await createUser(firstName,lastName,username,hashedPassword);
+  const create = await createUser(firstName,lastName,username,hashedPassword);
 
+  console.log(create)
   const user = await getUserByUsername(username);
 
   await createUserSavingsAcc(user.id);

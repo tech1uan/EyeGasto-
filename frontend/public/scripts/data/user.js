@@ -152,6 +152,7 @@ export async function loadUser() {
   const picture = data?.user?.profile_picture || `${API_BASE}/images/user.png`;
 
   const name = data?.user?.username ? data.user.full_name : 'Tracker';
+  const username = `@${data?.user?.username ? data.user.username : '@tracker'}`
 
   const expensesLogged = userProfileStats?.profileStats?.expenses_logged || '0';
   const monthsActive = userProfileStats?.profileStats?.months_active || '0';
@@ -174,6 +175,7 @@ export async function loadUser() {
   `;
 
   document.getElementById('profile-name').textContent = name;
+  document.getElementById('profile-username').textContent = username;
   document.getElementById('edit-profile-name').textContent = name;
   document.getElementById('expenses-logged-num').textContent = expensesLogged;
   document.getElementById('months-active-num').textContent = monthsActive;
