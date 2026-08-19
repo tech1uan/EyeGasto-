@@ -1,6 +1,6 @@
 import { formatToPeso } from "../../core/utils.js";
 import { budget } from "../../data/budget.js";
-import { getComparisonStats, getExpensesByRange, getMonthlyStats, getMonthStats } from "../../data/expenses.js";
+import { getComparisonStats, getExpensesByRange, getMonthlyStats } from "../../data/expenses.js";
 import { groupExpensesByCategory } from "../expenses/groupExpensesByCategory.js";
 import { fetchTotalExpenses } from "../expenses/totalExpenses.js";
 import { updateAnalyticsDonut } from "./analyticsExpensesByCategoryChart.js";
@@ -42,24 +42,23 @@ export async function updateAnalytics(range) {
   const tipMessage = document.querySelector(".total-tip-message");
   const averageContainer = document.querySelector(".average");
   const averageTipContainer = document.querySelector(".avg-tip-message");
-  const savedThisMonthContainer = document.querySelector(".saved-this-month");
-  const savedTipContainer = document.querySelector(".saved-tip-message");
+  const topCategoryContainer = document.querySelector(".top-category-amount");
+  const topCategoryTip = document.querySelector(".top-category-tip");
   const budgetLeftContainer = document.querySelector(".budget-left");
   const budgetTip = document.querySelector(".budget-tip-message");
 
   resetTipClasses(
     tipMessage,
     averageTipContainer,
-    savedTipContainer,
+    topCategoryTip,
     budgetTip
   );
 
-  const [totalSpentAmount, comparisonStats, monthlyStats, thisMonthSpent] = await Promise.all([
+  const [totalSpentAmount, comparisonStats, monthlyStats] = await Promise.all([
     fetchTotalExpenses(range),
-    getComparisonStats(range), 
+    getComparisonStats(range),
     getMonthlyStats(range),
-    getMonthStats()
-]);
+  ]);
 
   const data = await budget.getBudget('monthly')
 
@@ -78,7 +77,7 @@ export async function updateAnalytics(range) {
   } else if (totalSpentLastPeriod > 0) {
     const spentPercent =
       ((totalSpentAmount - totalSpentLastPeriod) / totalSpentLastPeriod) * 100;
-     
+
       const previous = getRangeLabel(range);
 
     tipMessage.classList.remove("text-[#7FA39B]")
@@ -103,18 +102,6 @@ export async function updateAnalytics(range) {
   averageContainer.textContent = formatToPeso(avgPerDay);
   averageTipContainer.textContent = `${daysLogged} days logged`;
   averageTipContainer.classList.add("text-[#e0f5f0]");
-
-  const savedThisMonth = monthlyBudget - thisMonthSpent.totalSpent;
-
-  savedThisMonthContainer.textContent = formatToPeso(savedThisMonth);
-
-  if (savedThisMonth >= 0) {
-    savedTipContainer.textContent = `↗ +${formatToPeso(savedThisMonth)}`;
-    savedTipContainer.classList.add("text-[#22C55E]");
-  } else {
-    savedTipContainer.textContent = `↘ ${formatToPeso(savedThisMonth)}`;
-    savedTipContainer.classList.add("text-[#EF4444]");
-  }
 
 
   const totalSpentThisMonth = await fetchTotalExpenses('1month')
@@ -154,6 +141,23 @@ export async function updateAnalytics(range) {
     categoryBreakdown[cat] = item.total
    })
 
+  const topEntry = Object.entries(grouped).reduce((top, [name, cat]) => {
+    const amt = Number(cat.total) || 0;
+    return amt > (top?.amount || 0) ? { name, amount: amt } : top;
+  }, null);
+
+  const totalForRange = totalSpentAmount || 1;
+
+  if (topEntry) {
+    topCategoryContainer.textContent = topEntry.name;
+    const pct = ((topEntry.amount / totalForRange) * 100).toFixed(0);
+    topCategoryTip.textContent = `${formatToPeso(topEntry.amount)} · ${pct}% of total`;
+    topCategoryTip.classList.add("text-[#e0f5f0]");
+  } else {
+    topCategoryContainer.textContent = '—';
+    topCategoryTip.textContent = "No expenses yet";
+    topCategoryTip.classList.add("text-[#e0f5f0]");
+  }
     
   await updateSmartInsights(totalSpentAmount, monthlyBudget, categoryBreakdown, daysLogged, range)
 
