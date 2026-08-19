@@ -11,6 +11,7 @@ import { renderBudget } from "../../ui/renderBudget.js";
 import { budget } from "../../data/budget.js";
 import { initAnalytics } from "../analytics/analytics.js";
 import { checkBudgetData } from "../../budget/budgetActions.js";
+import { updateExpenseHeatMap } from "../analytics/analyticsHeatMap.js";
 
 
 
@@ -85,7 +86,8 @@ async function openEditForm(id) {
   updateTotalExpenses(),
   updateRecentExpenses(),
   updateExpensesChart(),
-  renderBudget()
+  renderBudget(),
+  updateExpenseHeatMap()
   ])
   
   await checkBudgetData()

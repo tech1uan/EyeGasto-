@@ -8,6 +8,7 @@ import { updateRecentExpenses } from "./recentExpenses.js";
 import { updateExpensesChart } from "../../charts/expensesChart.js";
 import { initAnalytics } from "../analytics/analytics.js";
 import { checkBudgetData } from "../../budget/budgetActions.js";
+import { updateExpenseHeatMap } from "../analytics/analyticsHeatMap.js";
 
 export async function initDeleteExpense() {
 const containers = document.querySelectorAll('.expenses-container, .expenses-container-b');
@@ -40,7 +41,8 @@ container.addEventListener('click', async (e) => {
      updateTotalExpenses(),
      updateRecentExpenses(),
      updateExpensesChart(),
-     renderBudget()
+     renderBudget(),
+     updateExpenseHeatMap()
     ])
   
     await checkBudgetData()

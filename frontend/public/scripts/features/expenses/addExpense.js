@@ -13,6 +13,7 @@ import { initAnalytics } from "../analytics/analytics.js";
 import { checkBudgetData } from "../../budget/budgetActions.js";
 import { checkSpendingTrend } from "../../notifs/pushNotifications.js";
 import { refreshProfileStats } from "../../data/user.js";
+import { updateExpenseHeatMap } from "../analytics/analyticsHeatMap.js";
    
 
    export async function initCategoryShortcut() {
@@ -73,7 +74,8 @@ import { refreshProfileStats } from "../../data/user.js";
               updateTotalExpenses(),
               updateExpensesChart(),
               renderBudget(),
-              refreshProfileStats()
+              refreshProfileStats(),
+              updateExpenseHeatMap()
               ])
 
               await checkBudgetData()
