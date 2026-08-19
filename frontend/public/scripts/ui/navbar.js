@@ -81,7 +81,7 @@ export function initNavbar() {
         if(type === 'add-savings') {
          addWithdrawOption.classList.remove('hidden');
          document.querySelector('.add-withdraw-title').textContent = 'Add Savings';
-         document.getElementById('js-budget-button').innerHTML = ` <i class="fa-solid fa-plus"></i>Add`
+         document.getElementById('js-budget-button').innerHTML = ` <i class="fa-solid fa-plus"></i>Deposit`
          document.getElementById('js-budget-button').dataset.type = 'add';
          document.getElementById('add-withdraw-description').textContent = 'Add money to your savings to grow your balance and reach your financial goals faster.'
          document.getElementById('savings-icon').classList.remove('fa-arrow-down');
