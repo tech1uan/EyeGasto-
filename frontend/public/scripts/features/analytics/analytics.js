@@ -114,14 +114,13 @@ export async function updateAnalytics(range) {
   
   const budgetLeft = monthlyBudget - totalSpentThisMonth
 
-  budgetLeftContainer.textContent = formatToPeso(budgetLeft || 0);
-
   if (!monthlyBudget || monthlyBudget <= 0) {
+    budgetLeftContainer.textContent = '—';
     budgetTip.textContent = "Set a budget";
     budgetTip.classList.add("text-[#e0f5f0]");
-  
   } else {
-
+    budgetLeftContainer.textContent = formatToPeso(budgetLeft);
+  
   const budgetPercent = totalSpentThisMonth / monthlyBudget;
 
   if (budgetPercent <= 0.8) {

@@ -163,9 +163,9 @@
               </div>
 
               <!-- weekly pulse strip: at-a-glance view of daily-budget adherence across the week -->
-              <div class="weekly-pulse-strip mt-4 pt-3 border-t border-dashed border-gray-200">
+                   <div class="weekly-pulse-strip mt-4 pt-3 border-t border-dashed border-gray-200">
                 <h2 class="font-['DM_Sans'] text-black font-bold text-[10px] sm:text-[11px] tracking-widest opacity-[50%] mb-2">THIS WEEK</h2>
-                <div id="weeklyPulseStrip" class="flex justify-between px-1">
+                <div id="monthlyPulseStrip" class="flex justify-between px-1">
                   <div class="pulse-day flex flex-col items-center gap-1" data-day = "Monday">
                     <span class="pulse-dot w-[16px] h-[16px] rounded-full bg-[#EBF8F7] border-2 border-[#d7eeec] block"></span>
                     <span class="text-[10px] text-black/40 font-['DM_Sans'] font-semibold">M</span>
@@ -180,7 +180,7 @@
                   </div>
                   <div class="pulse-day flex flex-col items-center gap-1" data-day = "Thursday">
                     <span class="pulse-dot w-[16px] h-[16px] rounded-full bg-[#EBF8F7] border-2 border-[#d7eeec] block"></span>
-                    <span class="text-[10px] text-black/40 font-['DM_Sans'] font-bold">T</span>
+                    <span class="text-[10px] text-black/40 font-['DM_Sans'] font-semibold">Th</span>
                   </div>
                   <div class="pulse-day flex flex-col items-center gap-1" data-day = "Friday">
                     <span class="pulse-dot w-[16px] h-[16px] rounded-full bg-[#EBF8F7] border-2 border-[#d7eeec] block"></span>
@@ -223,9 +223,9 @@
                 </div>
               </div>
               
-                   <div class="weekly-pulse-strip mt-4 pt-3 border-t border-dashed border-gray-200">
+              <div class="weekly-pulse-strip mt-4 pt-3 border-t border-dashed border-gray-200">
                 <h2 class="font-['DM_Sans'] text-black font-bold text-[10px] sm:text-[11px] tracking-widest opacity-[50%] mb-2">THIS WEEK</h2>
-                <div id="weeklyPulseStrip" class="flex justify-between px-1">
+                <div id="dailyPulseStrip" class="flex justify-between px-1">
                   <div class="pulse-day flex flex-col items-center gap-1" data-day = "Monday">
                     <span class="pulse-dot w-[16px] h-[16px] rounded-full bg-[#EBF8F7] border-2 border-[#d7eeec] block"></span>
                     <span class="text-[10px] text-black/40 font-['DM_Sans'] font-semibold">M</span>
@@ -240,7 +240,7 @@
                   </div>
                   <div class="pulse-day flex flex-col items-center gap-1" data-day = "Thursday">
                     <span class="pulse-dot w-[16px] h-[16px] rounded-full bg-[#EBF8F7] border-2 border-[#d7eeec] block"></span>
-                    <span class="text-[10px] text-black/40 font-['DM_Sans'] font-bold">T</span>
+                    <span class="text-[10px] text-black/40 font-['DM_Sans'] font-semibold">Th</span>
                   </div>
                   <div class="pulse-day flex flex-col items-center gap-1" data-day = "Friday">
                     <span class="pulse-dot w-[16px] h-[16px] rounded-full bg-[#EBF8F7] border-2 border-[#d7eeec] block"></span>
@@ -1133,7 +1133,7 @@
       </div>
       
       <div class="analytics-card budget-left-container">
-            <p class="analytics-card-title">Monthly Budget Left</p>
+            <p class="analytics-card-title">Monthly Budget Left <span class="text-[10px] opacity-60 normal-case tracking-normal">(This month)</span></p>
             <p class="analytics-amount budget-left"></p>
             <p class="analytics-tip budget-tip-message"></p>
       </div>
@@ -1145,7 +1145,7 @@
       </div>
       
       <div class="analytics-card saved-this-month-container">
-            <p class="analytics-card-title">Saved This Month</p>
+            <p class="analytics-card-title">Budget Surplus</p>
             <p class="analytics-amount saved-this-month"></p>
             <p class="analytics-tip saved-tip-message"></p>
       </div>
