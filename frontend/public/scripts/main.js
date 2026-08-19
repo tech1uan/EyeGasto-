@@ -56,47 +56,70 @@ function hideAppLoader() {
 
 }
 
+let isRefreshing = false;
+let refreshPromise = null;
+
 export async function authFetch(url, options = {}) {
 
   let res = await fetch(url, {
     ...options,
-    credentials:'include',
+    credentials: 'include',
   })
-   console.log("First request:", res.status);
- 
-if(res.status === 401) {
-  console.log("Access token expired. Refreshing...");
-  let refresh = await fetch(`${API_BASE}/auth/token`, {
-    method: 'POST',
-    credentials:'include',
-  });
 
-   console.log("Refresh:", refresh.status);
+  if (res.status === 401) {
+    if (!isRefreshing) {
+      isRefreshing = true;
+      refreshPromise = (async () => {
+        try {
+          let refresh = await fetch(`${API_BASE}/auth/token`, {
+            method: 'POST',
+            credentials: 'include',
+          });
+          return refresh.ok;
+        } catch {
+          return false;
+        } finally {
+          isRefreshing = false;
+        }
+      })();
+    }
 
+    const refreshOk = await refreshPromise;
 
-  if(!refresh.ok) {
-    console.log("Refresh failed.");
-
-    return res;
-  }
-
-  console.log("Retrying original request...");
-
+    if (!refreshOk) {
+      return res;
+    }
 
     res = await fetch(url, {
       ...options,
       credentials: 'include'
     })
-        console.log("Retry result:", res.status);
+  }
 
-  } 
-   
-return res;
+  return res;
 }
 
 
 async function initApp() {
   console.log('App is initializing!')
+
+  const reloadKey = 'gastoo_init_attempts';
+  const now = Date.now();
+  let attempts = JSON.parse(sessionStorage.getItem(reloadKey) || '{"count":0,"first":0}');
+
+  if (now - attempts.first > 10000) {
+    attempts = { count: 1, first: now };
+  } else {
+    attempts.count++;
+  }
+  sessionStorage.setItem(reloadKey, JSON.stringify(attempts));
+
+  if (attempts.count > 3) {
+    console.error('🛑 Reload loop detected. Clearing state and redirecting to login.');
+    sessionStorage.removeItem(reloadKey);
+    window.location.replace('/login');
+    return;
+  }
 
   showAppLoader()
 try {
@@ -106,9 +129,12 @@ try {
 
 if (!res.ok) {
        console.error('🛑 Authentication failed completely. Exiting initialization.');
+       sessionStorage.removeItem(reloadKey);
        window.location.replace('/login.html');
        return; 
     }
+
+sessionStorage.removeItem(reloadKey);
 
 
 await initUser();
@@ -164,6 +190,7 @@ hideAppLoader()
        
 } catch (error) {
   console.error("Initialization crash:", error);
+  sessionStorage.removeItem(reloadKey);
   return window.location.replace('/login.html');
 }
 

@@ -49,6 +49,7 @@ async function login() {
     } else {
 
       showMessage(success, 'Logged in successfully!', 3000);
+      sessionStorage.removeItem('gastoo_init_attempts');
 
       if(data.role === 'user') {
           window.location.replace('/');

@@ -37,10 +37,19 @@ server.use(logger);
 server.use(latencyCheck);
 
 server.use(cors({
-  origin: [
-    'https://gastoos.onrender.com',
-    'http://localhost:8000',      
-  ],
+  origin: function (origin, callback) {
+    const allowed = [
+      'https://gastoos.onrender.com',
+      'https://www.gastoos.onrender.com',
+      'http://localhost:8000',
+      'http://localhost:5173',
+    ];
+    if (!origin || allowed.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(null, true);
+    }
+  },
   credentials: true
 }));
 
@@ -57,14 +66,11 @@ webpush.setVapidDetails(
 
 server.get('/', sessionAuth, (req, res) => {
 
-    if (!req.user) {
-        return res.redirect('/login');
-    }
-
-    if (req.user.role === 'admin') {
+    if (req.user && req.user.role === 'admin') {
         return res.redirect('/gastoo-admin-dashboard');
     }
 
+    res.set('Cache-Control', 'no-store');
     return res.sendFile(path.join(publicPath, 'index.html'));
 
 });

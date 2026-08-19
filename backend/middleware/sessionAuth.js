@@ -90,7 +90,7 @@ async function refreshSession(req,res,next){
                 jwtUser,
                 process.env.ACCESS_KEY_SECRET,
                 {
-                    expiresIn:"30s"
+                    expiresIn:"15m"
                 }
             );
 
