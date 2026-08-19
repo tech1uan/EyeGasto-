@@ -84,16 +84,9 @@ export async function renderBudget(data = null) {
     <p class="text-2xl sm:text-[26px] md:text-[28px] font-['DM_Sans']">
       ${remaining.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })}
     </p>
-
-    <div class="flex items-center gap-1.5 whitespace-nowrap font-['DM_Sans'] text-[11px] sm:text-xs text-black/50">
-  <span>
-    ${spent.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })} spent
-  </span>
-  <span>·</span>
-  <span>
-    ${remaining.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })} remaining
-  </span>
-</div>
+    <p class="font-['DM_Sans'] text-[11px] sm:text-xs text-black/50">
+      Spent: ${spent.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })} of ${original.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })}
+    </p>
   `;
 
   const percent = Math.min(((spent / original) * 100), 100);
