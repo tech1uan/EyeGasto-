@@ -60,12 +60,9 @@ export async function getUserByUserID(userId) {
     first_name,
     last_name,
     username,
-    email,
     password,
     created_at,
-    verification_code,
     is_verified,
-    code_expires_at,
     profile_picture
 
     FROM users
@@ -380,7 +377,6 @@ export async function getRecentUsers() {
       u.username,
       u.created_at,
       u.profile_picture,
-      u.email,
       u.last_login,
       COUNT(e.user_id) AS expensesLogged
       FROM users u
