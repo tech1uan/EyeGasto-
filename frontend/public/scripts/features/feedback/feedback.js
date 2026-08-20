@@ -1,3 +1,4 @@
+import { API_BASE } from "../../config.js";
 import { authFetch } from "../../main.js";
 
 export async function initFeedbackModal() {
