@@ -235,12 +235,7 @@ async function initDailyNotifications(todayExpenseCount, notificationStatus) {
   const lastTip = getPHDate(notificationStatus?.data?.last_tip_at);
   const lastReminder = getPHDate(notificationStatus?.data?.last_reminder_at);
 
-  console.log("Today:", today);
-  console.log("Hour:", hour);
-  console.log("Expense Count:", todayExpenseCount);
-  console.log("Last Tip:", lastTip);
-  console.log("Last Reminder:", lastReminder);
-
+  
   // Reminder — once per day at 7PM PH, only if no expenses logged
   if (hour >= 19 && todayExpenseCount === 0 && lastReminder !== today) {
     await pushNotification(
